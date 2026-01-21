@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PW Secure Access</title>
+<title>PW Secure Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -42,7 +42,7 @@ body{
   display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .logo{
   width:38px;height:38px;
@@ -90,6 +90,7 @@ input:focus{
   margin-top:10px;
   font-size:12px;
   color:#555;
+  line-height:1.5;
 }
 .hint b{ color:var(--pw-purple); }
 
@@ -135,14 +136,9 @@ input:focus{
   margin-bottom:10px;
 }
 
-h4{
-  color:var(--pw-purple);
-  margin:16px 0 6px;
-}
-
 ul{
   list-style:none;
-  padding:0;margin:0;
+  padding:0;margin:10px 0 0;
   font-size:13px;color:#444;
 }
 ul li{
@@ -170,8 +166,12 @@ ul li{
       <input type="password" id="passInput" placeholder="Enter today’s password">
       <button class="btn" onclick="checkPassword()">Continue</button>
 
+      <!-- ✅ PASSWORD HINT (FORMAT + TODAY EXAMPLE) -->
       <div class="hint">
-        💡 Password format: <b>RS@DDMMYYYY</b>
+        💡 <b>Password Hint</b><br>
+        Format: <b>RS@DDMMYYYY</b><br>
+        Today’s password example:
+        <b id="todayHint"></b>
       </div>
 
       <div id="error" class="error"></div>
@@ -185,7 +185,9 @@ ul li{
 
       <div class="success">Access granted successfully</div>
 
-      <h4>Login History (Last 5)</h4>
+      <h4 style="color:var(--pw-purple);margin-top:14px;">
+        Login History (Last 5)
+      </h4>
       <ul id="loginHistory"></ul>
     </div>
 
@@ -205,6 +207,9 @@ function getTodayPassword(){
     String(d.getMonth()+1).padStart(2,"0") +
     d.getFullYear();
 }
+
+/* ===== SHOW TODAY HINT ===== */
+document.getElementById("todayHint").innerText = getTodayPassword();
 
 /* ===== STATE ===== */
 let attempts = Number(localStorage.getItem("attempts")) || 0;
