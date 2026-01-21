@@ -53,7 +53,6 @@ button{
   border-radius:12px;
   text-align:center;
   font-weight:700;
-  margin-bottom:12px;
 }
 iframe{
   width:100%;
@@ -67,6 +66,8 @@ iframe{
   font-weight:800;
 }
 .hide{display:none}
+ol{font-size:14px;padding-left:18px}
+ol li{margin-bottom:6px}
 </style>
 </head>
 
@@ -74,11 +75,11 @@ iframe{
 <div class="wrapper">
 
 <!-- 🔐 WEBSITE LOGIN -->
-<div class="card" id="siteBox">
-  <h2>Website Login</h2>
-  <div class="sub">Access video & instructions</div>
+<div class="card" id="loginBox">
+  <h2>🔐 Login Required</h2>
+  <div class="sub">Enter password to continue</div>
 
-  <input type="password" id="sitePass" placeholder="Enter website password">
+  <input type="password" id="sitePass" placeholder="Website password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
@@ -89,7 +90,7 @@ iframe{
 </div>
 
 <!-- 🌐 WEBSITE CONTENT -->
-<div id="siteContent" class="hide">
+<div id="content" class="hide">
 
   <div class="card">
     <div class="timer" id="timer"></div>
@@ -101,14 +102,19 @@ iframe{
   </div>
 
   <div class="card">
-    <h2>📌 Instructions</h2>
-    <ol style="font-size:14px">
-      <li>Turn OFF Private / Custom DNS</li>
-      <li>Use Chrome or Opera Mini</li>
-      <li>If ad opens, press BACK once</li>
-      <li>If site doesn’t open, turn ON VPN</li>
-      <li>Laptop users: VPN + Ad-blocker</li>
+    <h2>📌 Important Instructions</h2>
+    <ol>
+      <li>Turn OFF Private / Custom DNS in phone settings.</li>
+      <li>Use Chrome or Opera Mini (Opera Mini = fewer ads).</li>
+      <li>If ads open, press BACK once.</li>
+      <li>If website does not open, turn ON VPN.</li>
+      <li>Laptop users: VPN + Ad-Blocker recommended.</li>
     </ol>
+  </div>
+
+  <div class="card">
+    <h2>🌐 Open Website</h2>
+    <button onclick="openWebsite()">Go to rarestudy.site</button>
   </div>
 
   <div class="card">
@@ -120,7 +126,7 @@ iframe{
 <div class="card hide" id="apkBox">
   <h2>APK Download Login</h2>
 
-  <input type="password" id="apkPass" placeholder="Enter APK password">
+  <input type="password" id="apkPass" placeholder="APK password">
   <button onclick="checkApk()">Unlock Download</button>
 
   <div class="hint">
@@ -138,7 +144,7 @@ iframe{
 </div>
 
 <script>
-/* ===== DATE & PASSWORD ===== */
+/* ===== DATE & PASSWORD AUTO ===== */
 function todayStr(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
@@ -151,21 +157,25 @@ const APK_PASS ="APK@"+todayStr();
 siteHint.innerText=SITE_PASS;
 apkHint.innerText =APK_PASS;
 
-/* ===== ATTEMPTS ===== */
+/* ===== ATTEMPT LIMIT ===== */
 let siteTry=Number(localStorage.getItem("siteTry"))||0;
 let apkTry =Number(localStorage.getItem("apkTry"))||0;
 
 /* ===== WEBSITE LOGIN ===== */
 function checkSite(){
-  if(siteTry>=3){siteErr.innerText="Too many attempts. Try tomorrow.";return;}
+  if(siteTry>=3){
+    siteErr.innerText="Too many attempts. Try tomorrow.";
+    return;
+  }
   if(sitePass.value!==SITE_PASS){
-    siteTry++;localStorage.setItem("siteTry",siteTry);
+    siteTry++;
+    localStorage.setItem("siteTry",siteTry);
     siteErr.innerText="Wrong password ("+(3-siteTry)+" left)";
     return;
   }
   localStorage.removeItem("siteTry");
-  siteBox.classList.add("hide");
-  siteContent.classList.remove("hide");
+  loginBox.classList.add("hide");
+  content.classList.remove("hide");
 
   if(!localStorage.getItem("startTime")){
     localStorage.setItem("startTime",Date.now());
@@ -190,15 +200,24 @@ function startTimer(){
   },1000);
 }
 
+/* ===== WEBSITE OPEN ===== */
+function openWebsite(){
+  window.open("https://rarestudy.site","_blank");
+}
+
 /* ===== APK ===== */
 function openApk(){
   apkBox.classList.remove("hide");
 }
 function checkApk(){
-  if(apkTry>=2){apkErr.innerText="Too many attempts.";return;}
+  if(apkTry>=2){
+    apkErr.innerText="Too many attempts.";
+    return;
+  }
   if(apkPass.value!==APK_PASS){
-    apkTry++;localStorage.setItem("apkTry",apkTry);
-    apkErr.innerText="Wrong APK password ("+(2-apkTry)+" left)";
+    apkTry++;
+    localStorage.setItem("apkTry",apkTry);
+    apkErr.innerText="Wrong password ("+(2-apkTry)+" left)";
     return;
   }
   localStorage.removeItem("apkTry");
@@ -207,4 +226,4 @@ function checkApk(){
 </script>
 
 </body>
-    </html>
+</html>
