@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Secure Access</title>
+<title>PW Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -22,10 +22,41 @@ body{
 
 .wrapper{
   max-width:430px;
-  margin:32px auto;
+  margin:28px auto;
   padding:14px;
 }
 
+/* ===== PW HEADER ===== */
+.pw-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+.pw-logo{
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--pw),var(--pw-dark));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:900;
+  font-size:20px;
+  box-shadow:0 6px 18px rgba(91,43,214,.35);
+}
+.pw-title{
+  font-weight:800;
+  font-size:18px;
+  color:var(--pw);
+}
+.pw-sub{
+  font-size:12px;
+  color:#666;
+}
+
+/* ===== CARD ===== */
 .card{
   background:#fff;
   border-radius:18px;
@@ -34,7 +65,6 @@ body{
   margin-bottom:20px;
   animation:fadeUp .4s ease;
 }
-
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:none}
@@ -51,6 +81,7 @@ h2{
   margin-bottom:12px;
 }
 
+/* ===== INPUTS & BUTTONS ===== */
 input{
   width:100%;
   padding:13px 14px;
@@ -93,6 +124,7 @@ button:active{transform:scale(.98)}
   margin-top:6px;
 }
 
+/* ===== TIMER ===== */
 .timer{
   background:#fff7cc;
   border:1px dashed var(--yellow);
@@ -103,6 +135,7 @@ button:active{transform:scale(.98)}
   color:#7a5a00;
 }
 
+/* ===== CONTENT ===== */
 ol{
   font-size:14px;
   padding-left:18px;
@@ -121,12 +154,21 @@ ol li{margin-bottom:6px}
 <body>
 <div class="wrapper">
 
+<!-- ===== LOGIN HEADER ===== -->
+<div class="pw-header">
+  <div class="pw-logo">PW</div>
+  <div>
+    <div class="pw-title">PW Secure Portal</div>
+    <div class="pw-sub">Official access system</div>
+  </div>
+</div>
+
 <!-- 🔐 LOGIN -->
 <div class="card" id="loginBox">
-  <h2>🔐 Secure Login</h2>
-  <div class="sub">PW-style protected access</div>
+  <h2>Login Required</h2>
+  <div class="sub">Enter password to continue</div>
 
-  <input type="password" id="sitePass" placeholder="Enter website password">
+  <input type="password" id="sitePass" placeholder="Website password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
@@ -139,6 +181,15 @@ ol li{margin-bottom:6px}
 <!-- 🔓 CONTENT -->
 <div id="content" class="hide">
 
+  <!-- HEADER AFTER LOGIN -->
+  <div class="pw-header">
+    <div class="pw-logo">PW</div>
+    <div>
+      <div class="pw-title">PW Learning Access</div>
+      <div class="pw-sub">Verified user session</div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="timer" id="timer"></div>
   </div>
@@ -147,10 +198,10 @@ ol li{margin-bottom:6px}
     <h2>📌 Important Instructions</h2>
     <ol>
       <li>Turn OFF Private / Custom DNS.</li>
-      <li>Use Chrome or Opera Mini (Opera Mini = fewer ads).</li>
+      <li>Use Chrome or Opera Mini.</li>
       <li>If ads open, press BACK once.</li>
       <li>If site does not open, turn ON VPN.</li>
-      <li>Laptop users: VPN + Ad-Blocker recommended.</li>
+      <li>Laptop users: VPN + Ad-Blocker.</li>
     </ol>
   </div>
 
@@ -166,10 +217,10 @@ ol li{margin-bottom:6px}
 
 <!-- 📦 APK LOGIN -->
 <div class="card hide" id="apkBox">
-  <h2>📦 APK Download</h2>
-  <div class="sub">Extra security for application</div>
+  <h2>APK Download Security</h2>
+  <div class="sub">Extra protection enabled</div>
 
-  <input type="password" id="apkPass" placeholder="Enter APK password">
+  <input type="password" id="apkPass" placeholder="APK password">
   <button onclick="checkApk()">Unlock Download</button>
 
   <div class="hint">
@@ -270,4 +321,4 @@ function checkApk(){
 </script>
 
 </body>
-    </html>
+  </html>
