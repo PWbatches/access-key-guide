@@ -2,25 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Access</title>
 
 <style>
-/* ===== APPLE iOS STYLE ===== */
-:root{
-  --bg:#f2f2f7;
-  --card:#ffffffcc;
-  --text:#111;
-  --sub:#6b7280;
-  --accent:#007aff;
-  --danger:#ff3b30;
-}
-
+/* ===== iOS THEME ===== */
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
-  background:var(--bg);
-  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui;
+  background:#f2f2f7;
+  color:#111;
 }
 
 .container{
@@ -30,48 +21,56 @@ body{
 }
 
 .card{
-  background:var(--card);
-  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(22px);
   border-radius:28px;
-  padding:24px;
-  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  padding:22px;
+  box-shadow:0 20px 45px rgba(0,0,0,.12);
 }
 
 .hidden{display:none}
 
-/* LOGO */
-.logo{
-  width:72px;
-  height:72px;
+/* ===== PW LOGO (YOUR EXACT CODE – RESIZED) ===== */
+.pw-logo{
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background-color: #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin:0 auto 14px;
-  border-radius:18px;
-  background:#000;
-  color:#fff;
+}
+
+.ring{
+  position:absolute;
+  width:85%;
+  height:85%;
+  border-radius:50%;
+  border:5px solid white;
+  border-left-color:transparent;
+  border-right-color:transparent;
+  transform:rotate(-10deg);
+}
+
+.text{
+  position:relative;
+  z-index:10;
+  color:white;
+  font-family:'Times New Roman',Times,serif;
+  font-weight:bold;
+  font-size:64px;
+  line-height:1;
   display:flex;
   align-items:center;
-  justify-content:center;
-  font-weight:700;
-  font-size:22px;
+  padding-top:6px;
 }
 
-/* GUIDE ORB */
-.guide-orb{
-  width:90px;
-  height:90px;
-  margin:0 auto 10px;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#fff,#dbeafe,#93c5fd);
-  box-shadow:0 0 25px rgba(0,122,255,.35);
-}
+.letter-p{margin-right:-12px;top:-3px;position:relative}
+.letter-w{position:relative}
 
-.guide-text{
-  text-align:center;
-  font-size:13px;
-  color:var(--sub);
-  margin-bottom:14px;
-}
-
-/* INPUTS */
+/* ===== INPUTS ===== */
 input,button{
   width:100%;
   padding:14px;
@@ -82,12 +81,12 @@ input,button{
 
 input{
   background:#f4f4f5;
-  margin-top:8px;
+  margin-top:10px;
 }
 
 button{
   margin-top:14px;
-  background:var(--accent);
+  background:#007aff;
   color:#fff;
   font-weight:600;
 }
@@ -99,32 +98,32 @@ button.secondary{
 
 .info{
   font-size:13px;
-  color:var(--sub);
+  color:#6b7280;
   margin-top:10px;
 }
 
 .error{
-  color:var(--danger);
+  color:#ff3b30;
   font-size:13px;
   margin-top:8px;
 }
 
-/* INSIDE INSTRUCTIONS */
+/* ===== SECTIONS ===== */
+.section{
+  margin-top:20px;
+}
+.section h3{
+  margin-bottom:6px;
+}
+
+/* ===== INSTRUCTIONS ===== */
 .instructions{
-  margin-top:16px;
+  margin-top:14px;
   background:#f4f4f5;
   padding:16px;
   border-radius:18px;
   font-size:13px;
   line-height:1.7;
-}
-
-/* INSIDE PAGE */
-.section{
-  margin-top:18px;
-}
-.section h3{
-  margin-bottom:6px;
 }
 </style>
 </head>
@@ -136,12 +135,13 @@ button.secondary{
 <!-- LOGIN PAGE -->
 <div id="loginBox" class="card">
 
-  <!-- LOGO (VISIBLE ALWAYS) -->
-  <div class="logo">PW</div>
-
-  <div class="guide-orb"></div>
-  <div class="guide-text">
-    Secure system active. Enter today’s password.
+  <!-- PW LOGO -->
+  <div class="pw-logo">
+    <div class="ring"></div>
+    <div class="text">
+      <span class="letter-p">P</span>
+      <span class="letter-w">W</span>
+    </div>
   </div>
 
   <input id="sitePass" type="password" placeholder="Enter website password">
@@ -153,13 +153,10 @@ button.secondary{
     Example (today): <b id="todayPass"></b>
   </div>
 
-  <button class="secondary" onclick="toggleInstructions()">
-    Instructions
-  </button>
-
+  <button class="secondary" onclick="toggleInstructions()">Instructions</button>
   <div id="siteErr" class="error"></div>
 
-  <!-- INSTRUCTIONS INSIDE LOGIN -->
+  <!-- INSTRUCTIONS (INSIDE) -->
   <div id="instructions" class="instructions hidden">
 🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
 
@@ -170,37 +167,29 @@ Follow the steps carefully 👇<br><br>
 • To avoid ads, open the website directly using Opera Mini browser.<br>
 • If app/website does not open, turn ON VPN and try again.<br><br>
 
-📌 <b>Steps to Generate Key:</b><br><br>
-
-1️⃣ Turn OFF DNS<br>
-Disable Private DNS / Custom DNS.<br><br>
-
-2️⃣ Update Browser<br>
-Make sure Chrome is updated.<br><br>
-
-3️⃣ Use Correct Browser<br>
-• Chrome → recommended<br>
-• Opera Mini → fewer ads<br><br>
-
-4️⃣ Extra Page / Ad Opens<br>
-Press BACK once and continue.<br><br>
-
-5️⃣ Laptop / PC Users<br>
-• Turn ON VPN<br>
-• Use Ad-Blocker<br><br>
+📌 <b>Steps to Generate Key:</b><br>
+1️⃣ Turn OFF Private DNS / Custom DNS.<br>
+2️⃣ Update Google Chrome.<br>
+3️⃣ Use Chrome (recommended) or Opera Mini.<br>
+4️⃣ Extra ad opens → press BACK once.<br>
+5️⃣ Laptop users → VPN + Ad-Blocker.<br><br>
 
 ⏳ <b>Key Validity:</b><br>
 Valid for 24 hours only.<br>
 (This avoids copyright issues)
   </div>
-
 </div>
 
 <!-- INSIDE PAGE -->
 <div id="contentBox" class="card hidden">
 
-  <div class="logo">PW</div>
-  <div class="guide-text">Access Granted</div>
+  <div class="pw-logo">
+    <div class="ring"></div>
+    <div class="text">
+      <span class="letter-p">P</span>
+      <span class="letter-w">W</span>
+    </div>
+  </div>
 
   <div class="section">
     <h3>🌐 Website</h3>
@@ -215,12 +204,28 @@ Valid for 24 hours only.<br>
       src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
   </div>
 
+  <div class="section">
+    <h3>📦 APK Download</h3>
+    <input id="apkPass" type="password" placeholder="Enter APK password">
+    <button onclick="checkApk()">Unlock APK</button>
+
+    <div class="info">
+      Format: <b>APK@DDMMYYYY</b>
+    </div>
+
+    <a id="apkLink" class="hidden"
+      href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+      <button>Download APK</button>
+    </a>
+
+    <div id="apkErr" class="error"></div>
+  </div>
+
 </div>
 
 </div>
 
 <script>
-/* ===== LOGIN LOGIC FIXED ===== */
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
@@ -229,9 +234,10 @@ function today(){
 }
 
 const sitePassword="RS@"+today();
+const apkPassword="APK@"+today();
 document.getElementById("todayPass").innerText=sitePassword;
 
-let attempts=0;
+let attempts=0,apkAttempts=0;
 
 function checkSite(){
   if(attempts>=3){
@@ -247,10 +253,23 @@ function checkSite(){
   }
 }
 
+function checkApk(){
+  if(apkAttempts>=3){
+    apkErr.innerText="APK locked. Try tomorrow.";
+    return;
+  }
+  if(apkPass.value===apkPassword){
+    apkLink.classList.remove("hidden");
+  }else{
+    apkAttempts++;
+    apkErr.innerText="Wrong APK password";
+  }
+}
+
 function toggleInstructions(){
   instructions.classList.toggle("hidden");
 }
 </script>
 
 </body>
-</html>
+    </html>
