@@ -1,170 +1,222 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Access Key Download</title>
-</head>
+  <title>Access Key Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body style="font-family:Arial; text-align:center; margin:20px;">
-
-<!-- ================= PASSWORD BOX ================= -->
-<div id="passwordBox">
-  <h2>🔐 Enter Access Password</h2>
-  <input type="password" id="passInput" placeholder="Enter password">
-  <br><br>
-  <button onclick="checkPassword()">Unlock</button>
-  <p id="error" style="color:red;"></p>
-</div>
-
-<!-- ================= MAIN CONTENT ================= -->
-<div id="content">
-
-  <h2>📌 Important Steps (Dhyaan se padhein)</h2>
-  <h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
-
-<p><b>Follow the steps carefully:</b></p>
-
-<h4>⚠️ Important Browser Note:</h4>
-<ul style="text-align:left; max-width:750px; margin:15px auto; line-height:1.7;">
-  <li>
-    Agar link kisi <b>APP</b> ke andar se open karte ho,
-    to yeh <b>Google Chrome</b> me open hoga aur ads aa sakte hain.
-  </li>
-  <li>
-    Ads avoid karne ke liye,
-    website ko <b>direct Opera Mini browser</b> me open karein (best option).
-  </li>
-  <li>
-    Agar app ya website open na ho,
-    to <b>VPN ON</b> karke dubara try karein.
-  </li>
-</ul>
-
-<h4>📌 Steps to Generate Access Key:</h4>
-
-<ol style="text-align:left; max-width:750px; margin:20px auto; line-height:1.8;">
-
-  <li>
-    <b>Turn OFF DNS</b><br>
-    Phone settings me jaakar
-    <b>Private DNS / Custom DNS</b> disable karein.
-  </li>
-
-  <li>
-    <b>Update Browser</b><br>
-    Ensure karein ki
-    <b>Google Chrome latest version</b> par update ho.
-  </li>
-
-  <li>
-    <b>Use Correct Browser</b><br>
-    • Chrome → recommended<br>
-    • Opera Mini → fewer ads (best option)
-  </li>
-
-  <li>
-    <b>If Any Extra Page / Ad Opens</b><br>
-    Sirf <b>BACK</b> button ek baar press karein aur process continue karein.
-    Access key successfully generate ho jaayegi.
-  </li>
-
-  <li>
-    <b>Laptop / PC Users</b><br>
-    • Website open karne se pehle <b>VPN ON</b> karein<br>
-    • <b>Ad-Blocker extension</b> use karein<br>
-    (Isse ads aur redirects avoid hote hain)
-  </li>
-
-</ol>
-
-<h4>⏳ Key Validity:</h4>
-<ul style="text-align:left; max-width:750px; margin:15px auto; line-height:1.7;">
-  <li>
-    Access Key sirf <b>24 hours</b> ke liye valid hoti hai.
-  </li>
-  <li>
-    24 hours ke baad,
-    dubara login karke
-    <b>same process repeat</b> karna padega.
-  </li>
-  <li>
-    Ye process <b>copyright issues avoid</b> karne ke liye hai.
-  </li>
-</ul>
-
-<p style="text-align:center; font-weight:bold; margin-top:22px;">
-🌐 Official Website:
-<a href="https://rarestudy.site" target="_blank"
-   style="color:#0a58ca; text-decoration:none;">
-rarestudy.site
-</a>
-</p>
-
-<hr style="margin:35px 0;">
-
-  <!-- ================= VIDEO SECTION ================= -->
-  <h2>🎥 Video Guide</h2>
-
-  <iframe
-    src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"
-    width="95%"
-    height="240"
-    allow="autoplay"
-    allowfullscreen
-    style="border:1px solid #ccc; border-radius:10px;">
-  </iframe>
-
-  <p style="font-size:13px; color:#555;">
-    Ye video sirf guide ke liye hai (download se koi relation nahi)
-  </p>
-
-  <hr style="margin:30px 0;">
-
-  <!-- ================= APK DOWNLOAD ================= -->
-  <h2>📦 Download Application (APK)</h2>
-
-  <p>Application download karne ke liye niche button par click karein</p>
-
-  <a
-    href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
-    target="_blank"
-    style="
+  <style>
+    body{
+      background: linear-gradient(135deg,#6a11cb,#2575fc);
+      font-family: Arial, sans-serif;
+      margin:0; padding:0;
+    }
+    .card{
+      background:#fff;
+      max-width:900px;
+      margin:25px auto;
+      padding:25px;
+      border-radius:18px;
+      box-shadow:0 12px 35px rgba(0,0,0,.25);
+      text-align:center;
+    }
+    h2,h3,h4{ color:#2c3e50; }
+    .badge{
       display:inline-block;
-      padding:14px 28px;
-      background:#0a58ca;
-      color:white;
-      text-decoration:none;
-      border-radius:8px;
+      background:#ff9800;
+      color:#fff;
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      margin-bottom:12px;
+      font-weight:bold;
+    }
+    ol,ul{
+      text-align:left;
+      max-width:750px;
+      margin:15px auto;
+      line-height:1.8;
+      font-size:14px;
+    }
+    iframe{
+      width:95%;
+      height:240px;
+      border-radius:14px;
+      border:2px solid #e3e3e3;
+    }
+
+    .btn-animated{
+      background: linear-gradient(135deg,#ff512f,#f09819);
+      color:#fff;
+      border:none;
+      padding:15px 34px;
+      border-radius:30px;
       font-size:16px;
       font-weight:bold;
-    ">
-    ⬇ Download App (APK)
-  </a>
+      text-decoration:none;
+      display:inline-block;
+      margin-top:12px;
+      animation:pulse 1.6s infinite;
+    }
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(255,152,25,.7); }
+      70%{ box-shadow:0 0 0 18px rgba(255,152,25,0); }
+      100%{ box-shadow:0 0 0 0 rgba(255,152,25,0); }
+    }
 
-  <p style="font-size:13px; margin-top:12px;">
-    ⚠️ App sirf Android devices ke liye hai
-  </p>
+    #passwordBox input{
+      padding:10px;
+      width:220px;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+    #passwordBox button{
+      margin-top:10px;
+      padding:10px 22px;
+      border:none;
+      border-radius:20px;
+      background:#2575fc;
+      color:#fff;
+      font-weight:bold;
+      cursor:pointer;
+    }
+    .countdown{
+      font-weight:bold;
+      color:#e53935;
+      margin-bottom:15px;
+    }
+  </style>
+</head>
 
+<body oncontextmenu="return false">
+
+<div class="card">
+
+  <!-- 🔐 PASSWORD -->
+  <div id="passwordBox">
+    <span class="badge">🔐 Protected Page</span>
+    <h2>Enter Access Password</h2>
+    <input type="password" id="passInput" placeholder="Enter password">
+    <br>
+    <button onclick="checkPassword()">Unlock</button>
+    <p id="error" style="color:red;"></p>
+    <p id="attempts" style="font-size:13px;color:#555;"></p>
+  </div>
+
+  <!-- 📦 CONTENT -->
+  <div id="content" style="display:none;">
+    <span class="badge">⏳ Access Active</span>
+    <div class="countdown" id="timer"></div>
+
+    <h3>🔑 How to Generate Access Key</h3>
+
+    <h4>⚠️ Important Browser Note</h4>
+    <ul>
+      <li>If link opens from any app, ads may appear in Chrome.</li>
+      <li>To avoid ads, open directly in <b>Opera Mini</b>.</li>
+      <li>If website doesn’t open, <b>turn ON VPN</b> and try again.</li>
+    </ul>
+
+    <h4>📌 Steps</h4>
+    <ol>
+      <li><b>Turn OFF DNS</b> (Private / Custom DNS).</li>
+      <li><b>Update Chrome</b> to latest version.</li>
+      <li><b>Use Browser</b>: Chrome (recommended), Opera Mini (fewer ads).</li>
+      <li>If ad page opens, press <b>BACK</b> once.</li>
+      <li><b>Laptop / PC</b>: VPN ON + Ad-Blocker.</li>
+    </ol>
+
+    <h4>🎥 Video Guide</h4>
+    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview" allowfullscreen></iframe>
+
+    <h4 style="margin-top:25px;">📦 Download Application</h4>
+    <a class="btn-animated"
+       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+       target="_blank">
+      ⬇ Download App (APK)
+    </a>
+
+    <p style="font-size:13px;margin-top:12px;">⚠️ Android devices only</p>
+
+    <p style="margin-top:15px;">
+      🌐 <b>Official Website:</b>
+      <a href="https://rarestudy.site" target="_blank">rarestudy.site</a>
+    </p>
+  </div>
 </div>
 
-<!-- ================= SCRIPT ================= -->
 <script>
-  const सहीPassword = "RS@2026Key";
+  /* ====== SETTINGS (ONLY YAHAN CHANGE KAR SAKTE HO) ====== */
+  const PASSWORD = "RS@2026Key";     // 🔐 password
+  const MAX_ATTEMPTS = 5;            // 🔢 password limit
+  const VALID_TIME = 24 * 60 * 60 * 1000; // ⏳ 24 hours
 
-  function checkPassword() {
+  /* ====== LOGIC ====== */
+  let attempts = Number(localStorage.getItem("attempts")) || 0;
+
+  function checkPassword(){
+    if(attempts >= MAX_ATTEMPTS){
+      document.getElementById("error").innerText =
+        "❌ Too many wrong attempts. Try again later.";
+      return;
+    }
+
     const entered = document.getElementById("passInput").value;
-    if (entered === सहीPassword) {
-      document.getElementById("passwordBox").style.display = "none";
-      document.getElementById("content").style.display = "block";
+
+    if(entered === PASSWORD){
+      localStorage.setItem("unlockTime", Date.now());
+      localStorage.removeItem("attempts");
+      showContent();
     } else {
+      attempts++;
+      localStorage.setItem("attempts", attempts);
       document.getElementById("error").innerText = "❌ Wrong password";
+      document.getElementById("attempts").innerText =
+        "Attempts left: " + (MAX_ATTEMPTS - attempts);
     }
   }
 
-  window.onload = function () {
-    document.getElementById("passwordBox").style.display = "block";
-    document.getElementById("content").style.display = "none";
+  function showContent(){
+    document.getElementById("passwordBox").style.display="none";
+    document.getElementById("content").style.display="block";
+    startTimer();
+  }
+
+  function startTimer(){
+    const unlockTime = Number(localStorage.getItem("unlockTime"));
+    setInterval(function(){
+      const left = VALID_TIME - (Date.now() - unlockTime);
+      if(left <= 0){
+        localStorage.removeItem("unlockTime");
+        location.reload();
+      } else {
+        const h = Math.floor(left / 3600000);
+        const m = Math.floor((left % 3600000) / 60000);
+        const s = Math.floor((left % 60000) / 1000);
+        document.getElementById("timer").innerText =
+          "⏳ Time Left: " + h + "h " + m + "m " + s + "s";
+      }
+    },1000);
+  }
+
+  window.onload = function(){
+    const t = localStorage.getItem("unlockTime");
+    if(t && (Date.now() - t) < VALID_TIME){
+      showContent();
+    } else {
+      localStorage.removeItem("unlockTime");
+      document.getElementById("attempts").innerText =
+        "Attempts left: " + (MAX_ATTEMPTS - attempts);
+    }
   };
+
+  // 🚫 basic inspect block
+  document.addEventListener("keydown",function(e){
+    if(e.keyCode===123 || (e.ctrlKey && e.shiftKey && e.keyCode===73) || (e.ctrlKey && e.keyCode===85)){
+      e.preventDefault();
+    }
+  });
 </script>
 
 </body>
