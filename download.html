@@ -120,13 +120,20 @@ iframe{border:none;border-radius:18px}
 <!-- Dashboard -->
 <div id="dashboard" class="hidden">
 
+  <!-- ACCESS GRANTED -->
   <div class="card center">
     <div class="pw-logo" style="margin:0 auto 8px"><span>PW</span></div>
     <div class="time-big">ACCESS GRANTED</div>
   </div>
 
+  <!-- SESSION TIMER -->
   <div class="card time-card center" id="sessionTimer"></div>
-  <div class="card time-card center" id="examTimer"></div>
+
+  <!-- EXAM TIMER -->
+  <div class="card time-card center">
+    <div class="time-big">Exam Start Date: 1 June 2026</div>
+    <div id="examTimer" style="margin-top:8px"></div>
+  </div>
 
   <!-- Instructions -->
   <div class="card">
@@ -135,16 +142,18 @@ iframe{border:none;border-radius:18px}
       <b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
 
       ⚠️ <b>Important Browser Note:</b><br>
-      • App se open karne par ads aa sakte hain<br>
-      • Ads avoid karne ke liye Opera Mini use karein<br>
-      • Page open na ho to VPN ON karein<br><br>
+      • If you open the link from an app, it may open in Google Chrome and ads may appear.<br>
+      • To avoid ads, open the website directly using the Opera Mini browser.<br>
+      • If the page or app does not open, turn ON VPN and try again.<br><br>
 
-      <b>📌 Steps:</b><br>
-      1. Private DNS OFF karein<br>
-      2. Browser update rakhein<br>
-      3. Chrome / Opera Mini use karein<br>
-      4. Extra page aaye to BACK press karein<br>
-      5. Laptop users VPN + Ad-Blocker use karein<br><br>
+      <b>📌 Steps to Generate Key:</b><br>
+      1. Turn OFF Private DNS / Custom DNS from phone settings.<br>
+      2. Make sure your browser is updated to the latest version.<br>
+      3. Use the correct browser:<br>
+         – Chrome (recommended)<br>
+         – Opera Mini (fewer ads)<br>
+      4. If any extra page or ad opens, press BACK once and continue.<br>
+      5. Laptop / PC users should turn ON VPN and use an Ad-Blocker extension.<br><br>
 
       <b>⏳ Key Validity:</b><br>
       • Access Key is valid for 24 hours only.<br>
@@ -191,7 +200,7 @@ iframe{border:none;border-radius:18px}
 <script>
 const SESSION=86400000;
 const EXAM=new Date("2026-06-01T00:00:00").getTime();
-let loginTries=0,apkTries=0;
+let loginTries=0, apkTries=0;
 
 function today(){
  const d=new Date();
@@ -203,7 +212,7 @@ function today(){
 function login(){
  const lock=localStorage.getItem("lockUntil");
  if(lock && Date.now()<lock){
-  loginErr.innerText="Login locked. Try after 24 hours.";
+  loginErr.innerText="Login locked. Try again after 24 hours.";
   return;
  }
  if(sitePass.value==="RS@"+today()){
@@ -213,7 +222,7 @@ function login(){
   loginTries++;
   if(loginTries>=3){
    localStorage.setItem("lockUntil",Date.now()+SESSION);
-   loginErr.innerText="Too many attempts. Locked for 24 hours.";
+   loginErr.innerText="Too many attempts. Login locked for 24 hours.";
   }else{
    loginErr.innerText="Incorrect password.";
   }
@@ -223,7 +232,7 @@ function login(){
 function showDash(){
  loginBox.classList.add("hidden");
  dashboard.classList.remove("hidden");
- startSession();startExam();
+ startSession(); startExam();
 }
 
 function startSession(){
@@ -242,9 +251,8 @@ function startSession(){
 function startExam(){
  setInterval(()=>{
   let d=EXAM-Date.now();
-  if(d<=0){examTimer.innerHTML="<div class='time-big'>Exam Started</div>";return;}
+  if(d<=0){examTimer.innerHTML="Exam Started";return;}
   examTimer.innerHTML=
-   "<div class='time-big'>Exam starts in</div>"+
    Math.floor(d/86400000)+"d "+
    Math.floor(d%86400000/3600000)+"h "+
    Math.floor(d%3600000/60000)+"m "+
@@ -253,8 +261,9 @@ function startExam(){
 }
 
 function unlockAPK(){
- if(apkTries>=3){
-  apkErr.innerText="APK access locked for this session.";
+ const lock=localStorage.getItem("apkLockUntil");
+ if(lock && Date.now()<lock){
+  apkErr.innerText="APK access locked. Try again after 24 hours.";
   return;
  }
  if(apkPass.value==="APK@"+today()){
@@ -262,7 +271,12 @@ function unlockAPK(){
   apkErr.innerText="";
  }else{
   apkTries++;
-  apkErr.innerText="Wrong APK password.";
+  if(apkTries>=3){
+   localStorage.setItem("apkLockUntil",Date.now()+SESSION);
+   apkErr.innerText="Too many attempts. APK locked for 24 hours.";
+  }else{
+   apkErr.innerText="Wrong APK password.";
+  }
  }
 }
 
@@ -277,4 +291,4 @@ window.onload=()=>{
 </script>
 
 </body>
-  </html>
+      </html>
