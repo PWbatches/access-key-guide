@@ -2,26 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Secure Access</title>
+<title>Secure Access (24 Hours)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
   margin:0;
   background:#0b0b0b;
-  font-family:system-ui,Arial;
+  font-family:system-ui, Arial;
   color:#fff;
 }
-.wrapper{
+.hidden{display:none}
+.container{
   max-width:420px;
   margin:30px auto;
-  padding:14px;
+  padding:16px;
 }
 .card{
   background:#151515;
   border-radius:18px;
   padding:20px;
-  box-shadow:0 0 30px rgba(0,0,0,.7);
+  box-shadow:0 0 20px #000;
 }
 .logo{
   width:90px;
@@ -32,32 +33,31 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-}
-.logo span{
   font-size:36px;
-  font-weight:700;
+  font-weight:800;
 }
-h2{text-align:center;margin:10px 0}
+h2{text-align:center;margin-bottom:10px}
 input{
   width:100%;
   padding:12px;
   border-radius:12px;
   border:none;
+  outline:none;
   margin-top:10px;
 }
 button{
   width:100%;
-  padding:12px;
   margin-top:12px;
+  padding:12px;
   border:none;
   border-radius:14px;
-  font-weight:700;
   background:#fff;
   color:#000;
+  font-weight:700;
 }
 .hint{
   font-size:13px;
-  color:#aaa;
+  color:#bbb;
   margin-top:8px;
   line-height:1.5;
 }
@@ -66,13 +66,20 @@ button{
   font-size:13px;
   margin-top:6px;
 }
-.hidden{display:none}
-.section{margin-top:22px}
+.timer{
+  background:#111;
+  border:1px dashed #555;
+  padding:10px;
+  border-radius:12px;
+  text-align:center;
+  margin-bottom:14px;
+}
+.section{margin-top:18px}
 iframe{
   width:100%;
   height:220px;
-  border:none;
   border-radius:14px;
+  border:none;
 }
 a.btn{
   display:block;
@@ -83,106 +90,85 @@ a.btn{
   border-radius:14px;
   font-weight:700;
   text-decoration:none;
-  margin-top:10px;
-}
-.timer{
-  background:#222;
-  padding:10px;
-  border-radius:12px;
-  text-align:center;
-  margin-top:10px;
-  font-weight:700;
-}
-.history{
-  font-size:13px;
-  color:#ccc;
-  margin-top:8px;
 }
 </style>
 </head>
 
 <body>
-<div class="wrapper">
+
+<div class="container">
 
 <!-- LOGIN PAGE -->
-<div class="card" id="loginBox">
-  <div class="logo"><span>PW</span></div>
-  <h2>Website Login</h2>
+<div id="loginBox" class="card">
+  <div class="logo">PW</div>
+  <h2>🔐 Secure Access</h2>
 
-  <input id="sitePass" type="password" placeholder="Enter website password">
+  <input type="password" id="sitePass" placeholder="Enter website password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
-    <b>Password Hint:</b><br>
+    Password Hint:<br>
     Format: <b>RS@DDMMYYYY</b><br>
-    Example: <b>RS@01012025</b>
+    Example: <b>RS@01012025</b><br>
+    (Use today's date)
   </div>
 
   <div id="siteErr" class="error"></div>
 </div>
 
-<!-- INSIDE CONTENT -->
-<div class="card hidden" id="content">
-  <div class="logo"><span>PW</span></div>
-  <h2>✅ ACCESS GRANTED</h2>
+<!-- CONTENT -->
+<div id="content" class="hidden">
 
-  <div class="timer" id="timer"></div>
-  <div class="history" id="history"></div>
+<div class="card">
+  <div class="logo">PW</div>
+  <div class="timer" id="timer">⏳ Loading...</div>
 
   <!-- INSTRUCTIONS -->
   <div class="section">
     <h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
+    <p>Follow the steps carefully 👇</p>
 
-    <p><b>Follow the steps carefully 👇</b></p>
+    <b>⚠️ Important Browser Note:</b>
+    <ul>
+      <li>If you login or open the website from any APP (in-app browser), ads may appear.</li>
+      <li>If you login from inside our APK (after installing the app), ads may appear.</li>
+      <li>To avoid ads, open the website directly using <b>Opera Mini browser</b>.</li>
+      <li>If app/website does not open, turn <b>ON VPN</b> and try again.</li>
+    </ul>
 
-    <p><b>⚠️ Important Browser Note:</b><br>
-    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-    • To avoid ads, open the website directly using <b>Opera Mini browser</b>.<br>
-    • If app/website does not open, turn <b>ON VPN</b> and try again.</p>
+    <b>📌 Steps to Generate Key:</b>
+    <ol>
+      <li>Turn OFF DNS – disable Private DNS / Custom DNS.</li>
+      <li>Update Google Chrome to the latest version.</li>
+      <li>Use Chrome (recommended) or Opera Mini (fewer ads).</li>
+      <li>If any extra page or ad opens, press BACK once and continue.</li>
+      <li>Laptop / PC users: Turn ON VPN and use an Ad-Blocker.</li>
+    </ol>
 
-    <p><b>📌 Steps to Generate Key:</b></p>
-
-    <p><b>1️⃣ Turn OFF DNS</b><br>
-    Go to phone settings and disable Private DNS / Custom DNS.</p>
-
-    <p><b>2️⃣ Update Browser</b><br>
-    Make sure Google Chrome is updated to the latest version.</p>
-
-    <p><b>3️⃣ Use Correct Browser</b><br>
-    • Chrome → recommended<br>
-    • Opera Mini → fewer ads (best option)</p>
-
-    <p><b>4️⃣ If Any Extra Page / Ad Opens</b><br>
-    Just press BACK once and continue.<br>
-    Key will be generated successfully.</p>
-
-    <p><b>5️⃣ Laptop / PC Users</b><br>
-    • Turn ON VPN<br>
-    • Use Ad-Blocker extension<br>
-    (This helps avoid ads & redirects)</p>
-
-    <p><b>⏳ Key Validity:</b><br>
-    • Access Key is valid for <b>24 hours only</b><br>
-    • After 24 hours, you must login again and repeat the same process<br>
-    (This avoids copyright issues)</p>
+    <b>⏳ Key Validity:</b>
+    <ul>
+      <li>Access Key is valid for <b>24 hours only</b>.</li>
+      <li>After 24 hours, you must login again and repeat the same process.</li>
+      <li>This system is used to <b>avoid copyright issues</b> and unauthorized access.</li>
+    </ul>
   </div>
 
   <!-- VIDEO -->
   <div class="section">
     <h3>🎥 Video Guide</h3>
-    <iframe src="VIDEO_LINK"></iframe>
+    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
   </div>
 
   <!-- WEBSITE -->
   <div class="section">
     <h3>🌐 Website</h3>
-    <a class="btn" href="WEBSITE_LINK" target="_blank">Open Website</a>
+    <a class="btn" href="https://rarestudy.site" target="_blank">Open Website</a>
   </div>
 
   <!-- APK -->
-  <div class="section">
+  <div class="section card">
     <h3>📦 APK Download</h3>
-    <input id="apkPass" type="password" placeholder="Enter APK password">
+    <input type="password" id="apkPass" placeholder="Enter APK password">
     <button onclick="checkApk()">Unlock APK</button>
 
     <div class="hint">
@@ -192,10 +178,13 @@ a.btn{
 
     <div id="apkErr" class="error"></div>
 
-    <a id="apkLink" class="btn hidden" href="APK_LINK">Download APK</a>
+    <a id="apkLink" class="btn hidden"
+       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+       Download APK
+    </a>
   </div>
-</div>
 
+</div>
 </div>
 
 <script>
@@ -206,62 +195,57 @@ function today(){
          d.getFullYear();
 }
 
-const SITE_PASS="RS@"+today();
-const APK_PASS ="APK@"+today();
-const LIMIT=86400000;
+const sitePassword = "RS@" + today();
+const apkPassword  = "APK@" + today();
+let siteTry = 0, apkTry = 0;
 
 function checkSite(){
-  if(sitePass.value===SITE_PASS){
-    localStorage.setItem("loginTime",Date.now());
-
-    let h=JSON.parse(localStorage.getItem("history")||"[]");
-    h.push(new Date().toLocaleString());
-    localStorage.setItem("history",JSON.stringify(h));
-
-    showContent();
+  if(siteTry >= 3) return;
+  if(sitePass.value === sitePassword){
+    localStorage.setItem("loginTime", Date.now());
+    loginBox.classList.add("hidden");
+    content.classList.remove("hidden");
+    startTimer();
   }else{
-    siteErr.innerText="❌ Wrong password";
+    siteTry++;
+    siteErr.innerText = "❌ Wrong password (" + (3-siteTry) + " attempts left)";
   }
 }
 
 function checkApk(){
-  if(apkPass.value===APK_PASS){
+  if(apkTry >= 3) return;
+  if(apkPass.value === apkPassword){
     apkLink.classList.remove("hidden");
   }else{
-    apkErr.innerText="❌ Wrong APK password";
+    apkTry++;
+    apkErr.innerText = "❌ Wrong APK password (" + (3-apkTry) + " attempts left)";
   }
-}
-
-function showContent(){
-  loginBox.classList.add("hidden");
-  content.classList.remove("hidden");
-  startTimer();
 }
 
 function startTimer(){
-  const start=Number(localStorage.getItem("loginTime"));
+  const start = localStorage.getItem("loginTime");
   setInterval(()=>{
-    const left=LIMIT-(Date.now()-start);
-    if(left<=0) location.reload();
-
-    const h=Math.floor(left/3600000);
-    const m=Math.floor(left%3600000/60000);
-    const s=Math.floor(left%60000/1000);
-
-    timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
+    const diff = 86400000 - (Date.now() - start);
+    if(diff <= 0){
+      localStorage.clear();
+      location.reload();
+    }
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor(diff%3600000/60000);
+    const s = Math.floor(diff%60000/1000);
+    timer.innerText = `⏳ Time left: ${h}h ${m}m ${s}s`;
   },1000);
-
-  const hist=JSON.parse(localStorage.getItem("history")||"[]");
-  history.innerHTML="<b>📜 Login History:</b><br>"+hist.join("<br>");
 }
 
-window.onload=()=>{
-  const t=localStorage.getItem("loginTime");
-  if(t && Date.now()-t<LIMIT){
-    showContent();
+window.onload = ()=>{
+  const t = localStorage.getItem("loginTime");
+  if(t && Date.now()-t < 86400000){
+    loginBox.classList.add("hidden");
+    content.classList.remove("hidden");
+    startTimer();
   }
-};
+}
 </script>
 
 </body>
-                                            </html>
+    </html>
