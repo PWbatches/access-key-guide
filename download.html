@@ -3,332 +3,295 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PW Secure Access</title>
+<title>Secure Access</title>
 
 <style>
-html,body{margin:0;padding:0;overflow-x:hidden}
-*{box-sizing:border-box;max-width:100%}
-.hidden{display:none}
-
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+html,body{
+  margin:0;
+  padding:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
   background:#ffffff;
-  color:#0f172a;
+  overflow-x:hidden;
 }
+
+/* ---------- MICRO POLISH BASE ---------- */
+*{
+  box-sizing:border-box;
+  transition:all .25s ease;
+}
+
+/* ---------- WATERMARK ---------- */
+.watermark{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:.035;
+  pointer-events:none;
+  z-index:0;
+}
+.watermark .pw-logo{
+  transform:scale(3.1);
+}
+
+/* ---------- PW LOGO ---------- */
+.pw-logo{
+  width:84px;height:84px;
+  background:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+.pw-logo::before{
+  content:"";
+  position:absolute;
+  width:72%;
+  height:72%;
+  border:4px solid #fff;
+  border-left-color:transparent;
+  border-right-color:transparent;
+  border-radius:50%;
+}
+.pw-logo span{
+  font-family:"Times New Roman",serif;
+  font-size:44px;
+  font-weight:bold;
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
 .container{
+  position:relative;
+  z-index:2;
   max-width:420px;
   margin:auto;
   padding:24px;
-  position:relative;
-  overflow:hidden;
 }
 
-/* Watermark */
-.bg-logo{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;z-index:-1;opacity:.055;
-}
-.bg-logo .pw-logo{
-  width:85vmin;height:85vmin;
-  max-width:900px;max-height:900px;
-  min-width:320px;min-height:320px;
-  filter:grayscale(100%);
-}
-
-/* PW Logo */
-.pw-logo{
-  background:#000;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-}
-.pw-logo .ring{
-  position:absolute;width:85%;height:85%;
-  border-radius:50%;border:6px solid #fff;
-  border-left-color:transparent;border-right-color:transparent;
-  transform:rotate(-10deg);
-}
-.pw-logo .text{
-  color:#fff;font-family:'Times New Roman',serif;
-  font-size:110px;font-weight:bold;display:flex;
-}
-.letter-p{margin-right:-18px}
-
-/* Sizes */
-.login-logo-wrap{display:flex;justify-content:center;margin-bottom:18px}
-.login-logo-wrap .pw-logo{width:200px;height:200px}
-.dash-logo{margin-bottom:12px}
-.dash-logo .pw-logo{width:90px;height:90px}
-
-/* Card */
 .card{
-  background:#fff;border-radius:36px;
-  padding:28px;box-shadow:0 30px 60px rgba(0,0,0,.12);
-  overflow:hidden;
-}
-.box{
-  background:#f6f7fb;padding:16px;border-radius:22px;
-  margin-top:18px;font-weight:600;
-}
-.exam-box{
-  background:#fff7ed;padding:18px;border-radius:22px;
-  font-weight:800;text-align:center;margin-top:18px;
+  background:#f8f9fb;
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  animation:fadeUp .5s ease;
 }
 
-/* Inputs & buttons */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+
+.center{text-align:center}
+.small{font-size:13px;color:#555;line-height:1.4}
+.hidden{display:none}
+
+/* ---------- INPUT ---------- */
 input{
-  width:100%;padding:16px 18px;
-  border:none;border-radius:22px;
-  background:#f5f7ff;font-size:15px;margin-top:14px;
+  width:100%;
+  padding:15px 18px;
+  border-radius:28px;
+  border:none;
+  background:#eef0f4;
+  font-size:15px;
+  margin-bottom:12px;
 }
+
+/* ---------- BUTTON ---------- */
 button{
-  width:100%;padding:16px;border:none;
-  border-radius:26px;background:#000;color:#fff;
-  font-weight:800;margin-top:18px;cursor:pointer;
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:30px;
+  background:#000;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
 }
-button.secondary{background:#f1f1f1;color:#000}
-.info{font-size:12px;color:#6b7280;margin-top:8px}
-.error{font-size:12px;color:#dc2626;margin-top:6px}
-iframe{border-radius:16px}
+button:active{
+  transform:scale(.97);
+  box-shadow:0 10px 20px rgba(0,0,0,.25) inset;
+}
+
+/* ---------- TOGGLE ---------- */
+.slide{
+  overflow:hidden;
+  transition:max-height .35s ease, opacity .3s ease;
+}
+
+/* ---------- IFRAME ---------- */
+iframe{
+  border:none;
+  border-radius:18px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Watermark -->
-<div class="bg-logo">
-  <div class="pw-logo">
-    <div class="ring"></div>
-    <div class="text"><span class="letter-p">P</span><span>W</span></div>
-  </div>
+<!-- WATERMARK -->
+<div class="watermark">
+  <div class="pw-logo"><span>PW</span></div>
 </div>
 
 <div class="container">
 
 <!-- LOGIN -->
-<div id="loginBox">
-  <div class="login-logo-wrap">
-    <div class="pw-logo">
-      <div class="ring"></div>
-      <div class="text"><span class="letter-p">P</span><span>W</span></div>
-    </div>
+<div id="loginBox" class="card center">
+  <div style="display:flex;justify-content:center;margin-bottom:12px">
+    <div class="pw-logo"><span>PW</span></div>
   </div>
 
-  <div class="card">
-    <input id="sitePass" placeholder="Enter access key">
-    <button onclick="login()">Login</button>
+  <h3>Secure Access (24 Hours)</h3>
 
-    <!-- LOGIN PASSWORD HINT -->
-    <div class="info">
-      Password hint: <b>RS@ + Today’s Date</b><br>
-      Format: <b>RS@DDMMYYYY</b><br>
-      Example: <b>RS@21012026</b>
-    </div>
+  <input id="sitePass" placeholder="Enter website password">
+  <button onclick="login()">Continue</button>
 
-    <div id="loginErr" class="error"></div>
-  </div>
+  <p class="small">
+    Format: <b>RS@DDMMYYYY</b><br>
+    Example: <b>RS@21012026</b>
+  </p>
+
+  <p id="loginErr" class="small" style="color:#c00"></p>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
 
-  <div class="dash-logo">
-    <div class="pw-logo">
-      <div class="ring"></div>
-      <div class="text"><span class="letter-p">P</span><span>W</span></div>
+  <div class="center" style="margin-bottom:14px">
+    <div class="pw-logo"><span>PW</span></div>
+  </div>
+
+  <div class="card center" id="sessionTimer"></div>
+  <div class="card center" id="examTimer"></div>
+
+  <div class="card">
+    <button onclick="toggleInstructions()">Instructions</button>
+    <div id="instructions" class="slide hidden small" style="margin-top:14px">
+      <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+      • App se open karne par ads aa sakte hain<br>
+      • Ads avoid karne ke liye Opera Mini use karein<br>
+      • Page open na ho to VPN ON karein<br><br>
+      <b>Steps:</b><br>
+      1. Private DNS OFF karein<br>
+      2. Browser update rakhein<br>
+      3. Chrome / Opera Mini use karein<br>
+      4. Extra page aaye to BACK press karein<br>
+      5. Laptop users VPN + Adblock use karein<br><br>
+      <b>Access key 24 hours valid hoti hai</b>
     </div>
   </div>
 
   <div class="card">
+    <b>Instruction Video</b><br><br>
+    <iframe width="100%" height="200"
+      src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview">
+    </iframe>
+  </div>
 
-    <div class="box" id="sessionTimer"></div>
-
-    <div class="exam-box">
-      Exam starts in<br>
-      <span id="examTimer"></span>
-    </div>
-
-    <!-- Instructions -->
-    <button class="secondary" onclick="toggle('instructions')">Instructions</button>
-    <div id="instructions" class="box hidden">
-      • Use Opera Mini to avoid ads<br>
-      • Turn OFF Private DNS<br>
-      • Update Chrome<br>
-      • Extra page aaye to BACK press karein<br>
-      • Laptop users: VPN + Ad-Blocker<br>
-      • Access key valid for 24 hours only
-    </div>
-
-    <!-- Video -->
-    <div class="box">
-      <b>Instruction Video</b><br><br>
-      <iframe width="100%" height="180"
-        src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"
-        allow="autoplay"></iframe>
-    </div>
-
-    <!-- Website -->
+  <div class="card">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
     </button>
+  </div>
 
-    <!-- APK (PASSWORD PROTECTED) -->
+  <div class="card">
     <input id="apkPass" placeholder="Enter APK password">
-
-    <div class="info">
-      APK password hint: <b>APK@ + Today’s Date</b><br>
+    <p class="small">
       Format: <b>APK@DDMMYYYY</b><br>
       Example: <b>APK@21012026</b>
-    </div>
-
+    </p>
     <button onclick="unlockAPK()">Unlock APK</button>
-    <div id="apkErr" class="error"></div>
+    <p id="apkErr" class="small" style="color:#c00"></p>
 
-    <!-- APK DOWNLOAD (HIDDEN BY DEFAULT) -->
-    <a id="apkLink" class="hidden"
-       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
-      <button class="secondary">Download APK</button>
+    <a id="apkLink" class="hidden" href="#" download>
+      <button style="margin-top:10px">Download APK</button>
     </a>
-
-    <!-- History -->
-    <div class="box">
-      <b>Login History</b>
-      <div id="history"></div>
-    </div>
-
   </div>
-</div>
 
+</div>
 </div>
 
 <script>
-const SESSION=24*60*60*1000;
+const SESSION=86400000;
+const EXAM=new Date("2026-06-01T00:00:00").getTime();
+let tries=0,apkTries=0;
 
 function today(){
-  const d=new Date();
-  return String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+ const d=new Date();
+ return String(d.getDate()).padStart(2,"0")+
+ String(d.getMonth()+1).padStart(2,"0")+
+ d.getFullYear();
 }
 
-/* LOGIN */
 function login(){
-  if(sitePass.value!=="RS@"+today()){
-    loginErr.innerText="Wrong password";
-    return;
-  }
-  const now=new Date().toLocaleString();
-  let h=JSON.parse(localStorage.getItem("history")||"[]");
-  h.unshift(now);h=h.slice(0,5);
-  localStorage.setItem("history",JSON.stringify(h));
+ if(tries>=3)return;
+ if(sitePass.value==="RS@"+today()){
   localStorage.setItem("loginTime",Date.now());
-
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  renderHistory();startSession();startExam();
+  showDash();
+ }else{
+  tries++;
+  loginErr.innerText="Incorrect password";
+ }
 }
 
-/* APK UNLOCK */
-function unlockAPK(){
-  if(apkPass.value!=="APK@"+today()){
-    apkErr.innerText="Wrong APK password";
-    return;
-  }
-  apkErr.innerText="";
-  apkLink.classList.remove("hidden"); // APK APPEARS ONLY NOW
+function showDash(){
+ loginBox.classList.add("hidden");
+ dashboard.classList.remove("hidden");
+ startSession();
+ startExam();
 }
 
-/* SESSION TIMER */
 function startSession(){
-  setInterval(()=>{
-    const t=localStorage.getItem("loginTime");
-    if(!t||Date.now()-t>=SESSION){
-      localStorage.clear();
-      location.reload();
-    }
-    const left=SESSION-(Date.now()-t);
-    sessionTimer.innerText=
-      `Session expires in ${Math.floor(left/3600000)}h `
-      +`${Math.floor(left%3600000/60000)}m `
-      +`${Math.floor(left%60000/1000)}s`;
-  },1000);
+ setInterval(()=>{
+  const t=localStorage.getItem("loginTime");
+  const left=SESSION-(Date.now()-t);
+  if(left<=0){localStorage.clear();location.reload();}
+  sessionTimer.innerText=
+   "Session expires in "+
+   Math.floor(left/3600000)+"h "+
+   Math.floor(left%3600000/60000)+"m "+
+   Math.floor(left%60000/1000)+"s";
+ },1000);
 }
 
-/* EXAM TIMER */
 function startExam(){
-  const exam=new Date("2026-06-01T00:00:00");
-  setInterval(()=>{
-    let d=exam-new Date();if(d<0)d=0;
-    examTimer.innerText=
-      `${Math.floor(d/86400000)}d `
-      +`${Math.floor(d/3600000)%24}h `
-      +`${Math.floor(d/60000)%60}m `
-      +`${Math.floor(d/1000)%60}s`;
-  },1000);
+ setInterval(()=>{
+  let d=EXAM-Date.now();
+  if(d<=0){examTimer.innerText="Exam Started";return;}
+  examTimer.innerText=
+   "Exam starts in "+
+   Math.floor(d/86400000)+"d "+
+   Math.floor(d%86400000/3600000)+"h "+
+   Math.floor(d%3600000/60000)+"m "+
+   Math.floor(d%60000/1000)+"s";
+ },1000);
 }
 
-/* TOGGLE */
-function toggle(id){
-  document.getElementById(id).classList.toggle("hidden");
-}
-
-/* HISTORY */
-function renderHistory(){
-  const h=JSON.parse(localStorage.getItem("history")||"[]");
-  history.innerHTML=h.map(x=>`• ${x}`).join("<br>");
-}
-
-/* RESUME SESSION */
-window.onload=()=>{
-  const t=localStorage.getItem("loginTime");
-  if(t&&Date.now()-t<SESSION){
-    loginBox.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    renderHistory();startSession();startExam();
-  }
-};
-</script>
-
-</body>
-  </html>    }
-    const left=SESSION-(Date.now()-t);
-    const h=Math.floor(left/3600000);
-    const m=Math.floor((left%3600000)/60000);
-    const s=Math.floor((left%60000)/1000);
-    timer.innerText=`⏳ Session expires in ${h}h ${m}m ${s}s`;
-  },1000);
-}
-
-/* INSTRUCTIONS */
-function toggleInstructions(){
-  instructions.classList.toggle("hidden");
-}
-
-/* WEBSITE */
-function openWebsite(){
-  window.open("https://rarestudy.site","_blank");
-}
-
-/* APK */
 function unlockAPK(){
-  if(apkPass.value!==apkPassword()){
-    apkErr.innerText="Wrong APK password";
-    return;
-  }
-  apkErr.innerText="";
+ if(apkTries>=3)return;
+ if(apkPass.value==="APK@"+today()){
   apkLink.classList.remove("hidden");
+  apkErr.innerText="";
+ }else{
+  apkTries++;
+  apkErr.innerText="Wrong APK password";
+ }
 }
 
-/* AUTO RESUME */
+function toggleInstructions(){
+ instructions.classList.toggle("hidden");
+}
+
 window.onload=()=>{
-  const t=localStorage.getItem("loginTime");
-  if(t && Date.now()-t<SESSION){
-    loginBox.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    startTimer();
-  }
-};
+ const t=localStorage.getItem("loginTime");
+ if(t && Date.now()-t<SESSION)showDash();
+}
 </script>
 
 </body>
-  </html>
+    </html>
