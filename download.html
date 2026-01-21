@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Access Key Portal</title>
+<title>Secure Access Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -87,7 +87,7 @@ iframe{
 
 <div class="card">
 
-<!-- 🔐 PASSWORD BOX -->
+<!-- 🔐 PASSWORD SECTION -->
 <div id="passwordBox">
   <span class="badge">🔐 Protected</span>
   <h2>Enter Access Password</h2>
@@ -98,14 +98,14 @@ iframe{
 
   <p style="font-size:12px;color:#555;">
     💡 Password format: <b>RS@DDMMYYYY</b><br>
-    Today Example: <span id="todayHint"></span>
+    Today example: <span id="todayHint"></span>
   </p>
 
   <p id="error" style="color:red;"></p>
   <p id="attempts" style="font-size:13px;color:#555;"></p>
 </div>
 
-<!-- 📦 MAIN CONTENT -->
+<!-- 📦 CONTENT -->
 <div id="content" style="display:none;">
   <span class="badge">⏳ Access Active</span>
   <div class="countdown" id="timer"></div>
@@ -141,15 +141,13 @@ iframe{
 const MAX_ATTEMPTS = 5;
 const VALID_TIME = 24*60*60*1000;
 
-/* ===== AUTO PASSWORD DDMMYYYY ===== */
+/* ===== AUTO PASSWORD (DDMMYYYY) ===== */
 function getTodayPassword(){
   const d=new Date();
   return "RS@"+String(d.getDate()).padStart(2,"0")+
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
-
-/* ===== PASSWORD HINT ===== */
 document.getElementById("todayHint").innerText = getTodayPassword();
 
 /* ===== LOGIN LOGIC ===== */
@@ -219,17 +217,13 @@ function renderHistory(){
     localStorage.getItem("totalLogins")||0;
 }
 
-/* ===== ON LOAD ===== */
+/* ===== ON LOAD (ALWAYS ASK PASSWORD) ===== */
 window.onload=function(){
   renderHistory();
-  const t=localStorage.getItem("unlockTime");
-  if(t && (Date.now()-t)<VALID_TIME){
-    showContent();
-  }else{
-    localStorage.removeItem("unlockTime");
-    document.getElementById("attempts").innerText=
-      "Attempts left: "+(MAX_ATTEMPTS-attempts);
-  }
+  document.getElementById("passwordBox").style.display="block";
+  document.getElementById("content").style.display="none";
+  document.getElementById("attempts").innerText=
+    "Attempts left: "+(MAX_ATTEMPTS-attempts);
 };
 
 /* ===== BASIC PROTECTION ===== */
