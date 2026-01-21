@@ -1,223 +1,244 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Access Key Portal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Access Key Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body{
-      background: linear-gradient(135deg,#6a11cb,#2575fc);
-      font-family: Arial, sans-serif;
-      margin:0; padding:0;
-    }
-    .card{
-      background:#fff;
-      max-width:900px;
-      margin:25px auto;
-      padding:25px;
-      border-radius:18px;
-      box-shadow:0 12px 35px rgba(0,0,0,.25);
-      text-align:center;
-    }
-    h2,h3,h4{ color:#2c3e50; }
-    .badge{
-      display:inline-block;
-      background:#ff9800;
-      color:#fff;
-      padding:6px 14px;
-      border-radius:999px;
-      font-size:12px;
-      margin-bottom:12px;
-      font-weight:bold;
-    }
-    ol,ul{
-      text-align:left;
-      max-width:750px;
-      margin:15px auto;
-      line-height:1.8;
-      font-size:14px;
-    }
-    iframe{
-      width:95%;
-      height:240px;
-      border-radius:14px;
-      border:2px solid #e3e3e3;
-    }
-
-    .btn-animated{
-      background: linear-gradient(135deg,#ff512f,#f09819);
-      color:#fff;
-      border:none;
-      padding:15px 34px;
-      border-radius:30px;
-      font-size:16px;
-      font-weight:bold;
-      text-decoration:none;
-      display:inline-block;
-      margin-top:12px;
-      animation:pulse 1.6s infinite;
-    }
-    @keyframes pulse{
-      0%{ box-shadow:0 0 0 0 rgba(255,152,25,.7); }
-      70%{ box-shadow:0 0 0 18px rgba(255,152,25,0); }
-      100%{ box-shadow:0 0 0 0 rgba(255,152,25,0); }
-    }
-
-    #passwordBox input{
-      padding:10px;
-      width:220px;
-      border-radius:8px;
-      border:1px solid #ccc;
-    }
-    #passwordBox button{
-      margin-top:10px;
-      padding:10px 22px;
-      border:none;
-      border-radius:20px;
-      background:#2575fc;
-      color:#fff;
-      font-weight:bold;
-      cursor:pointer;
-    }
-    .countdown{
-      font-weight:bold;
-      color:#e53935;
-      margin-bottom:15px;
-    }
-  </style>
+<style>
+body{
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  font-family:Arial,sans-serif;
+  margin:0;
+}
+.card{
+  background:#fff;
+  max-width:900px;
+  margin:25px auto;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  text-align:center;
+}
+h2,h3,h4{color:#2c3e50}
+.badge{
+  background:#ff9800;
+  color:#fff;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+  display:inline-block;
+  margin-bottom:10px;
+}
+ol,ul{
+  text-align:left;
+  max-width:760px;
+  margin:15px auto;
+  line-height:1.8;
+  font-size:14px;
+}
+iframe{
+  width:95%;
+  height:240px;
+  border-radius:14px;
+  border:2px solid #e3e3e3;
+}
+.btn{
+  background:linear-gradient(135deg,#ff512f,#f09819);
+  color:#fff;
+  padding:15px 34px;
+  border-radius:30px;
+  font-size:16px;
+  font-weight:bold;
+  text-decoration:none;
+  display:inline-block;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,152,25,.7)}
+  70%{box-shadow:0 0 0 18px rgba(255,152,25,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,152,25,0)}
+}
+#passwordBox input{
+  padding:10px;
+  width:220px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+#passwordBox button{
+  margin-top:10px;
+  padding:10px 22px;
+  border:none;
+  border-radius:20px;
+  background:#2575fc;
+  color:#fff;
+  font-weight:bold;
+}
+.countdown{
+  font-weight:bold;
+  color:#e53935;
+  margin-bottom:12px;
+}
+</style>
 </head>
 
 <body oncontextmenu="return false">
 
 <div class="card">
 
-  <!-- 🔐 PASSWORD -->
-  <div id="passwordBox">
-    <span class="badge">🔐 Protected Page</span>
-    <h2>Enter Access Password</h2>
-    <input type="password" id="passInput" placeholder="Enter password">
-    <br>
-    <button onclick="checkPassword()">Unlock</button>
-    <p id="error" style="color:red;"></p>
-    <p id="attempts" style="font-size:13px;color:#555;"></p>
-  </div>
+<!-- 🔐 PASSWORD BOX -->
+<div id="passwordBox">
+  <span class="badge">🔐 Protected</span>
+  <h2>Enter Access Password</h2>
 
-  <!-- 📦 CONTENT -->
-  <div id="content" style="display:none;">
-    <span class="badge">⏳ Access Active</span>
-    <div class="countdown" id="timer"></div>
+  <input type="password" id="passInput" placeholder="Enter password">
+  <br>
+  <button onclick="checkPassword()">Unlock</button>
 
-    <h3>🔑 How to Generate Access Key</h3>
+  <p style="font-size:12px;color:#555;">
+    💡 Password format: <b>RS@DDMMYYYY</b><br>
+    Today Example: <span id="todayHint"></span>
+  </p>
 
-    <h4>⚠️ Important Browser Note</h4>
-    <ul>
-      <li>If link opens from any app, ads may appear in Chrome.</li>
-      <li>To avoid ads, open directly in <b>Opera Mini</b>.</li>
-      <li>If website doesn’t open, <b>turn ON VPN</b> and try again.</li>
-    </ul>
+  <p id="error" style="color:red;"></p>
+  <p id="attempts" style="font-size:13px;color:#555;"></p>
+</div>
 
-    <h4>📌 Steps</h4>
-    <ol>
-      <li><b>Turn OFF DNS</b> (Private / Custom DNS).</li>
-      <li><b>Update Chrome</b> to latest version.</li>
-      <li><b>Use Browser</b>: Chrome (recommended), Opera Mini (fewer ads).</li>
-      <li>If ad page opens, press <b>BACK</b> once.</li>
-      <li><b>Laptop / PC</b>: VPN ON + Ad-Blocker.</li>
-    </ol>
+<!-- 📦 MAIN CONTENT -->
+<div id="content" style="display:none;">
+  <span class="badge">⏳ Access Active</span>
+  <div class="countdown" id="timer"></div>
 
-    <h4>🎥 Video Guide</h4>
-    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview" allowfullscreen></iframe>
+  <p style="font-size:13px;">
+    🌍 Timezone: <b>India (IST)</b><br>
+    📊 Total Successful Logins: <b id="totalLogins">0</b>
+  </p>
 
-    <h4 style="margin-top:25px;">📦 Download Application</h4>
-    <a class="btn-animated"
-       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
-       target="_blank">
-      ⬇ Download App (APK)
-    </a>
+  <h3>🎥 Video Guide</h3>
+  <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview" allowfullscreen></iframe>
 
-    <p style="font-size:13px;margin-top:12px;">⚠️ Android devices only</p>
+  <h4 style="margin-top:25px;">📦 Download Application</h4>
+  <a class="btn"
+     href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+     target="_blank">
+    ⬇ Download App (APK)
+  </a>
 
-    <p style="margin-top:15px;">
-      🌐 <b>Official Website:</b>
-      <a href="https://rarestudy.site" target="_blank">rarestudy.site</a>
-    </p>
-  </div>
+  <h4 style="margin-top:25px;">🧾 Login History (Last 5)</h4>
+  <ul id="loginHistory"></ul>
+
+  <p style="margin-top:15px;">
+    🌐 <b>Official Website:</b>
+    <a href="https://rarestudy.site" target="_blank">rarestudy.site</a>
+  </p>
+</div>
+
 </div>
 
 <script>
-  /* ====== SETTINGS (ONLY YAHAN CHANGE KAR SAKTE HO) ====== */
-  const PASSWORD = "RS@2026Key";     // 🔐 password
-  const MAX_ATTEMPTS = 5;            // 🔢 password limit
-  const VALID_TIME = 24 * 60 * 60 * 1000; // ⏳ 24 hours
+/* ===== SETTINGS ===== */
+const MAX_ATTEMPTS = 5;
+const VALID_TIME = 24*60*60*1000;
 
-  /* ====== LOGIC ====== */
-  let attempts = Number(localStorage.getItem("attempts")) || 0;
+/* ===== AUTO PASSWORD DDMMYYYY ===== */
+function getTodayPassword(){
+  const d=new Date();
+  return "RS@"+String(d.getDate()).padStart(2,"0")+
+         String(d.getMonth()+1).padStart(2,"0")+
+         d.getFullYear();
+}
 
-  function checkPassword(){
-    if(attempts >= MAX_ATTEMPTS){
-      document.getElementById("error").innerText =
-        "❌ Too many wrong attempts. Try again later.";
-      return;
-    }
+/* ===== PASSWORD HINT ===== */
+document.getElementById("todayHint").innerText = getTodayPassword();
 
-    const entered = document.getElementById("passInput").value;
+/* ===== LOGIN LOGIC ===== */
+let attempts = Number(localStorage.getItem("attempts")) || 0;
 
-    if(entered === PASSWORD){
-      localStorage.setItem("unlockTime", Date.now());
-      localStorage.removeItem("attempts");
-      showContent();
-    } else {
-      attempts++;
-      localStorage.setItem("attempts", attempts);
-      document.getElementById("error").innerText = "❌ Wrong password";
-      document.getElementById("attempts").innerText =
-        "Attempts left: " + (MAX_ATTEMPTS - attempts);
-    }
+function checkPassword(){
+  if(attempts>=MAX_ATTEMPTS){
+    document.getElementById("error").innerText="❌ Too many attempts. Try tomorrow.";
+    return;
   }
-
-  function showContent(){
-    document.getElementById("passwordBox").style.display="none";
-    document.getElementById("content").style.display="block";
-    startTimer();
+  if(document.getElementById("passInput").value===getTodayPassword()){
+    localStorage.setItem("unlockTime",Date.now());
+    localStorage.removeItem("attempts");
+    addLoginHistory();
+    showContent();
+  }else{
+    attempts++;
+    localStorage.setItem("attempts",attempts);
+    document.getElementById("error").innerText="❌ Wrong password";
+    document.getElementById("attempts").innerText=
+      "Attempts left: "+(MAX_ATTEMPTS-attempts);
   }
+}
 
-  function startTimer(){
-    const unlockTime = Number(localStorage.getItem("unlockTime"));
-    setInterval(function(){
-      const left = VALID_TIME - (Date.now() - unlockTime);
-      if(left <= 0){
-        localStorage.removeItem("unlockTime");
-        location.reload();
-      } else {
-        const h = Math.floor(left / 3600000);
-        const m = Math.floor((left % 3600000) / 60000);
-        const s = Math.floor((left % 60000) / 1000);
-        document.getElementById("timer").innerText =
-          "⏳ Time Left: " + h + "h " + m + "m " + s + "s";
-      }
-    },1000);
-  }
+/* ===== SHOW CONTENT ===== */
+function showContent(){
+  document.getElementById("passwordBox").style.display="none";
+  document.getElementById("content").style.display="block";
+  startTimer();
+}
 
-  window.onload = function(){
-    const t = localStorage.getItem("unlockTime");
-    if(t && (Date.now() - t) < VALID_TIME){
-      showContent();
-    } else {
+/* ===== COUNTDOWN ===== */
+function startTimer(){
+  const t=Number(localStorage.getItem("unlockTime"));
+  setInterval(()=>{
+    const left=VALID_TIME-(Date.now()-t);
+    if(left<=0){
       localStorage.removeItem("unlockTime");
-      document.getElementById("attempts").innerText =
-        "Attempts left: " + (MAX_ATTEMPTS - attempts);
+      location.reload();
+    }else{
+      const h=Math.floor(left/3600000);
+      const m=Math.floor((left%3600000)/60000);
+      const s=Math.floor((left%60000)/1000);
+      document.getElementById("timer").innerText=
+        `⏳ Time Left: ${h}h ${m}m ${s}s`;
     }
-  };
+  },1000);
+}
 
-  // 🚫 basic inspect block
-  document.addEventListener("keydown",function(e){
-    if(e.keyCode===123 || (e.ctrlKey && e.shiftKey && e.keyCode===73) || (e.ctrlKey && e.keyCode===85)){
-      e.preventDefault();
-    }
-  });
+/* ===== LOGIN HISTORY + TOTAL COUNT ===== */
+function addLoginHistory(){
+  let history=JSON.parse(localStorage.getItem("loginHistory"))||[];
+  history.unshift(new Date().toLocaleString("en-IN"));
+  history=history.slice(0,5);
+  localStorage.setItem("loginHistory",JSON.stringify(history));
+
+  let total=Number(localStorage.getItem("totalLogins"))||0;
+  total++;
+  localStorage.setItem("totalLogins",total);
+}
+
+function renderHistory(){
+  const list=document.getElementById("loginHistory");
+  const history=JSON.parse(localStorage.getItem("loginHistory"))||[];
+  list.innerHTML=history.length?history.map(h=>`<li>${h}</li>`).join(""):"<li>No logins yet</li>";
+  document.getElementById("totalLogins").innerText=
+    localStorage.getItem("totalLogins")||0;
+}
+
+/* ===== ON LOAD ===== */
+window.onload=function(){
+  renderHistory();
+  const t=localStorage.getItem("unlockTime");
+  if(t && (Date.now()-t)<VALID_TIME){
+    showContent();
+  }else{
+    localStorage.removeItem("unlockTime");
+    document.getElementById("attempts").innerText=
+      "Attempts left: "+(MAX_ATTEMPTS-attempts);
+  }
+};
+
+/* ===== BASIC PROTECTION ===== */
+document.addEventListener("keydown",e=>{
+  if(e.keyCode===123||(e.ctrlKey&&e.shiftKey&&e.keyCode===73)||(e.ctrlKey&&e.keyCode===85)){
+    e.preventDefault();
+  }
+});
 </script>
 
 </body>
-  </html>
+</html>
