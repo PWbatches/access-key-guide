@@ -6,101 +6,39 @@
 <title>Secure Access</title>
 
 <style>
-/* ===== AUTO LIGHT / DARK (iOS STYLE) ===== */
 :root{
-  --bg:#f2f2f7;
-  --card:#ffffff;
-  --text:#0f172a;
-  --muted:#6b7280;
-  --primary:#007aff;
-  --danger:#ff3b30;
-  --soft:#f4f4f5;
+  --bg:#f2f2f7;--card:#fff;--text:#0f172a;
+  --muted:#6b7280;--primary:#007aff;
+  --danger:#ff3b30;--soft:#f4f4f5;
 }
-@media (prefers-color-scheme: dark){
+@media(prefers-color-scheme:dark){
   :root{
-    --bg:#0b0f1a;
-    --card:#111827;
-    --text:#e5e7eb;
-    --muted:#9ca3af;
-    --primary:#0a84ff;
-    --danger:#ff453a;
-    --soft:#1f2937;
+    --bg:#0b0f1a;--card:#111827;--text:#e5e7eb;
+    --muted:#9ca3af;--primary:#0a84ff;
+    --danger:#ff453a;--soft:#1f2937;
   }
 }
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
-  background:var(--bg);
-  color:var(--text);
+  margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+  background:var(--bg);color:var(--text);
 }
 .container{max-width:420px;margin:auto;padding:20px}
 .card{
-  background:var(--card);
-  border-radius:28px;
-  padding:22px;
-  box-shadow:0 20px 45px rgba(0,0,0,.15);
-  animation:fade .4s ease;
+  background:var(--card);border-radius:28px;padding:22px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
 }
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
 .hidden{display:none}
-
-/* ===== PW LOGO ===== */
-.pw-logo{
-  width:120px;height:120px;
-  background:#000;border-radius:50%;
-  margin:0 auto 18px;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;
-}
-.ring{
-  position:absolute;inset:8%;
-  border-radius:50%;
-  border:5px solid #fff;
-  border-left-color:transparent;
-  border-right-color:transparent;
-  transform:rotate(-10deg);
-}
-.text{
-  color:#fff;font-family:"Times New Roman",Times,serif;
-  font-weight:700;font-size:64px;display:flex;padding-top:6px
-}
-.letter-p{margin-right:-12px;position:relative;top:-3px}
-
-/* ===== INPUTS ===== */
 input,button{
-  width:100%;padding:14px;border-radius:16px;
-  border:none;font-size:15px
+  width:100%;padding:14px;border-radius:16px;border:none;font-size:15px
 }
 input{background:var(--soft);color:var(--text);margin-top:10px}
-button{
-  margin-top:14px;
-  background:var(--primary);color:#fff;font-weight:600;
-  cursor:pointer
-}
+button{margin-top:14px;background:var(--primary);color:#fff;font-weight:600}
 button.secondary{background:var(--soft);color:var(--text)}
-.info{font-size:12px;color:var(--muted);margin-top:10px}
+.info{font-size:12px;color:var(--muted);margin-top:8px}
 .error{font-size:12px;color:var(--danger);margin-top:6px}
-
-/* ===== SECTIONS ===== */
-.section{margin-top:22px}
-.timer, .box{
-  background:var(--soft);
-  padding:12px;border-radius:16px;
-  font-size:13px
-}
-iframe{width:100%;height:220px;border:none;border-radius:16px}
-
-/* ===== INSTRUCTIONS (INSIDE LOGIN) ===== */
-.instructions{
-  margin-top:14px;
-  background:var(--soft);
-  padding:14px;border-radius:16px;
-  font-size:13px;line-height:1.7
-}
-
-/* ===== HISTORY ===== */
-.history{font-size:12px;color:var(--muted);margin-top:8px}
+.box{background:var(--soft);padding:12px;border-radius:16px;font-size:13px}
+.section{margin-top:20px}
 </style>
 </head>
 
@@ -109,111 +47,180 @@ iframe{width:100%;height:220px;border:none;border-radius:16px}
 
 <!-- LOGIN -->
 <div id="loginBox" class="card">
-  <div class="pw-logo">
-    <div class="ring"></div>
-    <div class="text"><span class="letter-p">P</span>W</div>
-  </div>
-
   <input id="sitePass" type="password" placeholder="Website password">
   <button onclick="loginSite()">Login</button>
-
   <div class="info">
-    Format: <b>RS@DDMMYYYY</b><br>
+    Format: RS@DDMMYYYY<br>
     Today: <b id="todayPass"></b>
   </div>
-
-  <button class="secondary" onclick="toggleInstructions()">Instructions</button>
   <div id="siteErr" class="error"></div>
-
-  <!-- INSTRUCTIONS INSIDE LOGIN -->
-  <div id="instructions" class="instructions hidden">
-🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-• Turn OFF Private DNS<br>
-• Update Chrome<br>
-• Use Chrome / Opera Mini<br>
-• Extra page → BACK once<br>
-• Laptop → VPN + Ad-Blocker<br><br>
-⏳ Valid for 24 hours only (copyright safety)
-  </div>
 </div>
 
-<!-- CONTENT AFTER LOGIN -->
+<!-- DASHBOARD -->
 <div id="contentBox" class="card hidden">
-  <div class="timer" id="sessionTimer"></div>
+  <div class="box" id="sessionTimer"></div>
 
   <div class="section">
-    <h3>🌐 Website</h3>
-    <button onclick="openWebsite()">Open Website</button>
-    <div class="history" id="webHistory"></div>
+    <button class="secondary" onclick="toggleGuide()">Instructions</button>
+    <div id="guideBox" class="box hidden">
+      Turn OFF Private DNS<br>
+      Update Chrome<br>
+      Use Chrome / Opera Mini<br>
+      Extra page → BACK once<br>
+      Valid for 24 hours only
+    </div>
   </div>
 
   <div class="section">
-    <h3>🎥 Video Guide</h3>
-    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
+    <button onclick="window.open('https://rarestudy.site','_blank')">
+      Open Website
+    </button>
   </div>
 
   <div class="section">
-    <h3>📦 APK Download</h3>
     <input id="apkPass" type="password" placeholder="APK password">
     <button onclick="unlockApk()">Unlock APK</button>
     <div id="apkErr" class="error"></div>
     <a id="apkLink" class="hidden"
-       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+      href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
       <button class="secondary">Download APK</button>
     </a>
-    <div class="history" id="apkHistory"></div>
+  </div>
+
+  <div class="section">
+    <div class="box" id="historyBox"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL (HIDDEN) -->
+<div id="adminPanel" class="card hidden">
+  <input id="adminPass" type="password" placeholder="Admin password">
+  <button onclick="adminLogin()">Unlock Admin</button>
+  <div id="adminErr" class="error"></div>
+
+  <div id="adminActions" class="hidden">
+    <input id="tempPass" placeholder="Set temporary password">
+    <button onclick="setTempPassword()">Set Temp Password (24h)</button>
+    <button class="secondary" onclick="clearHistory()">Clear History</button>
+    <button class="secondary" onclick="forceLogout()">Force Logout</button>
   </div>
 </div>
 
 </div>
 
 <script>
-const DAY=86400000;
+const SESSION=24*60*60*1000;
+const HISTORY_DAYS=7;
+
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,'0')+
          String(d.getMonth()+1).padStart(2,'0')+
          d.getFullYear();
 }
-const sitePassword="RS@"+today();
-const apkPassword="APK@"+today();
-todayPass.innerText=sitePassword;
 
+/* PASSWORD LOGIC */
+function getSitePassword(){
+  const o=JSON.parse(localStorage.getItem("siteOverride")||"null");
+  if(o && Date.now()<o.expires) return o.password;
+  return "RS@"+today();
+}
+const apkPassword="APK@"+today();
+todayPass.innerText=getSitePassword();
+
+/* LOGIN */
 function loginSite(){
-  if(sitePass.value!==sitePassword){
+  if(sitePass.value!==getSitePassword()){
     siteErr.innerText="Wrong password";return;
   }
   localStorage.setItem("loginTime",Date.now());
-  localStorage.setItem("loginDate",today());
-  localStorage.setItem("webHistory","Website login: "+new Date().toLocaleString());
+  addHistory("Website Login");
   loginBox.classList.add("hidden");
   contentBox.classList.remove("hidden");
   startSession();
-  webHistory.innerText=localStorage.getItem("webHistory");
 }
+
+/* SESSION */
+function startSession(){
+  setInterval(()=>{
+    const t=localStorage.getItem("loginTime");
+    if(!t||Date.now()-t>SESSION){
+      localStorage.clear();location.reload();
+    }
+    const left=SESSION-(Date.now()-t);
+    sessionTimer.innerText=`Session expires in ${Math.floor(left/3600000)}h`;
+  },1000);
+}
+
+/* APK */
 function unlockApk(){
   if(apkPass.value!==apkPassword){
     apkErr.innerText="Wrong APK password";return;
   }
   apkLink.classList.remove("hidden");
-  localStorage.setItem("apkHistory","APK unlocked: "+new Date().toLocaleString());
-  apkHistory.innerText=localStorage.getItem("apkHistory");
+  addHistory("APK Unlocked");
 }
-function openWebsite(){
-  window.open("https://rarestudy.site","_blank");
+
+/* HISTORY */
+function addHistory(type){
+  const now=Date.now(),limit=HISTORY_DAYS*24*60*60*1000;
+  let list=JSON.parse(localStorage.getItem("history")||"[]");
+  list=list.filter(i=>now-i.time<limit);
+  list.unshift({type,time:now});
+  localStorage.setItem("history",JSON.stringify(list));
+  renderHistory();
 }
-function startSession(){
-  setInterval(()=>{
-    const t=localStorage.getItem("loginTime");
-    if(!t||Date.now()-t>DAY){localStorage.clear();location.reload();}
-    const left=DAY-(Date.now()-t);
-    sessionTimer.innerText=
-      `Session expires in ${Math.floor(left/3600000)}h ${Math.floor(left%3600000/60000)}m ${Math.floor(left%60000/1000)}s`;
-  },1000);
+function renderHistory(){
+  const list=JSON.parse(localStorage.getItem("history")||"[]");
+  historyBox.innerHTML=list.length
+    ? list.map(i=>`• ${i.type} — ${new Date(i.time).toLocaleString()}`).join("<br>")
+    : "No recent activity";
 }
-function toggleInstructions(){
-  instructions.classList.toggle("hidden");
+
+/* ADMIN */
+function adminPassword(){return "ADMIN@"+today();}
+function adminLogin(){
+  if(adminPass.value!==adminPassword()){
+    adminErr.innerText="Access denied";return;
+  }
+  adminActions.classList.remove("hidden");
 }
+function setTempPassword(){
+  const pass=tempPass.value.trim();
+  if(!pass) return alert("Enter password");
+  localStorage.setItem("siteOverride",JSON.stringify({
+    password:pass,
+    expires:Date.now()+SESSION
+  }));
+  alert("Temporary password active for 24 hours");
+}
+function clearHistory(){
+  localStorage.removeItem("history");renderHistory();
+}
+function forceLogout(){
+  localStorage.removeItem("loginTime");location.reload();
+}
+
+/* UI */
+function toggleGuide(){guideBox.classList.toggle("hidden");}
+
+/* SECRET ADMIN OPEN */
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey&&e.shiftKey&&e.key==="A"){
+    adminPanel.classList.toggle("hidden");
+  }
+});
+
+/* RESUME */
+window.onload=()=>{
+  renderHistory();
+  const t=localStorage.getItem("loginTime");
+  if(t&&Date.now()-t<SESSION){
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
+    startSession();
+  }
+};
 </script>
 </body>
-       </html>
+      </html>
