@@ -9,7 +9,6 @@
 :root{
   --bg:#0b0b0b;
   --card:#141414;
-  --pw:#ffffff;
   --accent:#22c55e;
   --danger:#ef4444;
 }
@@ -51,12 +50,27 @@ input,button{
   border:none;
   font-size:15px;
 }
-input{background:#0f0f0f;color:#fff;border:1px solid #333}
-button{
-  background:#fff;color:#000;font-weight:700;
+input{
+  background:#0f0f0f;
+  color:#fff;
+  border:1px solid #333
 }
-.hint{font-size:12px;color:#bbb;margin-top:6px}
-.error{color:var(--danger);font-size:13px;margin-top:6px}
+button{
+  background:#fff;
+  color:#000;
+  font-weight:700;
+}
+.hint{
+  font-size:12px;
+  color:#bbb;
+  margin-top:8px;
+  line-height:1.5;
+}
+.error{
+  color:var(--danger);
+  font-size:13px;
+  margin-top:6px
+}
 .badge{
   background:#052e16;
   border:1px solid var(--accent);
@@ -74,7 +88,12 @@ button{
   border-radius:14px;
 }
 .section{margin-top:18px}
-iframe{width:100%;height:220px;border-radius:14px;border:none}
+iframe{
+  width:100%;
+  height:220px;
+  border-radius:14px;
+  border:none
+}
 .hidden{display:none}
 a.btn{
   display:block;
@@ -93,6 +112,7 @@ a.btn{
 <body>
 <div class="wrapper">
 
+<!-- LOGIN -->
 <div class="card" id="loginBox">
   <div class="logo">PW</div>
   <h2>Website Login</h2>
@@ -100,19 +120,50 @@ a.btn{
 
   <input type="password" id="sitePass" placeholder="Enter website password">
   <button onclick="checkSite()">Continue</button>
-  <div class="hint">Format: RS@DDMMYYYY</div>
+
+  <div class="hint">
+    <b>Password Hint:</b><br>
+    Format: <b>RS@DDMMYYYY</b><br>
+    Example: <b>RS@01012025</b><br>
+    Use today's date in the same format.
+  </div>
+
   <div class="error" id="siteErr"></div>
 
   <div class="section">
-    <h3>🔑 How to Generate Access Key</h3>
-    <p>• Turn OFF Private DNS</p>
-    <p>• Use Chrome / Opera Mini</p>
-    <p>• Turn ON VPN if site doesn't open</p>
-    <p>• Laptop users: VPN + AdBlock</p>
-    <p>• Key valid for 24 hours only</p>
+    <h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
+    <p><b>Follow the steps carefully 👇</b></p>
+
+    <p><b>⚠️ Important Browser Note:</b><br>
+    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+    • To avoid ads, open the website directly using <b>Opera Mini browser</b>.<br>
+    • If app/website does not open, turn <b>ON VPN</b> and try again.</p>
+
+    <p><b>📌 Steps to Generate Key:</b></p>
+
+    <p><b>1️⃣ Turn OFF DNS</b><br>
+    Go to phone settings and disable Private DNS / Custom DNS.</p>
+
+    <p><b>2️⃣ Update Browser</b><br>
+    Make sure Google Chrome is updated to the latest version.</p>
+
+    <p><b>3️⃣ Use Correct Browser</b><br>
+    • Chrome → recommended<br>
+    • Opera Mini → fewer ads (best option)</p>
+
+    <p><b>4️⃣ If Any Extra Page / Ad Opens</b><br>
+    Just press BACK once and continue.</p>
+
+    <p><b>5️⃣ Laptop / PC Users</b><br>
+    • Turn ON VPN<br>
+    • Use Ad-Blocker extension</p>
+
+    <p><b>⏳ Key Validity:</b><br>
+    Access Key is valid for <b>24 hours only</b>.</p>
   </div>
 </div>
 
+<!-- CONTENT -->
 <div class="card hidden" id="content">
   <div class="badge">✅ ACCESS GRANTED</div>
   <div class="timer" id="timer"></div>
@@ -131,8 +182,16 @@ a.btn{
     <h3>📦 APK Download</h3>
     <input type="password" id="apkPass" placeholder="Enter APK password">
     <button onclick="checkApk()">Unlock APK</button>
-    <div class="hint">Format: APK@DDMMYYYY</div>
+
+    <div class="hint">
+      <b>APK Password Hint:</b><br>
+      Format: <b>APK@DDMMYYYY</b><br>
+      Example: <b>APK@01012025</b><br>
+      Use today's date in the same format.
+    </div>
+
     <div class="error" id="apkErr"></div>
+
     <a class="btn hidden" id="apkLink"
        href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
        Download APK
@@ -146,6 +205,59 @@ a.btn{
 const today=()=>{
  const d=new Date();
  return String(d.getDate()).padStart(2,'0')+
+        String(d.getMonth()+1).padStart(2,'0')+
+        d.getFullYear();
+}
+const sitePassword="RS@"+today();
+const apkPassword="APK@"+today();
+let siteTry=0,apkTry=0;
+
+function checkSite(){
+ if(siteTry>=3)return;
+ if(sitePass.value===sitePassword){
+  localStorage.setItem("loginTime",Date.now());
+  loginBox.classList.add("hidden");
+  content.classList.remove("hidden");
+  startTimer();
+ }else{
+  siteTry++;
+  siteErr.innerText="❌ Wrong password ("+(3-siteTry)+" attempts left)";
+ }
+}
+
+function checkApk(){
+ if(apkTry>=3)return;
+ if(apkPass.value===apkPassword){
+  apkLink.classList.remove("hidden");
+ }else{
+  apkTry++;
+  apkErr.innerText="❌ Wrong APK password ("+(3-apkTry)+" attempts left)";
+ }
+}
+
+function startTimer(){
+ const start=localStorage.getItem("loginTime");
+ setInterval(()=>{
+  const diff=86400000-(Date.now()-start);
+  if(diff<=0){location.reload()}
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor(diff%3600000/60000);
+  const s=Math.floor(diff%60000/1000);
+  timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
+ },1000)
+}
+
+window.onload=()=>{
+ const t=localStorage.getItem("loginTime");
+ if(t && Date.now()-t<86400000){
+  loginBox.classList.add("hidden");
+  content.classList.remove("hidden");
+  startTimer();
+ }
+}
+</script>
+</body>
+      </html> return String(d.getDate()).padStart(2,'0')+
         String(d.getMonth()+1).padStart(2,'0')+
         d.getFullYear();
 }
