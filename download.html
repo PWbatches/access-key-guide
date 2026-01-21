@@ -7,108 +7,123 @@
 
 <style>
 :root{
-  --bg:#0b0f1a;
+  --bg1:#0f172a;
+  --bg2:#020617;
   --card:#111827;
-  --accent:#22c55e;
-  --danger:#ef4444;
+  --accent:#6366f1;
+  --accent2:#22d3ee;
   --text:#e5e7eb;
-}
-@media(prefers-color-scheme:light){
-  :root{
-    --bg:#f4f6fa;
-    --card:#ffffff;
-    --text:#111;
-  }
 }
 body{
   margin:0;
   font-family:system-ui,Arial;
-  background:var(--bg);
+  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
   color:var(--text);
+  min-height:100vh;
 }
 .container{
   max-width:420px;
   margin:auto;
-  padding:16px;
+  padding:20px;
 }
 .card{
-  background:var(--card);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
+  background:rgba(17,24,39,.85);
+  backdrop-filter:blur(14px);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 .hidden{display:none}
 
-/* Avatar */
-.avatar-wrap{
-  text-align:center;
-  margin-bottom:16px;
+/* LOGO */
+.logo{
+  width:70px;
+  margin:0 auto 12px;
+  display:block;
 }
-.avatar{
-  width:110px;height:110px;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #444,#000);
-  margin:auto;
-  position:relative;
-  animation:float 4s ease-in-out infinite;
-  box-shadow:0 20px 40px rgba(0,0,0,.7);
-}
-.avatar::after{
-  content:"";
-  position:absolute;
-  inset:10px;
-  border-radius:50%;
-  background:rgba(255,255,255,.05);
-}
-@keyframes float{
-  50%{transform:translateY(-6px)}
-}
-.avatar-text{margin-top:8px;font-size:13px;color:#9ca3af}
 
-/* Inputs */
+/* GUIDE ORB (Avatar alternative) */
+.guide-orb{
+  width:120px;
+  height:120px;
+  margin:10px auto;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%,#fff,#22d3ee,#6366f1);
+  box-shadow:
+    0 0 30px rgba(99,102,241,.6),
+    0 0 60px rgba(34,211,238,.4);
+  animation:pulse 3s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 25px rgba(99,102,241,.5)}
+  50%{box-shadow:0 0 60px rgba(34,211,238,.9)}
+  100%{box-shadow:0 0 25px rgba(99,102,241,.5)}
+}
+
+.guide-text{
+  text-align:center;
+  font-size:13px;
+  color:#c7d2fe;
+  margin-bottom:10px;
+}
+
+/* INPUTS */
 input,button{
   width:100%;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:14px;
   border:none;
-  margin-top:10px;
+  margin-top:12px;
   font-size:15px;
 }
-input{background:#000;color:#fff;border:1px solid #333}
+input{
+  background:#020617;
+  color:#fff;
+  border:1px solid #1f2937;
+}
 button{
-  background:var(--accent);
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#000;
   font-weight:700;
   cursor:pointer;
+  transition:.3s;
+}
+button:hover{
+  transform:scale(1.04);
+  box-shadow:0 0 25px rgba(34,211,238,.7);
 }
 button.secondary{
   background:#1f2937;
   color:#fff;
 }
 
-/* Timer */
-.timer{
-  background:#000;
-  padding:10px;
-  border-radius:12px;
-  text-align:center;
-  margin:12px 0;
+/* INFO */
+.info{
+  font-size:13px;
+  margin-top:10px;
+  color:#a5b4fc;
+}
+.error{
+  color:#f87171;
+  font-size:13px;
+  margin-top:6px;
 }
 
-/* Section */
-.section{margin-top:16px}
-.section h3{margin-bottom:8px}
-
-/* Instructions modal */
+/* INSTRUCTIONS */
 #instructions{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  overflow:auto;
+  margin-top:16px;
+  background:rgba(0,0,0,.35);
+  padding:16px;
+  border-radius:18px;
+  font-size:13px;
+  line-height:1.7;
 }
-#instructions .card{margin:20px}
-
 </style>
 </head>
 
@@ -118,185 +133,80 @@ button.secondary{
 
 <!-- LOGIN -->
 <div id="loginBox" class="card">
-  <div class="avatar-wrap">
-    <div class="avatar"></div>
-    <div class="avatar-text" id="avatarMood">Enter password to continue</div>
+  <!-- LOGO PLACEHOLDER -->
+  <!-- yahan apna logo image daal sakte ho -->
+  <!-- <img src="logo.png" class="logo"> -->
+
+  <div class="guide-orb"></div>
+  <div class="guide-text">
+    Secure system active. Enter password to continue.
   </div>
 
   <input id="sitePass" type="password" placeholder="Enter website password">
-  <button onclick="checkSite()">Continue</button>
+  <button onclick="checkSite()">Login</button>
 
-  <div style="font-size:13px;margin-top:10px">
-    <b>Password Hint:</b><br>
+  <div class="info">
+    Password Hint:<br>
     Format: <b>RS@DDMMYYYY</b><br>
     Example: <b>RS@21012026</b>
   </div>
 
-  <button class="secondary" onclick="openInstructions()">Instructions</button>
-  <div id="siteErr" style="color:var(--danger);margin-top:8px"></div>
+  <button class="secondary" onclick="toggleInstructions()">
+    📘 Instructions
+  </button>
+
+  <div id="siteErr" class="error"></div>
+
+  <!-- INSTRUCTIONS BLOCK -->
+  <div id="instructions" class="hidden">
+    🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+    ⚠️ <b>Important Browser Note:</b><br>
+    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+    • To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
+    • If app/website does not open, turn <b>ON VPN</b> and try again.<br><br>
+
+    📌 <b>Steps to Generate Key:</b><br>
+    1️⃣ Turn OFF Private DNS / Custom DNS.<br>
+    2️⃣ Update Google Chrome to latest version.<br>
+    3️⃣ Use Chrome (recommended) or Opera Mini (fewer ads).<br>
+    4️⃣ If any extra page / ad opens, press BACK once.<br>
+    5️⃣ Laptop / PC users: Turn ON VPN and use Ad-Blocker.<br><br>
+
+    ⏳ <b>Key Validity:</b><br>
+    Access Key is valid for <b>24 hours only</b>.<br>
+    After 24 hours, login again to avoid copyright issues.
+  </div>
 </div>
 
-<!-- CONTENT -->
-<div id="content" class="hidden">
-
-  <div class="avatar-wrap">
-    <div class="avatar"></div>
-    <div class="avatar-text">Access Granted</div>
-  </div>
-
-  <div class="timer" id="loginTimer"></div>
-
-  <!-- EXAM -->
-  <div class="section">
-    <h3>📚 CS Executive Exam Countdown</h3>
-    <div class="timer" id="examTimer"></div>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="section">
-    <h3>🎥 Video Guide</h3>
-    <iframe width="100%" height="220" style="border-radius:14px"
-      src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <h3>🌐 Website</h3>
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
-  </div>
-
-  <!-- APK -->
-  <div class="section">
-    <h3>📦 APK Download</h3>
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <button onclick="checkApk()">Unlock APK</button>
-
-    <div style="font-size:13px;margin-top:6px">
-      Format: <b>APK@DDMMYYYY</b><br>
-      Example: <b>APK@21012026</b>
-    </div>
-
-    <a id="apkLink" class="hidden" target="_blank"
-      href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
-      <button style="margin-top:10px">Download APK</button>
-    </a>
-
-    <div id="apkErr" style="color:var(--danger);margin-top:6px"></div>
-  </div>
-
-</div>
-</div>
-
-<!-- INSTRUCTIONS -->
-<div id="instructions">
-  <div class="card">
-<h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
-<p>
-⚠️ Important Browser Note:<br>
-• If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using Opera Mini browser.<br>
-• If app/website does not open, turn ON VPN and try again.
-</p>
-<p>
-📌 Steps to Generate Key:<br>
-1️⃣ Turn OFF DNS (disable Private / Custom DNS)<br>
-2️⃣ Update Google Chrome<br>
-3️⃣ Use Chrome or Opera Mini<br>
-4️⃣ If ad opens, press BACK once<br>
-5️⃣ Laptop users: VPN + Ad-blocker
-</p>
-<p>
-⏳ Key Validity:<br>
-Access key valid for 24 hours only.<br>
-After expiry, login again (copyright safety).
-</p>
-<button onclick="closeInstructions()">Close</button>
-  </div>
 </div>
 
 <script>
-const DAY=86400000;
-const EXAM_TIME=new Date("2026-06-01T09:00:00").getTime();
-
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
-
 const sitePassword="RS@"+today();
-const apkPassword="APK@"+today();
-
-let siteTry=0,apkTry=0;
+let attempts=0;
 
 function checkSite(){
-  if(siteTry>=3)return;
+  if(attempts>=3){
+    siteErr.innerText="❌ Too many wrong attempts. Try again tomorrow.";
+    return;
+  }
   if(sitePass.value===sitePassword){
-    localStorage.setItem("loginTime",Date.now());
-    loginBox.classList.add("hidden");
-    content.classList.remove("hidden");
-    startLoginTimer();
-    startExamTimer();
+    alert("Access Granted");
   }else{
-    siteTry++;
-    siteErr.innerText="❌ Wrong password ("+(3-siteTry)+" attempts left)";
+    attempts++;
+    siteErr.innerText="❌ Wrong password ("+(3-attempts)+" attempts left)";
   }
 }
-
-function checkApk(){
-  if(apkTry>=3)return;
-  if(apkPass.value===apkPassword){
-    apkLink.classList.remove("hidden");
-  }else{
-    apkTry++;
-    apkErr.innerText="❌ Wrong APK password ("+(3-apkTry)+" attempts left)";
-  }
+function toggleInstructions(){
+  instructions.classList.toggle("hidden");
 }
-
-function startLoginTimer(){
-  setInterval(()=>{
-    const t=localStorage.getItem("loginTime");
-    if(!t)return;
-    const diff=DAY-(Date.now()-t);
-    if(diff<=0){localStorage.clear();location.reload();}
-    const h=Math.floor(diff/3600000);
-    const m=Math.floor(diff%3600000/60000);
-    const s=Math.floor(diff%60000/1000);
-    loginTimer.innerText=`⏳ Access expires in ${h}h ${m}m ${s}s`;
-  },1000);
-}
-
-function startExamTimer(){
-  setInterval(()=>{
-    const diff=EXAM_TIME-Date.now();
-    if(diff<=0){
-      examTimer.innerText="🎉 Exam Started. Best of luck!";
-      return;
-    }
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor(diff%86400000/3600000);
-    const m=Math.floor(diff%3600000/60000);
-    const s=Math.floor(diff%60000/1000);
-    examTimer.innerText=`🕒 ${d}d ${h}h ${m}m ${s}s`;
-  },1000);
-}
-
-window.onload=()=>{
-  const t=localStorage.getItem("loginTime");
-  if(t && Date.now()-t<DAY){
-    loginBox.classList.add("hidden");
-    content.classList.remove("hidden");
-    startLoginTimer();
-    startExamTimer();
-  }
-};
-
-function openInstructions(){instructions.style.display="block"}
-function closeInstructions(){instructions.style.display="none"}
 </script>
 
 </body>
-                            </html>
+</html>
