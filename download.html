@@ -6,16 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --bg:#0b0b0b;
-  --card:#141414;
-  --accent:#22c55e;
-  --danger:#ef4444;
-}
 body{
   margin:0;
-  background:var(--bg);
-  font-family:system-ui,Segoe UI,Arial;
+  background:#0b0b0b;
+  font-family:system-ui,Arial;
   color:#fff;
 }
 .wrapper{
@@ -24,87 +18,85 @@ body{
   padding:14px;
 }
 .card{
-  background:var(--card);
+  background:#151515;
   border-radius:18px;
   padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  box-shadow:0 0 30px rgba(0,0,0,.7);
 }
 .logo{
-  width:90px;height:90px;
-  border:4px solid #fff;
+  width:90px;
+  height:90px;
+  margin:0 auto 12px;
   border-radius:50%;
+  background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:0 auto 14px;
-  font-size:34px;
-  font-weight:800;
 }
-h2{text-align:center;margin:10px 0;}
-.sub{text-align:center;color:#aaa;font-size:13px}
-input,button{
+.logo span{
+  font-size:36px;
+  font-weight:700;
+}
+h2{text-align:center;margin:10px 0}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin-top:10px;
+}
+button{
   width:100%;
   padding:12px;
   margin-top:12px;
-  border-radius:14px;
   border:none;
-  font-size:15px;
-}
-input{
-  background:#0f0f0f;
-  color:#fff;
-  border:1px solid #333
-}
-button{
+  border-radius:14px;
+  font-weight:700;
   background:#fff;
   color:#000;
-  font-weight:700;
 }
 .hint{
-  font-size:12px;
-  color:#bbb;
+  font-size:13px;
+  color:#aaa;
   margin-top:8px;
   line-height:1.5;
 }
 .error{
-  color:var(--danger);
+  color:#ff4d4d;
   font-size:13px;
-  margin-top:6px
+  margin-top:6px;
 }
-.badge{
-  background:#052e16;
-  border:1px solid var(--accent);
-  color:#86efac;
-  padding:10px;
-  border-radius:14px;
-  text-align:center;
-  font-weight:700;
-}
-.timer{
-  margin-top:10px;
-  text-align:center;
-  background:#020617;
-  padding:10px;
-  border-radius:14px;
-}
-.section{margin-top:18px}
+.hidden{display:none}
+.section{margin-top:22px}
 iframe{
   width:100%;
   height:220px;
+  border:none;
   border-radius:14px;
-  border:none
 }
-.hidden{display:none}
 a.btn{
   display:block;
   text-align:center;
-  padding:12px;
-  margin-top:10px;
-  border-radius:14px;
   background:#fff;
   color:#000;
-  text-decoration:none;
+  padding:12px;
+  border-radius:14px;
   font-weight:700;
+  text-decoration:none;
+  margin-top:10px;
+}
+.timer{
+  background:#222;
+  padding:10px;
+  border-radius:12px;
+  text-align:center;
+  margin-top:10px;
+  font-weight:700;
+}
+.history{
+  font-size:13px;
+  color:#ccc;
+  margin-top:8px;
 }
 </style>
 </head>
@@ -112,26 +104,35 @@ a.btn{
 <body>
 <div class="wrapper">
 
-<!-- LOGIN -->
+<!-- LOGIN PAGE -->
 <div class="card" id="loginBox">
-  <div class="logo">PW</div>
+  <div class="logo"><span>PW</span></div>
   <h2>Website Login</h2>
-  <div class="sub">Secure Access (24 Hours)</div>
 
-  <input type="password" id="sitePass" placeholder="Enter website password">
+  <input id="sitePass" type="password" placeholder="Enter website password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
     <b>Password Hint:</b><br>
     Format: <b>RS@DDMMYYYY</b><br>
-    Example: <b>RS@01012025</b><br>
-    Use today's date in the same format.
+    Example: <b>RS@01012025</b>
   </div>
 
-  <div class="error" id="siteErr"></div>
+  <div id="siteErr" class="error"></div>
+</div>
 
+<!-- INSIDE CONTENT -->
+<div class="card hidden" id="content">
+  <div class="logo"><span>PW</span></div>
+  <h2>✅ ACCESS GRANTED</h2>
+
+  <div class="timer" id="timer"></div>
+  <div class="history" id="history"></div>
+
+  <!-- INSTRUCTIONS -->
   <div class="section">
     <h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
+
     <p><b>Follow the steps carefully 👇</b></p>
 
     <p><b>⚠️ Important Browser Note:</b><br>
@@ -152,162 +153,115 @@ a.btn{
     • Opera Mini → fewer ads (best option)</p>
 
     <p><b>4️⃣ If Any Extra Page / Ad Opens</b><br>
-    Just press BACK once and continue.</p>
+    Just press BACK once and continue.<br>
+    Key will be generated successfully.</p>
 
     <p><b>5️⃣ Laptop / PC Users</b><br>
     • Turn ON VPN<br>
-    • Use Ad-Blocker extension</p>
+    • Use Ad-Blocker extension<br>
+    (This helps avoid ads & redirects)</p>
 
     <p><b>⏳ Key Validity:</b><br>
-    Access Key is valid for <b>24 hours only</b>.</p>
+    • Access Key is valid for <b>24 hours only</b><br>
+    • After 24 hours, you must login again and repeat the same process<br>
+    (This avoids copyright issues)</p>
   </div>
-</div>
 
-<!-- CONTENT -->
-<div class="card hidden" id="content">
-  <div class="badge">✅ ACCESS GRANTED</div>
-  <div class="timer" id="timer"></div>
-
+  <!-- VIDEO -->
   <div class="section">
     <h3>🎥 Video Guide</h3>
-    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
+    <iframe src="VIDEO_LINK"></iframe>
   </div>
 
+  <!-- WEBSITE -->
   <div class="section">
     <h3>🌐 Website</h3>
-    <a class="btn" href="https://rarestudy.site" target="_blank">Open Website</a>
+    <a class="btn" href="WEBSITE_LINK" target="_blank">Open Website</a>
   </div>
 
+  <!-- APK -->
   <div class="section">
     <h3>📦 APK Download</h3>
-    <input type="password" id="apkPass" placeholder="Enter APK password">
+    <input id="apkPass" type="password" placeholder="Enter APK password">
     <button onclick="checkApk()">Unlock APK</button>
 
     <div class="hint">
-      <b>APK Password Hint:</b><br>
       Format: <b>APK@DDMMYYYY</b><br>
-      Example: <b>APK@01012025</b><br>
-      Use today's date in the same format.
+      Example: <b>APK@01012025</b>
     </div>
 
-    <div class="error" id="apkErr"></div>
+    <div id="apkErr" class="error"></div>
 
-    <a class="btn hidden" id="apkLink"
-       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
-       Download APK
-    </a>
+    <a id="apkLink" class="btn hidden" href="APK_LINK">Download APK</a>
   </div>
 </div>
 
 </div>
 
 <script>
-const today=()=>{
- const d=new Date();
- return String(d.getDate()).padStart(2,'0')+
-        String(d.getMonth()+1).padStart(2,'0')+
-        d.getFullYear();
+function today(){
+  const d=new Date();
+  return String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
+         d.getFullYear();
 }
-const sitePassword="RS@"+today();
-const apkPassword="APK@"+today();
-let siteTry=0,apkTry=0;
+
+const SITE_PASS="RS@"+today();
+const APK_PASS ="APK@"+today();
+const LIMIT=86400000;
 
 function checkSite(){
- if(siteTry>=3)return;
- if(sitePass.value===sitePassword){
-  localStorage.setItem("loginTime",Date.now());
-  loginBox.classList.add("hidden");
-  content.classList.remove("hidden");
-  startTimer();
- }else{
-  siteTry++;
-  siteErr.innerText="❌ Wrong password ("+(3-siteTry)+" attempts left)";
- }
+  if(sitePass.value===SITE_PASS){
+    localStorage.setItem("loginTime",Date.now());
+
+    let h=JSON.parse(localStorage.getItem("history")||"[]");
+    h.push(new Date().toLocaleString());
+    localStorage.setItem("history",JSON.stringify(h));
+
+    showContent();
+  }else{
+    siteErr.innerText="❌ Wrong password";
+  }
 }
 
 function checkApk(){
- if(apkTry>=3)return;
- if(apkPass.value===apkPassword){
-  apkLink.classList.remove("hidden");
- }else{
-  apkTry++;
-  apkErr.innerText="❌ Wrong APK password ("+(3-apkTry)+" attempts left)";
- }
+  if(apkPass.value===APK_PASS){
+    apkLink.classList.remove("hidden");
+  }else{
+    apkErr.innerText="❌ Wrong APK password";
+  }
+}
+
+function showContent(){
+  loginBox.classList.add("hidden");
+  content.classList.remove("hidden");
+  startTimer();
 }
 
 function startTimer(){
- const start=localStorage.getItem("loginTime");
- setInterval(()=>{
-  const diff=86400000-(Date.now()-start);
-  if(diff<=0){location.reload()}
-  const h=Math.floor(diff/3600000);
-  const m=Math.floor(diff%3600000/60000);
-  const s=Math.floor(diff%60000/1000);
-  timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
- },1000)
+  const start=Number(localStorage.getItem("loginTime"));
+  setInterval(()=>{
+    const left=LIMIT-(Date.now()-start);
+    if(left<=0) location.reload();
+
+    const h=Math.floor(left/3600000);
+    const m=Math.floor(left%3600000/60000);
+    const s=Math.floor(left%60000/1000);
+
+    timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
+  },1000);
+
+  const hist=JSON.parse(localStorage.getItem("history")||"[]");
+  history.innerHTML="<b>📜 Login History:</b><br>"+hist.join("<br>");
 }
 
 window.onload=()=>{
- const t=localStorage.getItem("loginTime");
- if(t && Date.now()-t<86400000){
-  loginBox.classList.add("hidden");
-  content.classList.remove("hidden");
-  startTimer();
- }
-}
+  const t=localStorage.getItem("loginTime");
+  if(t && Date.now()-t<LIMIT){
+    showContent();
+  }
+};
 </script>
+
 </body>
-      </html> return String(d.getDate()).padStart(2,'0')+
-        String(d.getMonth()+1).padStart(2,'0')+
-        d.getFullYear();
-}
-const sitePassword="RS@"+today();
-const apkPassword="APK@"+today();
-let siteTry=0,apkTry=0;
-
-function checkSite(){
- if(siteTry>=3)return;
- if(sitePass.value===sitePassword){
-  localStorage.setItem("loginTime",Date.now());
-  loginBox.classList.add("hidden");
-  content.classList.remove("hidden");
-  startTimer();
- }else{
-  siteTry++;
-  siteErr.innerText="❌ Wrong password ("+(3-siteTry)+" attempts left)";
- }
-}
-
-function checkApk(){
- if(apkTry>=3)return;
- if(apkPass.value===apkPassword){
-  apkLink.classList.remove("hidden");
- }else{
-  apkTry++;
-  apkErr.innerText="❌ Wrong APK password ("+(3-apkTry)+" attempts left)";
- }
-}
-
-function startTimer(){
- const start=localStorage.getItem("loginTime");
- setInterval(()=>{
-  const diff=86400000-(Date.now()-start);
-  if(diff<=0){location.reload()}
-  const h=Math.floor(diff/3600000);
-  const m=Math.floor(diff%3600000/60000);
-  const s=Math.floor(diff%60000/1000);
-  timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
- },1000)
-}
-
-window.onload=()=>{
- const t=localStorage.getItem("loginTime");
- if(t && Date.now()-t<86400000){
-  loginBox.classList.add("hidden");
-  content.classList.remove("hidden");
-  startTimer();
- }
-}
-</script>
-</body>
-</html>
+                                            </html>
