@@ -2,128 +2,134 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PW Secure Access</title>
+<title>Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root{
-  --pw:#000;
-  --green:#1db954;
-  --bg:#f5f5f5;
-  --card:#ffffff;
+  --bg:#0c0c0e;
+  --card:#151518;
+  --text:#ffffff;
+  --muted:#b5b5b5;
+  --accent:#ffffff;
+  --danger:#ff4d4d;
 }
+
 *{box-sizing:border-box}
 
 body{
   margin:0;
   background:var(--bg);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:var(--text);
 }
 
 .wrapper{
-  max-width:440px;
-  margin:28px auto;
-  padding:14px;
+  max-width:420px;
+  margin:40px auto;
+  padding:16px;
 }
 
-/* ===== PW LOGO ===== */
-.pw-logo-wrap{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:18px;
-}
-.pw-logo{
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:#000;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:20px;
-}
-.pw-text{
-  font-weight:800;
-  font-size:18px;
-}
-.pw-sub{
-  font-size:12px;
-  color:#666;
-}
-
-/* ===== CARD ===== */
 .card{
   background:var(--card);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 20px 50px rgba(0,0,0,.65);
+}
+
+.logo{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 12px;
 }
 
 h2{
-  margin:0 0 10px;
+  text-align:center;
+  margin:6px 0;
 }
+
+.sub{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
 input{
   width:100%;
   padding:13px;
-  border-radius:12px;
-  border:1.5px solid #ccc;
+  margin-top:14px;
+  border-radius:14px;
+  border:none;
   font-size:15px;
 }
+
 button{
   width:100%;
+  margin-top:16px;
   padding:13px;
-  margin-top:12px;
   border:none;
-  border-radius:14px;
-  background:#000;
-  color:#fff;
-  font-size:16px;
-  font-weight:700;
+  border-radius:16px;
+  background:var(--accent);
+  color:#000;
+  font-weight:800;
+  font-size:15px;
+  cursor:pointer;
 }
+
 .hint{
   font-size:12px;
-  margin-top:8px;
-  color:#555;
-}
-.error{
-  color:red;
-  font-size:13px;
-  margin-top:6px;
-}
-
-.hide{display:none}
-
-/* ===== ACCESS GRANTED ===== */
-.granted{
-  background:#e6fff1;
-  border:1px solid var(--green);
-  color:#0f7a39;
-  padding:12px;
-  border-radius:14px;
-  font-weight:800;
+  color:var(--muted);
   text-align:center;
+  margin-top:10px;
+}
+
+.error{
+  color:var(--danger);
+  text-align:center;
+  margin-top:8px;
+  font-size:13px;
+}
+
+#content{display:none}
+
+.banner{
+  background:#0a0a0a;
+  border-radius:16px;
+  padding:10px;
+  text-align:center;
+  font-weight:800;
   margin-bottom:16px;
 }
 
-/* ===== VIDEO ===== */
+.section{margin-top:20px}
+.section h3{margin-bottom:8px}
+
 iframe{
   width:100%;
-  height:230px;
-  border-radius:14px;
+  height:220px;
   border:none;
+  border-radius:16px;
 }
 
-/* ===== TIMER ===== */
-.timer{
+a.btn{
+  display:block;
   text-align:center;
-  font-weight:700;
-  padding:10px;
-  background:#fff3cd;
-  border-radius:12px;
+  margin-top:14px;
+  padding:13px;
+  background:#ffffff;
+  color:#000;
+  border-radius:16px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+ol{
+  padding-left:18px;
+  font-size:14px;
+  line-height:1.6;
+  color:#ddd;
 }
 </style>
 </head>
@@ -131,136 +137,91 @@ iframe{
 <body>
 <div class="wrapper">
 
-<!-- ===== LOGIN HEADER ===== -->
-<div class="pw-logo-wrap">
-  <div class="pw-logo">PW</div>
-  <div>
-    <div class="pw-text">PW Secure Portal</div>
-    <div class="pw-sub">Official Access System</div>
-  </div>
-</div>
-
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div class="card" id="loginBox">
-  <h2>Login Required</h2>
-  <input type="password" id="sitePass" placeholder="Enter password">
-  <button onclick="checkSite()">Continue</button>
+  <img src="pw-logo.png" class="logo">
+  <h2>Website Login</h2>
+  <div class="sub">Secure access required</div>
+
+  <input type="password" id="passInput" placeholder="Enter password">
+  <button onclick="check()">Continue</button>
 
   <div class="hint">
-    Password format: <b>RS@DDMMYYYY</b><br>
-    Today: <b id="siteHint"></b>
+    Password format: <b>DDMMYYYY</b><br>
+    Today: <b id="todayHint"></b>
   </div>
-  <div id="siteErr" class="error"></div>
+  <div class="error" id="err"></div>
 </div>
 
-<!-- ===== CONTENT ===== -->
-<div id="content" class="hide">
+<!-- CONTENT -->
+<div class="card" id="content">
+  <img src="pw-logo.png" class="logo">
+  <div class="banner">✅ ACCESS GRANTED</div>
 
-  <div class="granted">✅ ACCESS GRANTED</div>
-
-  <div class="card">
-    <div class="timer" id="timer"></div>
+  <div class="section">
+    <h3>🔑 How to Generate Access Key (Valid for 24 Hours)</h3>
+    <ol>
+      <li>If opened from an APP, Chrome may show ads.</li>
+      <li>Use <b>Opera Mini</b> to avoid ads.</li>
+      <li>If site doesn’t open, turn ON VPN.</li>
+      <li>Turn OFF Private DNS / Custom DNS.</li>
+      <li>Update Chrome to latest version.</li>
+      <li>If ad opens, press BACK once.</li>
+      <li>Laptop users: VPN + Ad-Blocker.</li>
+      <li>Key valid for 24 hours only.</li>
+    </ol>
   </div>
 
-  <!-- VIDEO -->
-  <div class="card">
-    <h2>🎥 Video Guide</h2>
+  <div class="section">
+    <h3>🎥 Video Guide</h3>
     <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
+    <div class="sub">Video sirf guide ke liye hai</div>
   </div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="card">
-    <h2>🔑 How to Generate Access Key (Valid for 24 Hours)</h2>
-
-    <p><b>Follow the steps carefully 👇</b></p>
-
-    <p><b>⚠️ Important Browser Note:</b><br>
-    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-    • To avoid ads, open the website directly using <b>Opera Mini browser</b>.<br>
-    • If app/website does not open, turn <b>ON VPN</b> and try again.</p>
-
-    <p><b>📌 Steps to Generate Key:</b></p>
-
-    <p><b>1️⃣ Turn OFF DNS</b><br>
-    Go to phone settings and disable Private DNS / Custom DNS.</p>
-
-    <p><b>2️⃣ Update Browser</b><br>
-    Make sure Google Chrome is updated to the latest version.</p>
-
-    <p><b>3️⃣ Use Correct Browser</b><br>
-    • Chrome → recommended<br>
-    • Opera Mini → fewer ads (best option)</p>
-
-    <p><b>4️⃣ If Any Extra Page / Ad Opens</b><br>
-    Just press BACK once and continue.<br>
-    Key will be generated successfully.</p>
-
-    <p><b>5️⃣ Laptop / PC Users</b><br>
-    • Turn ON VPN<br>
-    • Use Ad-Blocker extension<br>
-    (This helps avoid ads & redirects)</p>
-
-    <p><b>⏳ Key Validity:</b><br>
-    • Access Key is valid for 24 hours only<br>
-    • After 24 hours, you must login again and repeat the same process<br>
-    (This avoids copyright issues)</p>
+  <div class="section">
+    <h3>📦 Download Application (APK)</h3>
+    <a class="btn"
+       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+       target="_blank">
+       Download App (APK)
+    </a>
+    <div class="sub">Android devices only</div>
   </div>
-
-  <!-- WEBSITE -->
-  <div class="card">
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      🌐 Open Website
-    </button>
-  </div>
-
 </div>
 
 </div>
 
 <script>
-function todayStr(){
+const maxAttempts = 3;
+let attempts = 0;
+
+function todayPassword(){
   const d=new Date();
-  return String(d.getDate()).padStart(2,"0")+
-         String(d.getMonth()+1).padStart(2,"0")+
+  return String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
          d.getFullYear();
 }
-const PASS="RS@"+todayStr();
-siteHint.innerText=PASS;
 
-let tries=0;
-function checkSite(){
-  if(tries>=3){
-    siteErr.innerText="Too many attempts. Try tomorrow.";
-    return;
-  }
-  if(sitePass.value!==PASS){
-    tries++;
-    siteErr.innerText="Wrong password ("+(3-tries)+" left)";
-    return;
-  }
-  loginBox.classList.add("hide");
-  content.classList.remove("hide");
+document.getElementById("todayHint").innerText = todayPassword();
 
-  if(!localStorage.getItem("startTime")){
-    localStorage.setItem("startTime",Date.now());
-    localStorage.setItem("passDate",todayStr());
+function check(){
+  const entered=document.getElementById("passInput").value;
+  if(entered===todayPassword()){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("content").style.display="block";
+  }else{
+    attempts++;
+    document.getElementById("err").innerText="❌ Wrong password";
+    if(attempts>=maxAttempts){
+      document.getElementById("err").innerText="❌ Too many attempts. Refresh page.";
+      document.querySelector("button").disabled=true;
+    }
   }
-  startTimer();
 }
 
-function startTimer(){
-  setInterval(()=>{
-    if(localStorage.getItem("passDate")!==todayStr()){
-      localStorage.clear();
-      location.reload();
-      return;
-    }
-    const left=86400000-(Date.now()-localStorage.getItem("startTime"));
-    const h=Math.floor(left/3600000);
-    const m=Math.floor((left%3600000)/60000);
-    const s=Math.floor((left%60000)/1000);
-    timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
-  },1000);
+window.onload=()=>{
+  document.getElementById("loginBox").style.display="block";
+  document.getElementById("content").style.display="none";
 }
 </script>
 
