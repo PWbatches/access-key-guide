@@ -1,141 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Secure Access</title>
 
 <style>
-/* ===== iOS THEME ===== */
+/* =====================
+   DESIGN TOKENS
+===================== */
+:root{
+  --bg:#f2f2f7;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#6b7280;
+  --primary:#007aff;
+  --danger:#ff3b30;
+}
+
+/* ===== DARK MODE AUTO ===== */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b0f1a;
+    --card:#111827;
+    --border:#1f2937;
+    --text:#e5e7eb;
+    --muted:#9ca3af;
+    --primary:#0a84ff;
+    --danger:#ff453a;
+  }
+}
+
+/* =====================
+   BASE
+===================== */
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui;
-  background:#f2f2f7;
-  color:#111;
+  background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+  color:var(--text);
+  transition:background .3s,color .3s;
 }
-
 .container{
   max-width:420px;
-  margin:auto;
-  padding:20px;
+  margin:0 auto;
+  padding:24px 16px 40px;
 }
-
-.card{
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(22px);
-  border-radius:28px;
-  padding:22px;
-  box-shadow:0 20px 45px rgba(0,0,0,.12);
-}
-
 .hidden{display:none}
 
-/* ===== PW LOGO (YOUR EXACT CODE – RESIZED) ===== */
-.pw-logo{
-  position: relative;
-  width: 120px;
-  height: 120px;
-  background-color: #000;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin:0 auto 14px;
+/* =====================
+   CARD
+===================== */
+.card{
+  background:var(--card);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  transition:background .3s;
 }
 
+/* =====================
+   PW LOGO
+===================== */
+.pw-logo{
+  position:relative;
+  width:120px;height:120px;
+  margin:0 auto 20px;
+  background:#000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 .ring{
   position:absolute;
-  width:85%;
-  height:85%;
+  inset:8%;
   border-radius:50%;
-  border:5px solid white;
+  border:5px solid #fff;
   border-left-color:transparent;
   border-right-color:transparent;
   transform:rotate(-10deg);
 }
-
 .text{
-  position:relative;
-  z-index:10;
-  color:white;
-  font-family:'Times New Roman',Times,serif;
-  font-weight:bold;
+  color:#fff;
+  font-family:"Times New Roman",Times,serif;
+  font-weight:700;
   font-size:64px;
-  line-height:1;
   display:flex;
   align-items:center;
   padding-top:6px;
 }
-
-.letter-p{margin-right:-12px;top:-3px;position:relative}
+.letter-p{margin-right:-12px;position:relative;top:-3px}
 .letter-w{position:relative}
 
-/* ===== INPUTS ===== */
-input,button{
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  border:none;
-  font-size:16px;
+/* =====================
+   TYPOGRAPHY
+===================== */
+h2{
+  font-size:20px;
+  margin:0 0 6px;
+  text-align:center;
+}
+.sub{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:18px;
 }
 
+/* =====================
+   INPUTS & BUTTONS
+===================== */
 input{
-  background:#f4f4f5;
-  margin-top:10px;
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  font-size:15px;
+}
+input::placeholder{color:var(--muted)}
+input:focus{
+  outline:none;
+  border-color:var(--primary);
 }
 
 button{
+  width:100%;
+  padding:14px 16px;
   margin-top:14px;
-  background:#007aff;
-  color:#fff;
+  border-radius:14px;
+  border:none;
+  font-size:15px;
   font-weight:600;
+  cursor:pointer;
 }
-
-button.secondary{
-  background:#e5e7eb;
-  color:#111;
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+.btn-secondary{
+  background:rgba(0,0,0,.05);
+  color:var(--text);
 }
 
 .info{
-  font-size:13px;
-  color:#6b7280;
+  font-size:12px;
+  color:var(--muted);
   margin-top:10px;
 }
-
 .error{
-  color:#ff3b30;
-  font-size:13px;
+  font-size:12px;
+  color:var(--danger);
   margin-top:8px;
 }
 
-/* ===== SECTIONS ===== */
-.section{
-  margin-top:20px;
-}
-.section h3{
-  margin-bottom:6px;
-}
-
-/* ===== INSTRUCTIONS ===== */
+/* =====================
+   INSTRUCTIONS
+===================== */
 .instructions{
   margin-top:14px;
-  background:#f4f4f5;
-  padding:16px;
+  padding:14px;
   border-radius:18px;
+  background:rgba(0,0,0,.04);
   font-size:13px;
   line-height:1.7;
+}
+
+/* =====================
+   INSIDE PAGE
+===================== */
+.timer{
+  margin-bottom:14px;
+  padding:12px 14px;
+  background:rgba(0,0,0,.04);
+  border-radius:18px;
+  font-size:13px;
+}
+.section{margin-top:20px}
+iframe{
+  width:100%;
+  height:220px;
+  border:none;
+  border-radius:18px;
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN -->
 <div id="loginBox" class="card">
 
-  <!-- PW LOGO -->
   <div class="pw-logo">
     <div class="ring"></div>
     <div class="text">
@@ -144,43 +204,33 @@ button.secondary{
     </div>
   </div>
 
-  <input id="sitePass" type="password" placeholder="Enter website password">
-  <button onclick="checkSite()">Login</button>
+  <h2>Secure Login</h2>
+  <div class="sub">Automatic light / dark mode enabled</div>
+
+  <input id="sitePass" type="password" placeholder="Website password"/>
+  <button class="btn-primary" onclick="checkSite()">Login</button>
 
   <div class="info">
-    Password Hint:<br>
-    Format: <b>RS@DDMMYYYY</b><br>
-    Example (today): <b id="todayPass"></b>
+    Password format: <b>RS@DDMMYYYY</b><br>
+    Today: <b id="todayPass"></b>
   </div>
 
-  <button class="secondary" onclick="toggleInstructions()">Instructions</button>
+  <button class="btn-secondary" onclick="toggleInstructions()">Instructions</button>
   <div id="siteErr" class="error"></div>
 
-  <!-- INSTRUCTIONS (INSIDE) -->
   <div id="instructions" class="instructions hidden">
 🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
 Follow the steps carefully 👇<br><br>
-
-⚠️ <b>Important Browser Note:</b><br>
-• If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using Opera Mini browser.<br>
-• If app/website does not open, turn ON VPN and try again.<br><br>
-
-📌 <b>Steps to Generate Key:</b><br>
-1️⃣ Turn OFF Private DNS / Custom DNS.<br>
-2️⃣ Update Google Chrome.<br>
-3️⃣ Use Chrome (recommended) or Opera Mini.<br>
-4️⃣ Extra ad opens → press BACK once.<br>
-5️⃣ Laptop users → VPN + Ad-Blocker.<br><br>
-
-⏳ <b>Key Validity:</b><br>
-Valid for 24 hours only.<br>
-(This avoids copyright issues)
+• Turn OFF Private DNS<br>
+• Update Chrome<br>
+• Use Chrome / Opera Mini<br>
+• Extra page → BACK once<br>
+• Laptop → VPN + Ad-Blocker<br><br>
+⏳ Valid for 24 hours only
   </div>
 </div>
 
-<!-- INSIDE PAGE -->
+<!-- INSIDE -->
 <div id="contentBox" class="card hidden">
 
   <div class="pw-logo">
@@ -191,85 +241,61 @@ Valid for 24 hours only.<br>
     </div>
   </div>
 
-  <div class="section">
-    <h3>🌐 Website</h3>
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
-  </div>
+  <div class="timer" id="sessionTimer"></div>
 
   <div class="section">
-    <h3>🎥 Video Guide</h3>
-    <iframe width="100%" height="220" style="border-radius:18px;border:none"
-      src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
-  </div>
-
-  <div class="section">
-    <h3>📦 APK Download</h3>
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <button onclick="checkApk()">Unlock APK</button>
-
-    <div class="info">
-      Format: <b>APK@DDMMYYYY</b>
-    </div>
-
-    <a id="apkLink" class="hidden"
-      href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
-      <button>Download APK</button>
-    </a>
-
-    <div id="apkErr" class="error"></div>
+    <div class="timer" id="examTimer"></div>
   </div>
 
 </div>
-
 </div>
 
 <script>
+const DAY=86400000;
+const EXAM_TIME=new Date("2026-06-01T09:00:00").getTime();
+
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
-
 const sitePassword="RS@"+today();
-const apkPassword="APK@"+today();
-document.getElementById("todayPass").innerText=sitePassword;
-
-let attempts=0,apkAttempts=0;
+todayPass.innerText=sitePassword;
 
 function checkSite(){
-  if(attempts>=3){
-    siteErr.innerText="Too many attempts. Try tomorrow.";
-    return;
-  }
   if(sitePass.value===sitePassword){
+    localStorage.setItem("loginTime",Date.now());
+    localStorage.setItem("loginDate",today());
     loginBox.classList.add("hidden");
     contentBox.classList.remove("hidden");
+    startTimers();
   }else{
-    attempts++;
-    siteErr.innerText="Wrong password ("+(3-attempts)+" left)";
+    siteErr.innerText="Wrong password";
   }
 }
 
-function checkApk(){
-  if(apkAttempts>=3){
-    apkErr.innerText="APK locked. Try tomorrow.";
-    return;
-  }
-  if(apkPass.value===apkPassword){
-    apkLink.classList.remove("hidden");
-  }else{
-    apkAttempts++;
-    apkErr.innerText="Wrong APK password";
-  }
+function startTimers(){
+  setInterval(()=>{
+    const t=localStorage.getItem("loginTime");
+    const d=localStorage.getItem("loginDate");
+    if(!t||d!==today()||Date.now()-t>DAY){
+      localStorage.clear();location.reload();
+    }
+    const left=DAY-(Date.now()-t);
+    sessionTimer.innerText=`Session expires in ${Math.floor(left/3600000)}h ${Math.floor(left%3600000/60000)}m ${Math.floor(left%60000/1000)}s`;
+  },1000);
+
+  setInterval(()=>{
+    const diff=EXAM_TIME-Date.now();
+    examTimer.innerText=diff<=0?"Exam Started":
+      `${Math.floor(diff/86400000)}d ${Math.floor(diff%86400000/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
+  },1000);
 }
 
 function toggleInstructions(){
   instructions.classList.toggle("hidden");
 }
 </script>
-
 </body>
-    </html>
+  </html>
