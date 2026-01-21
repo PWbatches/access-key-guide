@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PW Secure Login</title>
+<title>PW Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== PW THEME ===== */
 :root{
   --pw-purple:#5b2bd6;
   --pw-purple-dark:#4a21b8;
@@ -20,13 +19,13 @@
 body{
   margin:0;
   background:var(--bg);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   color:var(--text);
 }
 
 .wrapper{
   max-width:420px;
-  margin:40px auto;
+  margin:32px auto;
   padding:0 14px;
 }
 
@@ -37,7 +36,7 @@ body{
   padding:22px 18px 26px;
 }
 
-/* ===== HEADER ===== */
+/* Header */
 .brand{
   display:flex;
   align-items:center;
@@ -51,25 +50,18 @@ body{
   display:grid;place-items:center;
   color:#fff;font-weight:800;
 }
-.title{
-  font-size:20px;font-weight:800;color:var(--pw-purple);
-}
-.subtitle{
-  font-size:13px;color:#666;margin-bottom:16px;
-}
+.title{font-size:20px;font-weight:800;color:var(--pw-purple)}
+.subtitle{font-size:13px;color:#666;margin-bottom:16px}
 
-/* ===== INPUTS ===== */
+/* Inputs */
 input{
   width:100%;
   padding:12px 14px;
   border-radius:12px;
   border:1.5px solid #e5e7eb;
   font-size:15px;
-  outline:none;
 }
-input:focus{
-  border-color:var(--pw-purple);
-}
+input:focus{border-color:var(--pw-purple);outline:none}
 
 .btn{
   width:100%;
@@ -83,31 +75,15 @@ input:focus{
   font-weight:700;
   cursor:pointer;
 }
-.btn:active{ background:var(--pw-purple-dark); }
+.btn:active{background:var(--pw-purple-dark)}
 
-/* ===== TEXT ===== */
-.hint{
-  margin-top:10px;
-  font-size:12px;
-  color:#555;
-  line-height:1.5;
-}
-.hint b{ color:var(--pw-purple); }
+.hint{margin-top:10px;font-size:12px;color:#555;line-height:1.5}
+.hint b{color:var(--pw-purple)}
+.error{margin-top:8px;font-size:13px;color:#d32f2f}
+.attempts{margin-top:4px;font-size:12px;color:#777}
 
-.error{
-  margin-top:8px;
-  font-size:13px;
-  color:#d32f2f;
-}
-.attempts{
-  margin-top:4px;
-  font-size:12px;
-  color:#777;
-}
-
-/* ===== CONTENT ===== */
-#content{ display:none; }
-
+/* Content */
+#content{display:none}
 .badge{
   display:inline-block;
   background:rgba(91,43,214,.08);
@@ -118,7 +94,6 @@ input:focus{
   font-weight:700;
   margin-bottom:10px;
 }
-
 .timer{
   background:#fff7cc;
   border:1px dashed var(--pw-yellow);
@@ -129,136 +104,163 @@ input:focus{
   text-align:center;
   margin-bottom:12px;
 }
-
-.success{
-  color:#1b5e20;
-  font-weight:700;
-  margin-bottom:10px;
+.section-title{
+  color:var(--pw-purple);
+  font-weight:800;
+  margin:18px 0 8px;
 }
 
-ul{
-  list-style:none;
-  padding:0;margin:10px 0 0;
-  font-size:13px;color:#444;
+/* Video */
+iframe{
+  width:100%;
+  height:220px;
+  border-radius:14px;
+  border:1px solid #e5e7eb;
 }
-ul li{
-  padding:6px 0;
-  border-bottom:1px dashed #e5e7eb;
+
+/* APK Button */
+.apk-btn{
+  display:block;
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#ff9800,#ffcf00);
+  color:#3b2a00;
+  font-weight:800;
+  text-align:center;
+  text-decoration:none;
 }
+
+/* Instructions */
+ol{
+  font-size:13px;
+  color:#444;
+  padding-left:18px;
+}
+ol li{margin-bottom:6px}
+
+/* History */
+ul{list-style:none;padding:0;margin:8px 0 0;font-size:13px}
+ul li{padding:6px 0;border-bottom:1px dashed #e5e7eb}
 </style>
 </head>
 
 <body>
 
 <div class="wrapper">
-  <div class="card">
+<div class="card">
 
-    <!-- 🔐 PASSWORD -->
-    <div id="passwordBox">
-      <div class="brand">
-        <div class="logo">PW</div>
-        <div>
-          <div class="title">Secure Login</div>
-          <div class="subtitle">PhysicsWallah-style access</div>
-        </div>
-      </div>
-
-      <input type="password" id="passInput" placeholder="Enter today’s password">
-      <button class="btn" onclick="checkPassword()">Continue</button>
-
-      <!-- ✅ PASSWORD HINT (FORMAT + TODAY EXAMPLE) -->
-      <div class="hint">
-        💡 <b>Password Hint</b><br>
-        Format: <b>RS@DDMMYYYY</b><br>
-        Today’s password example:
-        <b id="todayHint"></b>
-      </div>
-
-      <div id="error" class="error"></div>
-      <div id="attemptsInfo" class="attempts"></div>
+<!-- 🔐 PASSWORD -->
+<div id="passwordBox">
+  <div class="brand">
+    <div class="logo">PW</div>
+    <div>
+      <div class="title">Secure Login</div>
+      <div class="subtitle">PhysicsWallah style access</div>
     </div>
-
-    <!-- ✅ CONTENT -->
-    <div id="content">
-      <span class="badge">ACCESS ACTIVE</span>
-      <div class="timer" id="timer"></div>
-
-      <div class="success">Access granted successfully</div>
-
-      <h4 style="color:var(--pw-purple);margin-top:14px;">
-        Login History (Last 5)
-      </h4>
-      <ul id="loginHistory"></ul>
-    </div>
-
   </div>
+
+  <input type="password" id="passInput" placeholder="Enter today’s password">
+  <button class="btn" onclick="checkPassword()">Continue</button>
+
+  <!-- PASSWORD HINT -->
+  <div class="hint">
+    💡 <b>Password Hint</b><br>
+    Format: <b>RS@DDMMYYYY</b><br>
+    Today example: <b id="todayHint"></b>
+  </div>
+
+  <div id="error" class="error"></div>
+  <div id="attemptsInfo" class="attempts"></div>
+</div>
+
+<!-- ✅ CONTENT -->
+<div id="content">
+  <span class="badge">ACCESS ACTIVE</span>
+  <div class="timer" id="timer"></div>
+
+  <!-- 🎥 VIDEO -->
+  <div class="section-title">🎥 Video Guide</div>
+  <iframe
+    src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"
+    allowfullscreen>
+  </iframe>
+
+  <!-- 📦 APK -->
+  <div class="section-title">📦 Download Application</div>
+  <a class="apk-btn"
+     href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+     target="_blank">
+     ⬇ Download APK
+  </a>
+
+  <!-- 📌 INSTRUCTIONS -->
+  <div class="section-title">📌 Important Instructions</div>
+  <ol>
+    <li>Turn OFF Private / Custom DNS in phone settings.</li>
+    <li>Use Chrome or Opera Mini (Opera Mini = fewer ads).</li>
+    <li>If ads open, press BACK once and continue.</li>
+    <li>If website does not open, turn ON VPN.</li>
+    <li>Laptop users: VPN + Ad-Blocker recommended.</li>
+    <li>Password changes automatically every 24 hours.</li>
+  </ol>
+
+  <!-- 🧾 HISTORY -->
+  <div class="section-title">🧾 Login History (Last 5)</div>
+  <ul id="loginHistory"></ul>
+</div>
+
+</div>
 </div>
 
 <script>
-/* ===== SETTINGS ===== */
-const VALID_TIME = 24 * 60 * 60 * 1000; // 24 hours
+const VALID_TIME = 24*60*60*1000;
 const MAX_ATTEMPTS = 5;
 
-/* ===== PASSWORD (DDMMYYYY) ===== */
 function getTodayPassword(){
-  const d = new Date();
-  return "RS@" +
-    String(d.getDate()).padStart(2,"0") +
-    String(d.getMonth()+1).padStart(2,"0") +
-    d.getFullYear();
+  const d=new Date();
+  return "RS@"+String(d.getDate()).padStart(2,"0")
+        +String(d.getMonth()+1).padStart(2,"0")
+        +d.getFullYear();
 }
-
-/* ===== SHOW TODAY HINT ===== */
 document.getElementById("todayHint").innerText = getTodayPassword();
 
-/* ===== STATE ===== */
 let attempts = Number(localStorage.getItem("attempts")) || 0;
 
-/* ===== LOGIN ===== */
 function checkPassword(){
-  if(attempts >= MAX_ATTEMPTS){
-    document.getElementById("error").innerText =
-      "Too many wrong attempts. Try tomorrow.";
+  if(attempts>=MAX_ATTEMPTS){
+    error.innerText="Too many wrong attempts. Try tomorrow.";
     return;
   }
-
-  const entered = document.getElementById("passInput").value;
-  const todayPassword = getTodayPassword();
-
-  if(entered !== todayPassword){
+  if(passInput.value!==getTodayPassword()){
     attempts++;
-    localStorage.setItem("attempts", attempts);
-    document.getElementById("error").innerText = "Wrong password";
-    updateAttempts();
+    localStorage.setItem("attempts",attempts);
+    error.innerText="Wrong password";
+    attemptsInfo.innerText="Attempts left: "+(MAX_ATTEMPTS-attempts);
     return;
   }
-
   localStorage.removeItem("attempts");
 
-  const savedPasswordDate = localStorage.getItem("passwordDate");
-  if(savedPasswordDate !== todayPassword){
-    localStorage.setItem("passwordDate", todayPassword);
-    localStorage.setItem("timerStart", Date.now());
+  if(localStorage.getItem("passwordDate")!==getTodayPassword()){
+    localStorage.setItem("passwordDate",getTodayPassword());
+    localStorage.setItem("timerStart",Date.now());
   }
-
-  addLoginHistory();
+  addHistory();
   showContent();
 }
 
-/* ===== SHOW CONTENT ===== */
 function showContent(){
-  document.getElementById("passwordBox").style.display="none";
-  document.getElementById("content").style.display="block";
+  passwordBox.style.display="none";
+  content.style.display="block";
   startTimer();
   renderHistory();
 }
 
-/* ===== TIMER (PASSWORD-BOUND) ===== */
 function startTimer(){
-  const start = Number(localStorage.getItem("timerStart"));
+  const start=Number(localStorage.getItem("timerStart"));
   setInterval(()=>{
-    const left = VALID_TIME - (Date.now() - start);
-    if(left <= 0){
+    const left=VALID_TIME-(Date.now()-start);
+    if(left<=0){
       localStorage.removeItem("passwordDate");
       localStorage.removeItem("timerStart");
       location.reload();
@@ -267,43 +269,30 @@ function startTimer(){
     const h=Math.floor(left/3600000);
     const m=Math.floor((left%3600000)/60000);
     const s=Math.floor((left%60000)/1000);
-    document.getElementById("timer").innerText =
-      `Time left: ${h}h ${m}m ${s}s`;
+    timer.innerText=`Time left: ${h}h ${m}m ${s}s`;
   },1000);
 }
 
-/* ===== LOGIN HISTORY ===== */
-function addLoginHistory(){
-  let history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-  history.unshift(new Date().toLocaleString("en-IN"));
-  history = history.slice(0,5);
-  localStorage.setItem("loginHistory", JSON.stringify(history));
+function addHistory(){
+  let h=JSON.parse(localStorage.getItem("loginHistory"))||[];
+  h.unshift(new Date().toLocaleString("en-IN"));
+  h=h.slice(0,5);
+  localStorage.setItem("loginHistory",JSON.stringify(h));
 }
 function renderHistory(){
-  const list = document.getElementById("loginHistory");
-  const history = JSON.parse(localStorage.getItem("loginHistory")) || [];
-  list.innerHTML = history.length
-    ? history.map(h=>`<li>${h}</li>`).join("")
-    : "<li>No previous logins</li>";
+  const h=JSON.parse(localStorage.getItem("loginHistory"))||[];
+  loginHistory.innerHTML=h.length?h.map(x=>`<li>${x}</li>`).join(""):"<li>No logins yet</li>";
 }
 
-/* ===== ATTEMPTS INFO ===== */
-function updateAttempts(){
-  document.getElementById("attemptsInfo").innerText =
-    "Attempts left: " + (MAX_ATTEMPTS - attempts);
-}
-
-/* ===== ON LOAD ===== */
-window.onload = function(){
-  document.getElementById("passwordBox").style.display="block";
-  document.getElementById("content").style.display="none";
-  updateAttempts();
-
-  if(localStorage.getItem("passwordDate") === getTodayPassword()){
+window.onload=function(){
+  passwordBox.style.display="block";
+  content.style.display="none";
+  attemptsInfo.innerText="Attempts left: "+(MAX_ATTEMPTS-attempts);
+  if(localStorage.getItem("passwordDate")===getTodayPassword()){
     showContent();
   }
 };
 </script>
 
 </body>
-</html>
+  </html>
