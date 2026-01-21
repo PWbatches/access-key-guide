@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter Password</title>
+</head>
+
+<body style="text-align:center; margin-top:100px; font-family:Arial;">
+
+<h2>🔒 Enter Password</h2>
+
+<input type="password" id="p">
+<br><br>
+
+<button onclick="go()">Submit</button>
+
+<p id="m" style="color:red;"></p>
+
+<script>
+function go(){
+  if(document.getElementById("p").value=="RS@2026Key"){
+    window.location="download.html";
+  } else {
+    document.getElementById("m").innerText="Wrong password";
+  }
+}
+</script>
+
+</body>
+</html>
