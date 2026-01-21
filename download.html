@@ -6,21 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ===== APPLE iOS STYLE ===== */
 :root{
-  --bg:#0b0f1a;
-  --card:#111827;
-  --accent:#4f46e5;
-  --accent2:#22d3ee;
-  --text:#e5e7eb;
-  --error:#f87171;
+  --bg:#f2f2f7;
+  --card:#ffffffcc;
+  --text:#111;
+  --sub:#6b7280;
+  --accent:#007aff;
+  --danger:#ff3b30;
 }
 
 body{
   margin:0;
-  font-family:system-ui,Arial;
-  background:linear-gradient(180deg,#0b0f1a,#020617);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+  background:var(--bg);
   color:var(--text);
-  min-height:100vh;
 }
 
 .container{
@@ -31,9 +31,10 @@ body{
 
 .card{
   background:var(--card);
-  border-radius:22px;
+  backdrop-filter:blur(20px);
+  border-radius:28px;
   padding:24px;
-  box-shadow:0 25px 60px rgba(0,0,0,.55);
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
 .hidden{display:none}
@@ -41,76 +42,89 @@ body{
 /* LOGO */
 .logo{
   width:72px;
-  display:block;
-  margin:0 auto 12px;
+  height:72px;
+  margin:0 auto 14px;
+  border-radius:18px;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:22px;
 }
 
 /* GUIDE ORB */
 .guide-orb{
-  width:110px;
-  height:110px;
+  width:90px;
+  height:90px;
   margin:0 auto 10px;
   border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#fff,#22d3ee,#4f46e5);
-  box-shadow:0 0 30px rgba(79,70,229,.6);
+  background:radial-gradient(circle at 30% 30%,#fff,#dbeafe,#93c5fd);
+  box-shadow:0 0 25px rgba(0,122,255,.35);
 }
 
 .guide-text{
   text-align:center;
   font-size:13px;
-  color:#c7d2fe;
-  margin-bottom:12px;
+  color:var(--sub);
+  margin-bottom:14px;
 }
 
 /* INPUTS */
 input,button{
   width:100%;
   padding:14px;
-  border-radius:14px;
+  border-radius:16px;
   border:none;
-  font-size:15px;
+  font-size:16px;
 }
 
 input{
-  background:#020617;
-  color:#fff;
-  border:1px solid #1f2937;
-  margin-top:10px;
+  background:#f4f4f5;
+  margin-top:8px;
 }
 
 button{
   margin-top:14px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#000;
-  font-weight:700;
-  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+  font-weight:600;
 }
 
 button.secondary{
-  background:#1f2937;
-  color:#fff;
+  background:#e5e7eb;
+  color:#111;
 }
 
 .info{
   font-size:13px;
+  color:var(--sub);
   margin-top:10px;
-  color:#a5b4fc;
 }
 
 .error{
-  color:var(--error);
+  color:var(--danger);
   font-size:13px;
   margin-top:8px;
 }
 
-/* INSTRUCTIONS (INSIDE CARD) */
+/* INSIDE INSTRUCTIONS */
 .instructions{
   margin-top:16px;
-  background:#020617;
+  background:#f4f4f5;
   padding:16px;
   border-radius:18px;
   font-size:13px;
   line-height:1.7;
+}
+
+/* INSIDE PAGE */
+.section{
+  margin-top:18px;
+}
+.section h3{
+  margin-bottom:6px;
 }
 </style>
 </head>
@@ -119,11 +133,11 @@ button.secondary{
 
 <div class="container">
 
-<!-- LOGIN -->
-<div class="card">
+<!-- LOGIN PAGE -->
+<div id="loginBox" class="card">
 
-  <!-- LOGO (replace logo.png with your image) -->
-  <img src="logo.png" class="logo" alt="Logo">
+  <!-- LOGO (VISIBLE ALWAYS) -->
+  <div class="logo">PW</div>
 
   <div class="guide-orb"></div>
   <div class="guide-text">
@@ -140,12 +154,12 @@ button.secondary{
   </div>
 
   <button class="secondary" onclick="toggleInstructions()">
-    📘 Instructions
+    Instructions
   </button>
 
   <div id="siteErr" class="error"></div>
 
-  <!-- INSTRUCTIONS (FULL, EXACT, INSIDE) -->
+  <!-- INSTRUCTIONS INSIDE LOGIN -->
   <div id="instructions" class="instructions hidden">
 🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
 
@@ -158,35 +172,55 @@ Follow the steps carefully 👇<br><br>
 
 📌 <b>Steps to Generate Key:</b><br><br>
 
-1️⃣ <b>Turn OFF DNS</b><br>
-Go to phone settings and disable Private DNS / Custom DNS.<br><br>
+1️⃣ Turn OFF DNS<br>
+Disable Private DNS / Custom DNS.<br><br>
 
-2️⃣ <b>Update Browser</b><br>
-Make sure Google Chrome is updated to the latest version.<br><br>
+2️⃣ Update Browser<br>
+Make sure Chrome is updated.<br><br>
 
-3️⃣ <b>Use Correct Browser</b><br>
+3️⃣ Use Correct Browser<br>
 • Chrome → recommended<br>
-• Opera Mini → fewer ads (best option)<br><br>
+• Opera Mini → fewer ads<br><br>
 
-4️⃣ <b>If Any Extra Page / Ad Opens</b><br>
-Just press BACK once and continue.<br>
-Key will be generated successfully.<br><br>
+4️⃣ Extra Page / Ad Opens<br>
+Press BACK once and continue.<br><br>
 
-5️⃣ <b>Laptop / PC Users</b><br>
+5️⃣ Laptop / PC Users<br>
 • Turn ON VPN<br>
-• Use Ad-Blocker extension<br>
-(This helps avoid ads & redirects)<br><br>
+• Use Ad-Blocker<br><br>
 
 ⏳ <b>Key Validity:</b><br>
-• Access Key is valid for <b>24 hours only</b><br>
-• After 24 hours, you must login again and repeat the same process<br>
+Valid for 24 hours only.<br>
 (This avoids copyright issues)
   </div>
 
 </div>
+
+<!-- INSIDE PAGE -->
+<div id="contentBox" class="card hidden">
+
+  <div class="logo">PW</div>
+  <div class="guide-text">Access Granted</div>
+
+  <div class="section">
+    <h3>🌐 Website</h3>
+    <button onclick="window.open('https://rarestudy.site','_blank')">
+      Open Website
+    </button>
+  </div>
+
+  <div class="section">
+    <h3>🎥 Video Guide</h3>
+    <iframe width="100%" height="220" style="border-radius:18px;border:none"
+      src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
+  </div>
+
+</div>
+
 </div>
 
 <script>
+/* ===== LOGIN LOGIC FIXED ===== */
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
@@ -201,15 +235,15 @@ let attempts=0;
 
 function checkSite(){
   if(attempts>=3){
-    siteErr.innerText="❌ Too many wrong attempts. Try again tomorrow.";
+    siteErr.innerText="Too many attempts. Try tomorrow.";
     return;
   }
   if(sitePass.value===sitePassword){
-    siteErr.style.color="#22c55e";
-    siteErr.innerText="✅ Access Granted";
+    loginBox.classList.add("hidden");
+    contentBox.classList.remove("hidden");
   }else{
     attempts++;
-    siteErr.innerText="❌ Wrong password ("+(3-attempts)+" attempts left)";
+    siteErr.innerText="Wrong password ("+(3-attempts)+" left)";
   }
 }
 
