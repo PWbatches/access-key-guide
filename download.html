@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PW Secure Access</title>
+<title>Secure Access</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -51,9 +51,9 @@ button{
   font-size:12px;
   margin-top:8px;
   color:#555;
+  line-height:1.5;
 }
 .error{color:#d32f2f;font-size:13px;margin-top:6px}
-#content{display:none}
 .timer{
   background:#fff7cc;
   border:1px dashed var(--yellow);
@@ -81,6 +81,8 @@ iframe{
   text-decoration:none;
 }
 .section{margin-top:18px}
+ol{font-size:13px;color:#444;padding-left:18px}
+ol li{margin-bottom:6px}
 </style>
 </head>
 
@@ -88,46 +90,63 @@ iframe{
 <div class="wrapper">
 <div class="card">
 
-<!-- WEBSITE LOGIN -->
+<!-- 🌐 WEBSITE LOGIN -->
 <div id="siteBox">
   <h2>Website Login</h2>
-  <div class="sub">PhysicsWallah style secure access</div>
+  <div class="sub">Access video & instructions</div>
 
   <input type="password" id="sitePass" placeholder="Enter website password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
-    Format: <b>RS@DDMMYYYY</b><br>
-    Today: <b id="siteHint"></b>
+    Website password format:<br>
+    <b>RS@DDMMYYYY</b><br>
+    Today example: <b id="siteHint"></b>
   </div>
+
   <div id="siteErr" class="error"></div>
 </div>
 
-<!-- WEBSITE CONTENT -->
-<div id="content">
+<!-- 🌐 WEBSITE CONTENT -->
+<div id="content" style="display:none">
   <div class="timer" id="siteTimer"></div>
 
   <div class="section">
-    <h2>Video Guide</h2>
+    <h2>🎥 Video Guide</h2>
     <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
   </div>
 
   <div class="section">
-    <h2>Download Application</h2>
-    <button onclick="openApkBox()">⬇ Download APK</button>
+    <h2>📌 Important Instructions</h2>
+    <ol>
+      <li>Turn OFF Private / Custom DNS in phone settings.</li>
+      <li>Use Chrome or Opera Mini (Opera Mini = fewer ads).</li>
+      <li>If any ad page opens, press BACK once.</li>
+      <li>If website does not open, turn ON VPN.</li>
+      <li>Laptop users: VPN + Ad-Blocker recommended.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>📦 Download Application</h2>
+    <button onclick="openApk()">Proceed to APK Download</button>
   </div>
 </div>
 
-<!-- APK PASSWORD -->
+<!-- 📦 APK LOGIN -->
 <div id="apkBox" style="display:none">
-  <h2>APK Password</h2>
+  <h2>APK Download Login</h2>
+  <div class="sub">APK protected separately</div>
+
   <input type="password" id="apkPass" placeholder="Enter APK password">
   <button onclick="checkApk()">Unlock Download</button>
 
   <div class="hint">
-    Format: <b>APK@DDMMYYYY</b><br>
-    Today: <b id="apkHint"></b>
+    APK password format:<br>
+    <b>APK@DDMMYYYY</b><br>
+    Today example: <b id="apkHint"></b>
   </div>
+
   <div id="apkErr" class="error"></div>
 
   <a id="apkLink" class="apk-btn" style="display:none"
@@ -141,10 +160,12 @@ iframe{
 </div>
 
 <script>
-/* ===== PASSWORDS ===== */
-function today(){const d=new Date();
-return String(d.getDate()).padStart(2,"0")+
-String(d.getMonth()+1).padStart(2,"0")+d.getFullYear();}
+function today(){
+  const d=new Date();
+  return String(d.getDate()).padStart(2,"0")+
+         String(d.getMonth()+1).padStart(2,"0")+
+         d.getFullYear();
+}
 
 const SITE_PASS="RS@"+today();
 const APK_PASS="APK@"+today();
@@ -152,23 +173,22 @@ const APK_PASS="APK@"+today();
 siteHint.innerText=SITE_PASS;
 apkHint.innerText=APK_PASS;
 
-/* ===== ATTEMPTS (LOW) ===== */
-let siteTry=Number(localStorage.getItem("siteTry"))||0; // max 3
-let apkTry=Number(localStorage.getItem("apkTry"))||0;   // max 2
+let siteTry=Number(localStorage.getItem("siteTry"))||0;
+let apkTry=Number(localStorage.getItem("apkTry"))||0;
 
-/* ===== WEBSITE LOGIN ===== */
+/* WEBSITE LOGIN */
 function checkSite(){
   if(siteTry>=3){siteErr.innerText="Too many attempts. Try tomorrow.";return;}
   if(sitePass.value!==SITE_PASS){
     siteTry++;localStorage.setItem("siteTry",siteTry);
-    siteErr.innerText="Wrong password";return;
+    siteErr.innerText="Wrong website password";return;
   }
   siteBox.style.display="none";
   content.style.display="block";
   startTimer();
 }
 
-/* ===== TIMER ===== */
+/* TIMER */
 function startTimer(){
   if(!localStorage.getItem("start"))
     localStorage.setItem("start",Date.now());
@@ -183,8 +203,9 @@ function startTimer(){
   },1000);
 }
 
-/* ===== APK PASSWORD ===== */
-function openApkBox(){
+/* APK LOGIN */
+function openApk(){
+  content.style.display="none";
   apkBox.style.display="block";
 }
 function checkApk(){
@@ -198,4 +219,4 @@ function checkApk(){
 </script>
 
 </body>
-    </html>
+</html>
