@@ -7,49 +7,47 @@
 
 <style>
 :root{
-  --pw:#5b2bd6;
-  --pw-dark:#4a21b8;
-  --yellow:#ffcf00;
-  --bg:#f6f7fb;
+  --pw:#000;
+  --green:#1db954;
+  --bg:#f5f5f5;
+  --card:#ffffff;
 }
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:linear-gradient(180deg,#f3f0ff,var(--bg));
+  background:var(--bg);
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
 
 .wrapper{
-  max-width:430px;
+  max-width:440px;
   margin:28px auto;
   padding:14px;
 }
 
-/* ===== PW HEADER ===== */
-.pw-header{
+/* ===== PW LOGO ===== */
+.pw-logo-wrap{
   display:flex;
   align-items:center;
   gap:12px;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 .pw-logo{
-  width:46px;
-  height:46px;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--pw),var(--pw-dark));
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#000;
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#fff;
   font-weight:900;
   font-size:20px;
-  box-shadow:0 6px 18px rgba(91,43,214,.35);
 }
-.pw-title{
+.pw-text{
   font-weight:800;
   font-size:18px;
-  color:var(--pw);
 }
 .pw-sub{
   font-size:12px;
@@ -58,96 +56,75 @@ body{
 
 /* ===== CARD ===== */
 .card{
-  background:#fff;
-  border-radius:18px;
+  background:var(--card);
+  border-radius:16px;
   padding:20px;
-  box-shadow:0 12px 30px rgba(0,0,0,.1);
   margin-bottom:20px;
-  animation:fadeUp .4s ease;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:none}
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 h2{
-  margin:0 0 6px;
-  color:var(--pw);
-  font-weight:800;
+  margin:0 0 10px;
 }
-.sub{
-  font-size:13px;
-  color:#666;
-  margin-bottom:12px;
-}
-
-/* ===== INPUTS & BUTTONS ===== */
 input{
   width:100%;
-  padding:13px 14px;
-  border-radius:14px;
-  border:1.5px solid #ddd;
+  padding:13px;
+  border-radius:12px;
+  border:1.5px solid #ccc;
   font-size:15px;
-  transition:.2s;
 }
-input:focus{
-  outline:none;
-  border-color:var(--pw);
-  box-shadow:0 0 0 3px rgba(91,43,214,.15);
-}
-
 button{
   width:100%;
   padding:13px;
   margin-top:12px;
   border:none;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--pw),var(--pw-dark));
+  border-radius:14px;
+  background:#000;
   color:#fff;
   font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-  transition:.2s;
+  font-weight:700;
 }
-button:hover{transform:translateY(-1px)}
-button:active{transform:scale(.98)}
-
 .hint{
   font-size:12px;
-  color:#555;
   margin-top:8px;
-  line-height:1.4;
+  color:#555;
 }
 .error{
-  color:#d32f2f;
+  color:red;
   font-size:13px;
   margin-top:6px;
 }
 
+.hide{display:none}
+
+/* ===== ACCESS GRANTED ===== */
+.granted{
+  background:#e6fff1;
+  border:1px solid var(--green);
+  color:#0f7a39;
+  padding:12px;
+  border-radius:14px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:16px;
+}
+
+/* ===== VIDEO ===== */
+iframe{
+  width:100%;
+  height:230px;
+  border-radius:14px;
+  border:none;
+}
+
 /* ===== TIMER ===== */
 .timer{
-  background:#fff7cc;
-  border:1px dashed var(--yellow);
-  padding:10px;
-  border-radius:14px;
   text-align:center;
-  font-weight:800;
-  color:#7a5a00;
+  font-weight:700;
+  padding:10px;
+  background:#fff3cd;
+  border-radius:12px;
 }
-
-/* ===== CONTENT ===== */
-ol{
-  font-size:14px;
-  padding-left:18px;
-}
-ol li{margin-bottom:6px}
-
-.apk-btn{
-  background:linear-gradient(135deg,#ff9800,#ffcf00);
-  color:#3b2a00;
-}
-
-.hide{display:none}
 </style>
 </head>
 
@@ -155,20 +132,18 @@ ol li{margin-bottom:6px}
 <div class="wrapper">
 
 <!-- ===== LOGIN HEADER ===== -->
-<div class="pw-header">
+<div class="pw-logo-wrap">
   <div class="pw-logo">PW</div>
   <div>
-    <div class="pw-title">PW Secure Portal</div>
-    <div class="pw-sub">Official access system</div>
+    <div class="pw-text">PW Secure Portal</div>
+    <div class="pw-sub">Official Access System</div>
   </div>
 </div>
 
-<!-- 🔐 LOGIN -->
+<!-- ===== LOGIN ===== -->
 <div class="card" id="loginBox">
   <h2>Login Required</h2>
-  <div class="sub">Enter password to continue</div>
-
-  <input type="password" id="sitePass" placeholder="Website password">
+  <input type="password" id="sitePass" placeholder="Enter password">
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
@@ -178,96 +153,91 @@ ol li{margin-bottom:6px}
   <div id="siteErr" class="error"></div>
 </div>
 
-<!-- 🔓 CONTENT -->
+<!-- ===== CONTENT ===== -->
 <div id="content" class="hide">
 
-  <!-- HEADER AFTER LOGIN -->
-  <div class="pw-header">
-    <div class="pw-logo">PW</div>
-    <div>
-      <div class="pw-title">PW Learning Access</div>
-      <div class="pw-sub">Verified user session</div>
-    </div>
-  </div>
+  <div class="granted">✅ ACCESS GRANTED</div>
 
   <div class="card">
     <div class="timer" id="timer"></div>
   </div>
 
+  <!-- VIDEO -->
   <div class="card">
-    <h2>📌 Important Instructions</h2>
-    <ol>
-      <li>Turn OFF Private / Custom DNS.</li>
-      <li>Use Chrome or Opera Mini.</li>
-      <li>If ads open, press BACK once.</li>
-      <li>If site does not open, turn ON VPN.</li>
-      <li>Laptop users: VPN + Ad-Blocker.</li>
-    </ol>
+    <h2>🎥 Video Guide</h2>
+    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
   </div>
 
+  <!-- INSTRUCTIONS -->
   <div class="card">
-    <h2>🌐 Open Website</h2>
-    <button onclick="openWebsite()">Go to rarestudy.site</button>
+    <h2>🔑 How to Generate Access Key (Valid for 24 Hours)</h2>
+
+    <p><b>Follow the steps carefully 👇</b></p>
+
+    <p><b>⚠️ Important Browser Note:</b><br>
+    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+    • To avoid ads, open the website directly using <b>Opera Mini browser</b>.<br>
+    • If app/website does not open, turn <b>ON VPN</b> and try again.</p>
+
+    <p><b>📌 Steps to Generate Key:</b></p>
+
+    <p><b>1️⃣ Turn OFF DNS</b><br>
+    Go to phone settings and disable Private DNS / Custom DNS.</p>
+
+    <p><b>2️⃣ Update Browser</b><br>
+    Make sure Google Chrome is updated to the latest version.</p>
+
+    <p><b>3️⃣ Use Correct Browser</b><br>
+    • Chrome → recommended<br>
+    • Opera Mini → fewer ads (best option)</p>
+
+    <p><b>4️⃣ If Any Extra Page / Ad Opens</b><br>
+    Just press BACK once and continue.<br>
+    Key will be generated successfully.</p>
+
+    <p><b>5️⃣ Laptop / PC Users</b><br>
+    • Turn ON VPN<br>
+    • Use Ad-Blocker extension<br>
+    (This helps avoid ads & redirects)</p>
+
+    <p><b>⏳ Key Validity:</b><br>
+    • Access Key is valid for 24 hours only<br>
+    • After 24 hours, you must login again and repeat the same process<br>
+    (This avoids copyright issues)</p>
   </div>
 
+  <!-- WEBSITE -->
   <div class="card">
-    <button onclick="openApk()">⬇ Download APK</button>
+    <button onclick="window.open('https://rarestudy.site','_blank')">
+      🌐 Open Website
+    </button>
   </div>
-</div>
 
-<!-- 📦 APK LOGIN -->
-<div class="card hide" id="apkBox">
-  <h2>APK Download Security</h2>
-  <div class="sub">Extra protection enabled</div>
-
-  <input type="password" id="apkPass" placeholder="APK password">
-  <button onclick="checkApk()">Unlock Download</button>
-
-  <div class="hint">
-    Password format: <b>APK@DDMMYYYY</b><br>
-    Today: <b id="apkHint"></b>
-  </div>
-  <div id="apkErr" class="error"></div>
-
-  <a id="apkLink" class="hide"
-     href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
-    <button class="apk-btn">⬇ Download APK</button>
-  </a>
 </div>
 
 </div>
 
 <script>
-/* ===== DATE & PASSWORD ===== */
 function todayStr(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
-const SITE_PASS="RS@"+todayStr();
-const APK_PASS ="APK@"+todayStr();
+const PASS="RS@"+todayStr();
+siteHint.innerText=PASS;
 
-siteHint.innerText=SITE_PASS;
-apkHint.innerText =APK_PASS;
-
-/* ===== ATTEMPTS ===== */
-let siteTry=Number(localStorage.getItem("siteTry"))||0;
-let apkTry =Number(localStorage.getItem("apkTry"))||0;
-
-/* ===== WEBSITE LOGIN ===== */
+let tries=0;
 function checkSite(){
-  if(siteTry>=3){
+  if(tries>=3){
     siteErr.innerText="Too many attempts. Try tomorrow.";
     return;
   }
-  if(sitePass.value!==SITE_PASS){
-    siteTry++;
-    localStorage.setItem("siteTry",siteTry);
-    siteErr.innerText="Wrong password ("+(3-siteTry)+" left)";
+  if(sitePass.value!==PASS){
+    tries++;
+    siteErr.innerText="Wrong password ("+(3-tries)+" left)";
     return;
   }
-  localStorage.removeItem("siteTry");
   loginBox.classList.add("hide");
   content.classList.remove("hide");
 
@@ -278,7 +248,6 @@ function checkSite(){
   startTimer();
 }
 
-/* ===== TIMER ===== */
 function startTimer(){
   setInterval(()=>{
     if(localStorage.getItem("passDate")!==todayStr()){
@@ -293,32 +262,7 @@ function startTimer(){
     timer.innerText=`⏳ Time left: ${h}h ${m}m ${s}s`;
   },1000);
 }
-
-/* ===== OPEN WEBSITE ===== */
-function openWebsite(){
-  window.open("https://rarestudy.site","_blank");
-}
-
-/* ===== APK ===== */
-function openApk(){
-  apkBox.classList.remove("hide");
-  apkBox.scrollIntoView({behavior:"smooth"});
-}
-function checkApk(){
-  if(apkTry>=2){
-    apkErr.innerText="Too many attempts.";
-    return;
-  }
-  if(apkPass.value!==APK_PASS){
-    apkTry++;
-    localStorage.setItem("apkTry",apkTry);
-    apkErr.innerText="Wrong password ("+(2-apkTry)+" left)";
-    return;
-  }
-  localStorage.removeItem("apkTry");
-  apkLink.classList.remove("hide");
-}
 </script>
 
 </body>
-  </html>
+</html>
