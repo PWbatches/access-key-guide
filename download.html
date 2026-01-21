@@ -1,82 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secure Access</title>
 
 <style>
-/* =====================
-   DESIGN TOKENS
-===================== */
+/* ===== AUTO LIGHT / DARK (iOS STYLE) ===== */
 :root{
   --bg:#f2f2f7;
   --card:#ffffff;
-  --border:#e5e7eb;
   --text:#0f172a;
   --muted:#6b7280;
   --primary:#007aff;
   --danger:#ff3b30;
+  --soft:#f4f4f5;
 }
-
-/* ===== DARK MODE AUTO ===== */
 @media (prefers-color-scheme: dark){
   :root{
     --bg:#0b0f1a;
     --card:#111827;
-    --border:#1f2937;
     --text:#e5e7eb;
     --muted:#9ca3af;
     --primary:#0a84ff;
     --danger:#ff453a;
+    --soft:#1f2937;
   }
 }
 
-/* =====================
-   BASE
-===================== */
-*{box-sizing:border-box}
 body{
   margin:0;
-  background:var(--bg);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+  background:var(--bg);
   color:var(--text);
-  transition:background .3s,color .3s;
 }
-.container{
-  max-width:420px;
-  margin:0 auto;
-  padding:24px 16px 40px;
-}
-.hidden{display:none}
-
-/* =====================
-   CARD
-===================== */
+.container{max-width:420px;margin:auto;padding:20px}
 .card{
   background:var(--card);
   border-radius:28px;
-  padding:24px;
-  box-shadow:0 18px 40px rgba(0,0,0,.12);
-  transition:background .3s;
+  padding:22px;
+  box-shadow:0 20px 45px rgba(0,0,0,.15);
+  animation:fade .4s ease;
 }
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+.hidden{display:none}
 
-/* =====================
-   PW LOGO
-===================== */
+/* ===== PW LOGO ===== */
 .pw-logo{
-  position:relative;
   width:120px;height:120px;
-  margin:0 auto 20px;
-  background:#000;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:#000;border-radius:50%;
+  margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
 }
 .ring{
-  position:absolute;
-  inset:8%;
+  position:absolute;inset:8%;
   border-radius:50%;
   border:5px solid #fff;
   border-left-color:transparent;
@@ -84,109 +62,45 @@ body{
   transform:rotate(-10deg);
 }
 .text{
-  color:#fff;
-  font-family:"Times New Roman",Times,serif;
-  font-weight:700;
-  font-size:64px;
-  display:flex;
-  align-items:center;
-  padding-top:6px;
+  color:#fff;font-family:"Times New Roman",Times,serif;
+  font-weight:700;font-size:64px;display:flex;padding-top:6px
 }
 .letter-p{margin-right:-12px;position:relative;top:-3px}
-.letter-w{position:relative}
 
-/* =====================
-   TYPOGRAPHY
-===================== */
-h2{
-  font-size:20px;
-  margin:0 0 6px;
-  text-align:center;
+/* ===== INPUTS ===== */
+input,button{
+  width:100%;padding:14px;border-radius:16px;
+  border:none;font-size:15px
 }
-.sub{
-  text-align:center;
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:18px;
-}
-
-/* =====================
-   INPUTS & BUTTONS
-===================== */
-input{
-  width:100%;
-  padding:14px 16px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text);
-  font-size:15px;
-}
-input::placeholder{color:var(--muted)}
-input:focus{
-  outline:none;
-  border-color:var(--primary);
-}
-
+input{background:var(--soft);color:var(--text);margin-top:10px}
 button{
-  width:100%;
-  padding:14px 16px;
   margin-top:14px;
-  border-radius:14px;
-  border:none;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
+  background:var(--primary);color:#fff;font-weight:600;
+  cursor:pointer
 }
-.btn-primary{
-  background:var(--primary);
-  color:#fff;
-}
-.btn-secondary{
-  background:rgba(0,0,0,.05);
-  color:var(--text);
-}
+button.secondary{background:var(--soft);color:var(--text)}
+.info{font-size:12px;color:var(--muted);margin-top:10px}
+.error{font-size:12px;color:var(--danger);margin-top:6px}
 
-.info{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:10px;
+/* ===== SECTIONS ===== */
+.section{margin-top:22px}
+.timer, .box{
+  background:var(--soft);
+  padding:12px;border-radius:16px;
+  font-size:13px
 }
-.error{
-  font-size:12px;
-  color:var(--danger);
-  margin-top:8px;
-}
+iframe{width:100%;height:220px;border:none;border-radius:16px}
 
-/* =====================
-   INSTRUCTIONS
-===================== */
+/* ===== INSTRUCTIONS (INSIDE LOGIN) ===== */
 .instructions{
   margin-top:14px;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(0,0,0,.04);
-  font-size:13px;
-  line-height:1.7;
+  background:var(--soft);
+  padding:14px;border-radius:16px;
+  font-size:13px;line-height:1.7
 }
 
-/* =====================
-   INSIDE PAGE
-===================== */
-.timer{
-  margin-bottom:14px;
-  padding:12px 14px;
-  background:rgba(0,0,0,.04);
-  border-radius:18px;
-  font-size:13px;
-}
-.section{margin-top:20px}
-iframe{
-  width:100%;
-  height:220px;
-  border:none;
-  border-radius:18px;
-}
+/* ===== HISTORY ===== */
+.history{font-size:12px;color:var(--muted);margin-top:8px}
 </style>
 </head>
 
@@ -195,107 +109,111 @@ iframe{
 
 <!-- LOGIN -->
 <div id="loginBox" class="card">
-
   <div class="pw-logo">
     <div class="ring"></div>
-    <div class="text">
-      <span class="letter-p">P</span>
-      <span class="letter-w">W</span>
-    </div>
+    <div class="text"><span class="letter-p">P</span>W</div>
   </div>
 
-  <h2>Secure Login</h2>
-  <div class="sub">Automatic light / dark mode enabled</div>
-
-  <input id="sitePass" type="password" placeholder="Website password"/>
-  <button class="btn-primary" onclick="checkSite()">Login</button>
+  <input id="sitePass" type="password" placeholder="Website password">
+  <button onclick="loginSite()">Login</button>
 
   <div class="info">
-    Password format: <b>RS@DDMMYYYY</b><br>
+    Format: <b>RS@DDMMYYYY</b><br>
     Today: <b id="todayPass"></b>
   </div>
 
-  <button class="btn-secondary" onclick="toggleInstructions()">Instructions</button>
+  <button class="secondary" onclick="toggleInstructions()">Instructions</button>
   <div id="siteErr" class="error"></div>
 
+  <!-- INSTRUCTIONS INSIDE LOGIN -->
   <div id="instructions" class="instructions hidden">
 🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-Follow the steps carefully 👇<br><br>
 • Turn OFF Private DNS<br>
 • Update Chrome<br>
 • Use Chrome / Opera Mini<br>
 • Extra page → BACK once<br>
 • Laptop → VPN + Ad-Blocker<br><br>
-⏳ Valid for 24 hours only
+⏳ Valid for 24 hours only (copyright safety)
   </div>
 </div>
 
-<!-- INSIDE -->
+<!-- CONTENT AFTER LOGIN -->
 <div id="contentBox" class="card hidden">
-
-  <div class="pw-logo">
-    <div class="ring"></div>
-    <div class="text">
-      <span class="letter-p">P</span>
-      <span class="letter-w">W</span>
-    </div>
-  </div>
-
   <div class="timer" id="sessionTimer"></div>
 
   <div class="section">
-    <div class="timer" id="examTimer"></div>
+    <h3>🌐 Website</h3>
+    <button onclick="openWebsite()">Open Website</button>
+    <div class="history" id="webHistory"></div>
   </div>
 
+  <div class="section">
+    <h3>🎥 Video Guide</h3>
+    <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
+  </div>
+
+  <div class="section">
+    <h3>📦 APK Download</h3>
+    <input id="apkPass" type="password" placeholder="APK password">
+    <button onclick="unlockApk()">Unlock APK</button>
+    <div id="apkErr" class="error"></div>
+    <a id="apkLink" class="hidden"
+       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+      <button class="secondary">Download APK</button>
+    </a>
+    <div class="history" id="apkHistory"></div>
+  </div>
 </div>
+
 </div>
 
 <script>
 const DAY=86400000;
-const EXAM_TIME=new Date("2026-06-01T09:00:00").getTime();
-
 function today(){
   const d=new Date();
-  return String(d.getDate()).padStart(2,"0")+
-         String(d.getMonth()+1).padStart(2,"0")+
+  return String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
          d.getFullYear();
 }
 const sitePassword="RS@"+today();
+const apkPassword="APK@"+today();
 todayPass.innerText=sitePassword;
 
-function checkSite(){
-  if(sitePass.value===sitePassword){
-    localStorage.setItem("loginTime",Date.now());
-    localStorage.setItem("loginDate",today());
-    loginBox.classList.add("hidden");
-    contentBox.classList.remove("hidden");
-    startTimers();
-  }else{
-    siteErr.innerText="Wrong password";
+function loginSite(){
+  if(sitePass.value!==sitePassword){
+    siteErr.innerText="Wrong password";return;
   }
+  localStorage.setItem("loginTime",Date.now());
+  localStorage.setItem("loginDate",today());
+  localStorage.setItem("webHistory","Website login: "+new Date().toLocaleString());
+  loginBox.classList.add("hidden");
+  contentBox.classList.remove("hidden");
+  startSession();
+  webHistory.innerText=localStorage.getItem("webHistory");
 }
-
-function startTimers(){
+function unlockApk(){
+  if(apkPass.value!==apkPassword){
+    apkErr.innerText="Wrong APK password";return;
+  }
+  apkLink.classList.remove("hidden");
+  localStorage.setItem("apkHistory","APK unlocked: "+new Date().toLocaleString());
+  apkHistory.innerText=localStorage.getItem("apkHistory");
+}
+function openWebsite(){
+  window.open("https://rarestudy.site","_blank");
+}
+function startSession(){
   setInterval(()=>{
     const t=localStorage.getItem("loginTime");
-    const d=localStorage.getItem("loginDate");
-    if(!t||d!==today()||Date.now()-t>DAY){
-      localStorage.clear();location.reload();
-    }
+    if(!t||Date.now()-t>DAY){localStorage.clear();location.reload();}
     const left=DAY-(Date.now()-t);
-    sessionTimer.innerText=`Session expires in ${Math.floor(left/3600000)}h ${Math.floor(left%3600000/60000)}m ${Math.floor(left%60000/1000)}s`;
-  },1000);
-
-  setInterval(()=>{
-    const diff=EXAM_TIME-Date.now();
-    examTimer.innerText=diff<=0?"Exam Started":
-      `${Math.floor(diff/86400000)}d ${Math.floor(diff%86400000/3600000)}h ${Math.floor(diff%3600000/60000)}m ${Math.floor(diff%60000/1000)}s`;
+    sessionTimer.innerText=
+      `Session expires in ${Math.floor(left/3600000)}h ${Math.floor(left%3600000/60000)}m ${Math.floor(left%60000/1000)}s`;
   },1000);
 }
-
 function toggleInstructions(){
   instructions.classList.toggle("hidden");
 }
 </script>
 </body>
-  </html>
+       </html>
