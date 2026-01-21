@@ -7,70 +7,59 @@
 
 <style>
 :root{
-  --bg1:#0f172a;
-  --bg2:#020617;
+  --bg:#0b0f1a;
   --card:#111827;
-  --accent:#6366f1;
+  --accent:#4f46e5;
   --accent2:#22d3ee;
   --text:#e5e7eb;
+  --error:#f87171;
 }
+
 body{
   margin:0;
   font-family:system-ui,Arial;
-  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
+  background:linear-gradient(180deg,#0b0f1a,#020617);
   color:var(--text);
   min-height:100vh;
 }
+
 .container{
   max-width:420px;
   margin:auto;
   padding:20px;
 }
+
 .card{
-  background:rgba(17,24,39,.85);
-  backdrop-filter:blur(14px);
-  border-radius:24px;
+  background:var(--card);
+  border-radius:22px;
   padding:24px;
-  box-shadow:0 30px 70px rgba(0,0,0,.6);
-  animation:float 6s ease-in-out infinite;
+  box-shadow:0 25px 60px rgba(0,0,0,.55);
 }
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
+
 .hidden{display:none}
 
 /* LOGO */
 .logo{
-  width:70px;
-  margin:0 auto 12px;
+  width:72px;
   display:block;
+  margin:0 auto 12px;
 }
 
-/* GUIDE ORB (Avatar alternative) */
+/* GUIDE ORB */
 .guide-orb{
-  width:120px;
-  height:120px;
-  margin:10px auto;
+  width:110px;
+  height:110px;
+  margin:0 auto 10px;
   border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%,#fff,#22d3ee,#6366f1);
-  box-shadow:
-    0 0 30px rgba(99,102,241,.6),
-    0 0 60px rgba(34,211,238,.4);
-  animation:pulse 3s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 25px rgba(99,102,241,.5)}
-  50%{box-shadow:0 0 60px rgba(34,211,238,.9)}
-  100%{box-shadow:0 0 25px rgba(99,102,241,.5)}
+  background:radial-gradient(circle at 30% 30%,#fff,#22d3ee,#4f46e5);
+  box-shadow:0 0 30px rgba(79,70,229,.6);
 }
 
 .guide-text{
   text-align:center;
   font-size:13px;
   color:#c7d2fe;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
 /* INPUTS */
@@ -79,46 +68,45 @@ input,button{
   padding:14px;
   border-radius:14px;
   border:none;
-  margin-top:12px;
   font-size:15px;
 }
+
 input{
   background:#020617;
   color:#fff;
   border:1px solid #1f2937;
+  margin-top:10px;
 }
+
 button{
+  margin-top:14px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#000;
   font-weight:700;
   cursor:pointer;
-  transition:.3s;
 }
-button:hover{
-  transform:scale(1.04);
-  box-shadow:0 0 25px rgba(34,211,238,.7);
-}
+
 button.secondary{
   background:#1f2937;
   color:#fff;
 }
 
-/* INFO */
 .info{
   font-size:13px;
   margin-top:10px;
   color:#a5b4fc;
 }
+
 .error{
-  color:#f87171;
+  color:var(--error);
   font-size:13px;
-  margin-top:6px;
+  margin-top:8px;
 }
 
-/* INSTRUCTIONS */
-#instructions{
+/* INSTRUCTIONS (INSIDE CARD) */
+.instructions{
   margin-top:16px;
-  background:rgba(0,0,0,.35);
+  background:#020617;
   padding:16px;
   border-radius:18px;
   font-size:13px;
@@ -132,14 +120,14 @@ button.secondary{
 <div class="container">
 
 <!-- LOGIN -->
-<div id="loginBox" class="card">
-  <!-- LOGO PLACEHOLDER -->
-  <!-- yahan apna logo image daal sakte ho -->
-  <!-- <img src="logo.png" class="logo"> -->
+<div class="card">
+
+  <!-- LOGO (replace logo.png with your image) -->
+  <img src="logo.png" class="logo" alt="Logo">
 
   <div class="guide-orb"></div>
   <div class="guide-text">
-    Secure system active. Enter password to continue.
+    Secure system active. Enter today’s password.
   </div>
 
   <input id="sitePass" type="password" placeholder="Enter website password">
@@ -148,7 +136,7 @@ button.secondary{
   <div class="info">
     Password Hint:<br>
     Format: <b>RS@DDMMYYYY</b><br>
-    Example: <b>RS@21012026</b>
+    Example (today): <b id="todayPass"></b>
   </div>
 
   <button class="secondary" onclick="toggleInstructions()">
@@ -157,28 +145,45 @@ button.secondary{
 
   <div id="siteErr" class="error"></div>
 
-  <!-- INSTRUCTIONS BLOCK -->
-  <div id="instructions" class="hidden">
-    🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+  <!-- INSTRUCTIONS (FULL, EXACT, INSIDE) -->
+  <div id="instructions" class="instructions hidden">
+🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
 
-    ⚠️ <b>Important Browser Note:</b><br>
-    • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-    • To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
-    • If app/website does not open, turn <b>ON VPN</b> and try again.<br><br>
+Follow the steps carefully 👇<br><br>
 
-    📌 <b>Steps to Generate Key:</b><br>
-    1️⃣ Turn OFF Private DNS / Custom DNS.<br>
-    2️⃣ Update Google Chrome to latest version.<br>
-    3️⃣ Use Chrome (recommended) or Opera Mini (fewer ads).<br>
-    4️⃣ If any extra page / ad opens, press BACK once.<br>
-    5️⃣ Laptop / PC users: Turn ON VPN and use Ad-Blocker.<br><br>
+⚠️ <b>Important Browser Note:</b><br>
+• If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+• To avoid ads, open the website directly using Opera Mini browser.<br>
+• If app/website does not open, turn ON VPN and try again.<br><br>
 
-    ⏳ <b>Key Validity:</b><br>
-    Access Key is valid for <b>24 hours only</b>.<br>
-    After 24 hours, login again to avoid copyright issues.
+📌 <b>Steps to Generate Key:</b><br><br>
+
+1️⃣ <b>Turn OFF DNS</b><br>
+Go to phone settings and disable Private DNS / Custom DNS.<br><br>
+
+2️⃣ <b>Update Browser</b><br>
+Make sure Google Chrome is updated to the latest version.<br><br>
+
+3️⃣ <b>Use Correct Browser</b><br>
+• Chrome → recommended<br>
+• Opera Mini → fewer ads (best option)<br><br>
+
+4️⃣ <b>If Any Extra Page / Ad Opens</b><br>
+Just press BACK once and continue.<br>
+Key will be generated successfully.<br><br>
+
+5️⃣ <b>Laptop / PC Users</b><br>
+• Turn ON VPN<br>
+• Use Ad-Blocker extension<br>
+(This helps avoid ads & redirects)<br><br>
+
+⏳ <b>Key Validity:</b><br>
+• Access Key is valid for <b>24 hours only</b><br>
+• After 24 hours, you must login again and repeat the same process<br>
+(This avoids copyright issues)
   </div>
-</div>
 
+</div>
 </div>
 
 <script>
@@ -188,7 +193,10 @@ function today(){
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
+
 const sitePassword="RS@"+today();
+document.getElementById("todayPass").innerText=sitePassword;
+
 let attempts=0;
 
 function checkSite(){
@@ -197,12 +205,14 @@ function checkSite(){
     return;
   }
   if(sitePass.value===sitePassword){
-    alert("Access Granted");
+    siteErr.style.color="#22c55e";
+    siteErr.innerText="✅ Access Granted";
   }else{
     attempts++;
     siteErr.innerText="❌ Wrong password ("+(3-attempts)+" attempts left)";
   }
 }
+
 function toggleInstructions(){
   instructions.classList.toggle("hidden");
 }
