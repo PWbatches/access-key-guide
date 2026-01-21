@@ -8,7 +8,6 @@
 <style>
 :root{
   --pw:#5b2bd6;
-  --pw-dark:#4a21b8;
   --yellow:#ffcf00;
   --bg:#f6f7fb;
 }
@@ -20,39 +19,32 @@ body{
 .wrapper{
   max-width:420px;
   margin:30px auto;
-  padding:0 14px;
+  padding:14px;
 }
 .card{
   background:#fff;
-  border-radius:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  border-radius:16px;
   padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  margin-bottom:18px;
 }
-h2{color:var(--pw);margin:0 0 6px}
-.sub{color:#666;font-size:13px;margin-bottom:14px}
-input{
+h2{margin:0 0 6px;color:var(--pw)}
+.sub{font-size:13px;color:#666;margin-bottom:10px}
+input,button{
   width:100%;
   padding:12px;
+  margin-top:10px;
   border-radius:12px;
   border:1.5px solid #ddd;
+  font-size:15px;
 }
 button{
-  width:100%;
-  margin-top:12px;
-  padding:12px;
-  border:none;
-  border-radius:14px;
   background:var(--pw);
   color:#fff;
-  font-size:16px;
   font-weight:700;
+  border:none;
 }
-.hint{
-  font-size:12px;
-  margin-top:8px;
-  color:#555;
-  line-height:1.5;
-}
+.hint{font-size:12px;color:#555;margin-top:8px}
 .error{color:#d32f2f;font-size:13px;margin-top:6px}
 .timer{
   background:#fff7cc;
@@ -67,31 +59,22 @@ iframe{
   width:100%;
   height:220px;
   border-radius:14px;
-  border:1px solid #ddd;
+  border:none;
 }
 .apk-btn{
-  display:block;
-  margin-top:14px;
-  padding:14px;
-  text-align:center;
-  border-radius:14px;
   background:linear-gradient(135deg,#ff9800,#ffcf00);
   color:#3b2a00;
   font-weight:800;
-  text-decoration:none;
 }
-.section{margin-top:18px}
-ol{font-size:13px;color:#444;padding-left:18px}
-ol li{margin-bottom:6px}
+.hide{display:none}
 </style>
 </head>
 
 <body>
 <div class="wrapper">
-<div class="card">
 
-<!-- 🌐 WEBSITE LOGIN -->
-<div id="siteBox">
+<!-- 🔐 WEBSITE LOGIN -->
+<div class="card" id="siteBox">
   <h2>Website Login</h2>
   <div class="sub">Access video & instructions</div>
 
@@ -99,124 +82,129 @@ ol li{margin-bottom:6px}
   <button onclick="checkSite()">Continue</button>
 
   <div class="hint">
-    Website password format:<br>
-    <b>RS@DDMMYYYY</b><br>
-    Today example: <b id="siteHint"></b>
+    Password format: <b>RS@DDMMYYYY</b><br>
+    Today: <b id="siteHint"></b>
   </div>
-
   <div id="siteErr" class="error"></div>
 </div>
 
 <!-- 🌐 WEBSITE CONTENT -->
-<div id="content" style="display:none">
-  <div class="timer" id="siteTimer"></div>
+<div id="siteContent" class="hide">
 
-  <div class="section">
+  <div class="card">
+    <div class="timer" id="timer"></div>
+  </div>
+
+  <div class="card">
     <h2>🎥 Video Guide</h2>
     <iframe src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"></iframe>
   </div>
 
-  <div class="section">
-    <h2>📌 Important Instructions</h2>
-    <ol>
-      <li>Turn OFF Private / Custom DNS in phone settings.</li>
-      <li>Use Chrome or Opera Mini (Opera Mini = fewer ads).</li>
-      <li>If any ad page opens, press BACK once.</li>
-      <li>If website does not open, turn ON VPN.</li>
-      <li>Laptop users: VPN + Ad-Blocker recommended.</li>
+  <div class="card">
+    <h2>📌 Instructions</h2>
+    <ol style="font-size:14px">
+      <li>Turn OFF Private / Custom DNS</li>
+      <li>Use Chrome or Opera Mini</li>
+      <li>If ad opens, press BACK once</li>
+      <li>If site doesn’t open, turn ON VPN</li>
+      <li>Laptop users: VPN + Ad-blocker</li>
     </ol>
   </div>
 
-  <div class="section">
-    <h2>📦 Download Application</h2>
-    <button onclick="openApk()">Proceed to APK Download</button>
+  <div class="card">
+    <button onclick="openApk()">⬇ Download APK</button>
   </div>
 </div>
 
 <!-- 📦 APK LOGIN -->
-<div id="apkBox" style="display:none">
+<div class="card hide" id="apkBox">
   <h2>APK Download Login</h2>
-  <div class="sub">APK protected separately</div>
 
   <input type="password" id="apkPass" placeholder="Enter APK password">
   <button onclick="checkApk()">Unlock Download</button>
 
   <div class="hint">
-    APK password format:<br>
-    <b>APK@DDMMYYYY</b><br>
-    Today example: <b id="apkHint"></b>
+    Password format: <b>APK@DDMMYYYY</b><br>
+    Today: <b id="apkHint"></b>
   </div>
-
   <div id="apkErr" class="error"></div>
 
-  <a id="apkLink" class="apk-btn" style="display:none"
-     href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
-     target="_blank">
-     ⬇ Download APK
+  <a id="apkLink" class="hide"
+     href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+    <button class="apk-btn">⬇ Download APK</button>
   </a>
 </div>
 
 </div>
-</div>
 
 <script>
-function today(){
+/* ===== DATE & PASSWORD ===== */
+function todayStr(){
   const d=new Date();
   return String(d.getDate()).padStart(2,"0")+
          String(d.getMonth()+1).padStart(2,"0")+
          d.getFullYear();
 }
-
-const SITE_PASS="RS@"+today();
-const APK_PASS="APK@"+today();
+const SITE_PASS="RS@"+todayStr();
+const APK_PASS ="APK@"+todayStr();
 
 siteHint.innerText=SITE_PASS;
-apkHint.innerText=APK_PASS;
+apkHint.innerText =APK_PASS;
 
+/* ===== ATTEMPTS ===== */
 let siteTry=Number(localStorage.getItem("siteTry"))||0;
-let apkTry=Number(localStorage.getItem("apkTry"))||0;
+let apkTry =Number(localStorage.getItem("apkTry"))||0;
 
-/* WEBSITE LOGIN */
+/* ===== WEBSITE LOGIN ===== */
 function checkSite(){
   if(siteTry>=3){siteErr.innerText="Too many attempts. Try tomorrow.";return;}
   if(sitePass.value!==SITE_PASS){
     siteTry++;localStorage.setItem("siteTry",siteTry);
-    siteErr.innerText="Wrong website password";return;
+    siteErr.innerText="Wrong password ("+(3-siteTry)+" left)";
+    return;
   }
-  siteBox.style.display="none";
-  content.style.display="block";
+  localStorage.removeItem("siteTry");
+  siteBox.classList.add("hide");
+  siteContent.classList.remove("hide");
+
+  if(!localStorage.getItem("startTime")){
+    localStorage.setItem("startTime",Date.now());
+    localStorage.setItem("passDate",todayStr());
+  }
   startTimer();
 }
 
-/* TIMER */
+/* ===== TIMER ===== */
 function startTimer(){
-  if(!localStorage.getItem("start"))
-    localStorage.setItem("start",Date.now());
-
   setInterval(()=>{
-    const left=86400000-(Date.now()-localStorage.getItem("start"));
-    if(left<=0){localStorage.clear();location.reload();}
-    const h=Math.floor(left/3600000),
-          m=Math.floor((left%3600000)/60000),
-          s=Math.floor((left%60000)/1000);
-    siteTimer.innerText=`Time left: ${h}h ${m}m ${s}s`;
+    if(localStorage.getItem("passDate")!==todayStr()){
+      localStorage.clear();
+      location.reload();
+      return;
+    }
+    const left=86400000-(Date.now()-localStorage.getItem("startTime"));
+    const h=Math.floor(left/3600000);
+    const m=Math.floor((left%3600000)/60000);
+    const s=Math.floor((left%60000)/1000);
+    timer.innerText=`Time left: ${h}h ${m}m ${s}s`;
   },1000);
 }
 
-/* APK LOGIN */
+/* ===== APK ===== */
 function openApk(){
-  content.style.display="none";
-  apkBox.style.display="block";
+  apkBox.classList.remove("hide");
 }
 function checkApk(){
   if(apkTry>=2){apkErr.innerText="Too many attempts.";return;}
   if(apkPass.value!==APK_PASS){
     apkTry++;localStorage.setItem("apkTry",apkTry);
-    apkErr.innerText="Wrong APK password";return;
+    apkErr.innerText="Wrong APK password ("+(2-apkTry)+" left)";
+    return;
   }
-  apkLink.style.display="block";
+  localStorage.removeItem("apkTry");
+  apkLink.classList.remove("hide");
 }
 </script>
 
 </body>
-</html>
+    </html>
