@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Secure Access</title>
 
 <style>
 :root{
-  --bg:#f2f2f7;--card:#fff;--text:#0f172a;
+  --bg:#f2f2f7;--card:#ffffff;--text:#0f172a;
   --muted:#6b7280;--primary:#007aff;
   --danger:#ff3b30;--soft:#f4f4f5;
 }
-@media(prefers-color-scheme:dark){
+@media (prefers-color-scheme: dark){
   :root{
     --bg:#0b0f1a;--card:#111827;--text:#e5e7eb;
     --muted:#9ca3af;--primary:#0a84ff;
@@ -20,25 +20,36 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui;
   background:var(--bg);color:var(--text);
 }
 .container{max-width:420px;margin:auto;padding:20px}
 .card{
-  background:var(--card);border-radius:28px;padding:22px;
+  background:var(--card);
+  border-radius:28px;
+  padding:22px;
   box-shadow:0 18px 40px rgba(0,0,0,.12);
 }
 .hidden{display:none}
 input,button{
-  width:100%;padding:14px;border-radius:16px;border:none;font-size:15px
+  width:100%;padding:14px;border-radius:16px;
+  border:none;font-size:15px
 }
 input{background:var(--soft);color:var(--text);margin-top:10px}
-button{margin-top:14px;background:var(--primary);color:#fff;font-weight:600}
+button{
+  margin-top:14px;background:var(--primary);
+  color:#fff;font-weight:600
+}
 button.secondary{background:var(--soft);color:var(--text)}
 .info{font-size:12px;color:var(--muted);margin-top:8px}
 .error{font-size:12px;color:var(--danger);margin-top:6px}
-.box{background:var(--soft);padding:12px;border-radius:16px;font-size:13px}
+.box{
+  background:var(--soft);padding:12px;
+  border-radius:16px;font-size:13px
+}
 .section{margin-top:20px}
+.center{text-align:center}
 </style>
 </head>
 
@@ -47,38 +58,68 @@ button.secondary{background:var(--soft);color:var(--text)}
 
 <!-- LOGIN -->
 <div id="loginBox" class="card">
+  <h3 class="center">Secure Login</h3>
   <input id="sitePass" type="password" placeholder="Website password">
   <button onclick="loginSite()">Login</button>
   <div class="info">
-    Format: RS@DDMMYYYY<br>
-    Today: <b id="todayPass"></b>
+    Password format: <b>RS@DDMMYYYY</b><br>
+    Example: <b>RS@21012026</b>
   </div>
   <div id="siteErr" class="error"></div>
 </div>
 
 <!-- DASHBOARD -->
 <div id="contentBox" class="card hidden">
-  <div class="box" id="sessionTimer"></div>
 
+  <div class="box center" id="sessionTimer"></div>
+
+  <!-- Instructions -->
   <div class="section">
     <button class="secondary" onclick="toggleGuide()">Instructions</button>
     <div id="guideBox" class="box hidden">
-      Turn OFF Private DNS<br>
-      Update Chrome<br>
-      Use Chrome / Opera Mini<br>
-      Extra page → BACK once<br>
-      Valid for 24 hours only
+      🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+      • If you open the link from an app, ads may appear in Chrome<br>
+      • To avoid ads, open directly using <b>Opera Mini</b><br>
+      • If website/app does not open, turn ON VPN and try again<br><br>
+
+      <b>Steps:</b><br>
+      1. Turn OFF Private / Custom DNS<br>
+      2. Update Google Chrome to latest version<br>
+      3. Use Chrome (recommended) or Opera Mini<br>
+      4. If any extra page opens, press BACK once<br>
+      5. Laptop users: Turn ON VPN + use Ad-Blocker<br><br>
+
+      ⏳ Access key valid for 24 hours only<br>
+      (This avoids copyright issues)
     </div>
   </div>
 
+  <!-- Website -->
   <div class="section">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
     </button>
   </div>
 
+  <!-- Video -->
+  <div class="section">
+    <div class="box">
+      <b>Instruction Video</b><br><br>
+      <iframe width="100%" height="180"
+        src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"
+        allow="autoplay">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="APK password">
+    <div class="info">
+      Format: <b>APK@DDMMYYYY</b><br>
+      Example: <b>APK@21012026</b>
+    </div>
     <button onclick="unlockApk()">Unlock APK</button>
     <div id="apkErr" class="error"></div>
     <a id="apkLink" class="hidden"
@@ -87,19 +128,21 @@ button.secondary{background:var(--soft);color:var(--text)}
     </a>
   </div>
 
+  <!-- History -->
   <div class="section">
     <div class="box" id="historyBox"></div>
   </div>
 </div>
 
-<!-- ADMIN PANEL (HIDDEN) -->
+<!-- ADMIN (HIDDEN, LOCAL ONLY) -->
 <div id="adminPanel" class="card hidden">
+  <h4>Admin</h4>
   <input id="adminPass" type="password" placeholder="Admin password">
-  <button onclick="adminLogin()">Unlock Admin</button>
+  <button onclick="adminLogin()">Unlock</button>
   <div id="adminErr" class="error"></div>
 
   <div id="adminActions" class="hidden">
-    <input id="tempPass" placeholder="Set temporary password">
+    <input id="tempPass" placeholder="Temporary website password">
     <button onclick="setTempPassword()">Set Temp Password (24h)</button>
     <button class="secondary" onclick="clearHistory()">Clear History</button>
     <button class="secondary" onclick="forceLogout()">Force Logout</button>
@@ -109,9 +152,10 @@ button.secondary{background:var(--soft);color:var(--text)}
 </div>
 
 <script>
-const SESSION=24*60*60*1000;
-const HISTORY_DAYS=7;
+const SESSION = 24*60*60*1000;
+const HISTORY_DAYS = 7;
 
+/* DATE */
 function today(){
   const d=new Date();
   return String(d.getDate()).padStart(2,'0')+
@@ -125,13 +169,15 @@ function getSitePassword(){
   if(o && Date.now()<o.expires) return o.password;
   return "RS@"+today();
 }
-const apkPassword="APK@"+today();
-todayPass.innerText=getSitePassword();
+function getApkPassword(){
+  return "APK@"+today();
+}
 
 /* LOGIN */
 function loginSite(){
   if(sitePass.value!==getSitePassword()){
-    siteErr.innerText="Wrong password";return;
+    siteErr.innerText="Wrong password";
+    return;
   }
   localStorage.setItem("loginTime",Date.now());
   addHistory("Website Login");
@@ -140,30 +186,38 @@ function loginSite(){
   startSession();
 }
 
-/* SESSION */
+/* SESSION TIMER */
 function startSession(){
   setInterval(()=>{
     const t=localStorage.getItem("loginTime");
-    if(!t||Date.now()-t>SESSION){
-      localStorage.clear();location.reload();
+    if(!t || Date.now()-t>=SESSION){
+      localStorage.removeItem("loginTime");
+      location.reload();
+      return;
     }
     const left=SESSION-(Date.now()-t);
-    sessionTimer.innerText=`Session expires in ${Math.floor(left/3600000)}h`;
+    const h=Math.floor(left/3600000);
+    const m=Math.floor((left%3600000)/60000);
+    const s=Math.floor((left%60000)/1000);
+    sessionTimer.innerText=`Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
 
 /* APK */
 function unlockApk(){
-  if(apkPass.value!==apkPassword){
-    apkErr.innerText="Wrong APK password";return;
+  if(apkPass.value!==getApkPassword()){
+    apkErr.innerText="Wrong APK password";
+    return;
   }
+  apkErr.innerText="";
   apkLink.classList.remove("hidden");
   addHistory("APK Unlocked");
 }
 
 /* HISTORY */
 function addHistory(type){
-  const now=Date.now(),limit=HISTORY_DAYS*24*60*60*1000;
+  const now=Date.now();
+  const limit=HISTORY_DAYS*24*60*60*1000;
   let list=JSON.parse(localStorage.getItem("history")||"[]");
   list=list.filter(i=>now-i.time<limit);
   list.unshift({type,time:now});
@@ -177,7 +231,7 @@ function renderHistory(){
     : "No recent activity";
 }
 
-/* ADMIN */
+/* ADMIN (LOCAL ONLY) */
 function adminPassword(){return "ADMIN@"+today();}
 function adminLogin(){
   if(adminPass.value!==adminPassword()){
@@ -186,19 +240,19 @@ function adminLogin(){
   adminActions.classList.remove("hidden");
 }
 function setTempPassword(){
-  const pass=tempPass.value.trim();
-  if(!pass) return alert("Enter password");
+  const p=tempPass.value.trim();
+  if(!p) return alert("Enter password");
   localStorage.setItem("siteOverride",JSON.stringify({
-    password:pass,
-    expires:Date.now()+SESSION
+    password:p,expires:Date.now()+SESSION
   }));
-  alert("Temporary password active for 24 hours");
+  alert("Temporary password set for 24 hours");
 }
 function clearHistory(){
   localStorage.removeItem("history");renderHistory();
 }
 function forceLogout(){
-  localStorage.removeItem("loginTime");location.reload();
+  localStorage.removeItem("loginTime");
+  location.reload();
 }
 
 /* UI */
@@ -211,11 +265,11 @@ document.addEventListener("keydown",e=>{
   }
 });
 
-/* RESUME */
+/* RESUME SESSION */
 window.onload=()=>{
   renderHistory();
   const t=localStorage.getItem("loginTime");
-  if(t&&Date.now()-t<SESSION){
+  if(t && Date.now()-t<SESSION){
     loginBox.classList.add("hidden");
     contentBox.classList.remove("hidden");
     startSession();
@@ -223,4 +277,4 @@ window.onload=()=>{
 };
 </script>
 </body>
-      </html>
+  </html>
