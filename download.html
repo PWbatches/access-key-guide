@@ -7,9 +7,32 @@
 
 <body style="font-family:Arial; text-align:center; margin:20px;">
 
+<!-- ================= PASSWORD BOX ================= -->
+<div id="passwordBox">
+  <h2>🔐 Enter Access Password</h2>
+  <input type="password" id="passInput" placeholder="Enter password">
+  <br><br>
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="error" style="color:red;"></p>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div id="content">
+
+  <h2>📌 Important Steps (Dhyaan se padhein)</h2>
+  <ol style="text-align:left; max-width:600px; margin:20px auto; font-size:14px;">
+    <li>Sabse pehle niche diya gaya video poora dekhein.</li>
+    <li>Video dekhne ke baad hi application download karein.</li>
+    <li>Download ke baad Android phone me “Unknown Sources” allow karein.</li>
+    <li>App install ke baad password dobara share na karein.</li>
+    <li>Access key 24 hours ke liye hi valid hoti hai.</li>
+  </ol>
+
+  <hr style="margin:30px 0;">
+
+  <!-- ================= VIDEO SECTION ================= -->
   <h2>🎥 Video Guide</h2>
 
-  <!-- 🔴 YAHAN SIRF VIDEO ID DAALNI HAI -->
   <iframe
     src="https://drive.google.com/file/d/1We5gjl7d5t9Z9OfYAFObuuIX3tY5a_9T/preview"
     width="95%"
@@ -19,26 +42,58 @@
     style="border:1px solid #ccc; border-radius:10px;">
   </iframe>
 
-  <p style="font-size:13px;color:#555;">
+  <p style="font-size:13px; color:#555;">
     Ye video sirf guide ke liye hai (download se koi relation nahi)
   </p>
 
   <hr style="margin:30px 0;">
 
+  <!-- ================= APK DOWNLOAD ================= -->
   <h2>📦 Download Application (APK)</h2>
 
-  <p>
-    Application download karne ke liye niche button par click karein
-  </p>
+  <p>Application download karne ke liye niche button par click karein</p>
 
-  <!-- 🔴 YAHAN SIRF APK ID DAALNI HAI -->
-  <"1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH">
+  <a
+    href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+    target="_blank"
+    style="
+      display:inline-block;
+      padding:14px 28px;
+      background:#0a58ca;
+      color:white;
+      text-decoration:none;
+      border-radius:8px;
+      font-size:16px;
+      font-weight:bold;
+    ">
     ⬇ Download App (APK)
   </a>
 
-  <p style="font-size:13px;margin-top:12px;">
-    ⚠ App sirf Android devices ke liye hai
+  <p style="font-size:13px; margin-top:12px;">
+    ⚠️ App sirf Android devices ke liye hai
   </p>
 
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+  const सहीPassword = "RS@2026Key";
+
+  function checkPassword() {
+    const entered = document.getElementById("passInput").value;
+    if (entered === सहीPassword) {
+      document.getElementById("passwordBox").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    } else {
+      document.getElementById("error").innerText = "❌ Wrong password";
+    }
+  }
+
+  window.onload = function () {
+    document.getElementById("passwordBox").style.display = "block";
+    document.getElementById("content").style.display = "none";
+  };
+</script>
+
 </body>
-</html>
+  </html>
