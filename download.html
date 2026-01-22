@@ -16,20 +16,20 @@ body{
   background:#f5f7fb;
 }
 
-/* ===== AESTHETIC WATERMARK ===== */
-body::before{
-  content:"PW   PW   PW   PW   PW";
+/* ===== BLURRED PW WATERMARK ===== */
+.watermark{
   position:fixed;
-  inset:-20%;
-  font-family:"Times New Roman",serif;
-  font-size:180px;
-  font-weight:bold;
-  color:#000;
-  opacity:0.04;
-  transform:rotate(-20deg);
-  letter-spacing:140px;
-  line-height:1.5;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   pointer-events:none;
+  z-index:0;
+  filter:blur(6px);
+  opacity:0.08;
+}
+.watermark .pw-logo{
+  transform:scale(2.6);
 }
 
 /* ===== CARD ===== */
@@ -45,7 +45,7 @@ body::before{
 }
 .hidden{display:none}
 
-/* ===== PW LOGO ===== */
+/* ===== PW ROUND LOGO ===== */
 .pw-logo{
   width:120px;
   height:120px;
@@ -98,12 +98,8 @@ button{
   cursor:pointer;
   margin-top:12px;
 }
-.hint{
-  font-size:12px;
-  color:#555;
-  margin-top:8px;
-  line-height:1.6;
-}
+button:disabled{background:#888;cursor:not-allowed}
+.hint{font-size:12px;color:#555;margin-top:8px}
 
 /* ===== TIMER ===== */
 .timer{
@@ -130,20 +126,37 @@ button{
   margin-top:16px;
 }
 
-/* ===== INSTRUCTION TOGGLE ===== */
+/* ===== PREMIUM INSTRUCTIONS ANIMATION ===== */
 .instruction-header{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   cursor:pointer;
   font-weight:600;
 }
-.arrow{transition:.3s}
-.arrow.open{transform:rotate(180deg)}
+.arrow{
+  transition:transform .4s ease;
+}
+.arrow.open{
+  transform:rotate(180deg);
+}
 .instruction-content{
-  display:none;
-  margin-top:12px;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:
+    max-height .6s ease,
+    opacity .4s ease,
+    transform .4s ease;
   font-size:13px;
   line-height:1.7;
+  margin-top:10px;
+}
+.instruction-content.open{
+  max-height:1200px;
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* ===== VIDEO ===== */
@@ -158,19 +171,20 @@ iframe{
 
 <body>
 
+<!-- WATERMARK -->
+<div class="watermark">
+  <div class="pw-logo"><div class="pw-text">PW</div></div>
+</div>
+
 <div class="card">
 
 <!-- LOGIN -->
 <div id="loginBox">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 
-  <input id="sitePass" type="password" placeholder="Enter website password">
-  <button onclick="login()">Continue</button>
+  <input id="sitePass" type="password" placeholder="Enter room password">
+  <button id="loginBtn" onclick="login()">Continue</button>
 
-  <div class="hint">
-    Password format: <b>RS@DDMMYYYY</b><br>
-    Example: RS@01012025
-  </div>
   <div id="loginErr" class="hint"></div>
 </div>
 
@@ -183,72 +197,43 @@ iframe{
 
   <div class="timer" id="timer"></div>
 
-  <!-- 1️⃣ INSTRUCTIONS TAB -->
+  <!-- INSTRUCTIONS -->
   <div class="section">
     <div class="instruction-header" onclick="toggleInstr()">
       <span>📘 Instructions</span>
       <span id="arrow" class="arrow">▼</span>
     </div>
-
     <div id="instr" class="instruction-content">
       🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
       Follow the steps carefully 👇<br><br>
-
       ⚠️ <b>Important Browser Note:</b><br>
       • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
       • To avoid ads, open the website directly using Opera Mini browser.<br>
       • If app/website does not open, turn ON VPN and try again.<br>
-      • When you click any link, if anything extra opens, press BACK only once and continue. The key will be generated successfully.<br><br>
-
-      📌 <b>Steps to Generate Key:</b><br><br>
-
-      1️⃣ Turn OFF DNS<br>
-      Go to phone settings and disable Private DNS / Custom DNS.<br><br>
-
-      2️⃣ Update Browser<br>
-      Make sure Google Chrome is updated to the latest version.<br><br>
-
-      3️⃣ Use Correct Browser<br>
-      • Chrome → recommended<br>
-      • Opera Mini → fewer ads (best option)<br><br>
-
-      4️⃣ If Any Extra Page / Ad Opens<br>
-      Just press BACK once and continue.<br>
-      Key will be generated successfully.<br><br>
-
-      5️⃣ Laptop / PC Users<br>
-      • Turn ON VPN<br>
-      • Use Ad-Blocker extension<br>
-      (This helps avoid ads & redirects)<br><br>
-
-      ⏳ <b>Key Validity:</b><br>
-      • Access Key is valid for 24 hours only.<br>
-      • After 24 hours, you must login again and repeat the same process.<br>
-      • This restriction is applied due to copyright ©️ issues.
+      • When you click any link, if anything extra opens, press BACK only once and continue.<br><br>
+      📌 <b>Steps:</b><br>
+      1️⃣ Turn OFF Private DNS / Custom DNS.<br>
+      2️⃣ Update Google Chrome.<br>
+      3️⃣ Use Chrome or Opera Mini.<br>
+      4️⃣ Laptop users use VPN + Ad-Blocker.<br><br>
+      ⏳ Access valid for 24 hours only (copyright ©️).
     </div>
   </div>
 
-  <!-- 2️⃣ VIDEO -->
+  <!-- VIDEO -->
   <div class="section">
     <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
   </div>
 
-  <!-- 3️⃣ WEBSITE -->
+  <!-- WEBSITE -->
   <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
+    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
   </div>
 
-  <!-- 4️⃣ APK PASSWORD -->
+  <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <button onclick="unlockAPK()">Unlock APK</button>
-    <div class="hint">
-      APK password format: <b>APK@DDMMYYYY</b><br>
-      Example: APK@01012025
-    </div>
     <div id="apkErr" class="hint"></div>
   </div>
 
@@ -257,8 +242,10 @@ iframe{
 
 <script>
 const DAY=24*60*60*1000;
+const MAX_ATTEMPTS=3;
 
-function todayPass(){
+/* PASSWORD */
+function todayRoom(){
   const d=new Date();
   return "RS@"+String(d.getDate()).padStart(2,'0')+
          String(d.getMonth()+1).padStart(2,'0')+
@@ -271,17 +258,40 @@ function todayAPK(){
          d.getFullYear();
 }
 
+/* LOGIN WITH ATTEMPTS */
 function login(){
-  if(sitePass.value!==todayPass()){
-    loginErr.textContent="Wrong password";
+  const now=Date.now();
+  let attempts=parseInt(localStorage.getItem("roomAttempts"))||MAX_ATTEMPTS;
+  let blocked=parseInt(localStorage.getItem("roomBlocked"))||0;
+
+  if(now<blocked){
+    loginErr.textContent="Too many attempts. Try again after 24 hours.";
+    sitePass.disabled=true;loginBtn.disabled=true;
     return;
   }
-  localStorage.setItem("loginTime",Date.now());
+
+  if(sitePass.value!==todayRoom()){
+    attempts--;
+    localStorage.setItem("roomAttempts",attempts);
+    if(attempts<=0){
+      localStorage.setItem("roomBlocked",now+DAY);
+      loginErr.textContent="Too many attempts. Locked for 24 hours.";
+      sitePass.disabled=true;loginBtn.disabled=true;
+    }else{
+      loginErr.textContent=`Wrong password. Attempts left: ${attempts}`;
+    }
+    return;
+  }
+
+  localStorage.removeItem("roomAttempts");
+  localStorage.removeItem("roomBlocked");
+  localStorage.setItem("loginTime",now);
   loginBox.classList.add("hidden");
   dashboard.classList.remove("hidden");
   startTimer();
 }
 
+/* TIMER */
 function startTimer(){
   setInterval(()=>{
     const t=localStorage.getItem("loginTime");
@@ -294,22 +304,22 @@ function startTimer(){
   },1000);
 }
 
+/* INSTRUCTIONS TOGGLE */
 function toggleInstr(){
-  const c=document.getElementById("instr");
-  const a=document.getElementById("arrow");
-  const open=c.style.display==="block";
-  c.style.display=open?"none":"block";
-  a.classList.toggle("open",!open);
+  instr.classList.toggle("open");
+  arrow.classList.toggle("open");
 }
 
+/* APK */
 function unlockAPK(){
   if(apkPass.value!==todayAPK()){
     apkErr.textContent="Wrong APK password";
     return;
   }
-  apkErr.textContent="APK unlocked successfully";
+  apkErr.textContent="APK unlocked";
 }
 
+/* AUTO LOGIN */
 window.onload=()=>{
   const t=localStorage.getItem("loginTime");
   if(t && Date.now()-t<DAY){
@@ -321,4 +331,4 @@ window.onload=()=>{
 </script>
 
 </body>
-  </html>
+      </html>
