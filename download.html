@@ -7,6 +7,7 @@
 
 <style>
 *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+
 body{
   margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
@@ -16,23 +17,19 @@ body{
 .watermark{
   position:fixed;inset:0;display:flex;justify-content:center;align-items:center;
   pointer-events:none;z-index:0;opacity:.45;filter:blur(.4px);
-  animation:wmFade 10s ease-in-out infinite alternate;
 }
-@keyframes wmFade{from{opacity:.35}to{opacity:.48}}
 .watermark .pw-logo{transform:scale(3.6);opacity:.95}
 
-/* ===== GLASS CARD (LOGIN + DASHBOARD SAME) ===== */
+/* ===== GLASS CARD (LOGIN + DASHBOARD) ===== */
 .card{
   width:100%;max-width:420px;
-  background:rgba(255,255,255,.32);
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
-  border-radius:28px;padding:28px;border:1px solid rgba(255,255,255,.35);
-  box-shadow:0 30px 60px rgba(0,0,0,.18);
+  background:rgba(255,255,255,.28); /* more glassy */
+  backdrop-filter:blur(22px) saturate(170%);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  border-radius:30px;padding:28px;border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 35px 70px rgba(0,0,0,.22);
   position:relative;z-index:1;
-  animation:float 6s ease-in-out infinite;
 }
-@keyframes float{50%{transform:translateY(-6px)}}
 .hidden{display:none}
 
 /* ===== LOGO ===== */
@@ -55,14 +52,11 @@ input{
 button{
   width:100%;padding:14px;border:none;border-radius:14px;background:#000;color:#fff;
   font-size:15px;font-weight:600;cursor:pointer;margin-top:14px;
-  transition:transform .2s ease, box-shadow .2s ease, opacity .2s;
 }
-button:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
-button:active{transform:translateY(0);opacity:.85}
 .hint{font-size:12.5px;color:#222;margin-top:6px;line-height:1.6}
 
 /* ===== ACCESS + TIMER ===== */
-.access{text-align:center;font-weight:800;margin-top:4px}
+.access{text-align:center;font-weight:800}
 .timer{
   background:#000;color:#fff;padding:14px;border-radius:18px;text-align:center;
   margin-top:8px;animation:pulse 1.6s ease-in-out infinite;
@@ -71,25 +65,38 @@ button:active{transform:translateY(0);opacity:.85}
 
 .section{margin-top:18px}
 
-/* ===== INSTRUCTIONS ===== */
+/* ===== INSTRUCTIONS (IMPROVED VISIBILITY) ===== */
 .instruction-header{
-  display:flex;justify-content:space-between;cursor:pointer;font-weight:700;
-  transition:opacity .2s;
+  display:flex;align-items:center;gap:8px;
+  cursor:pointer;font-weight:700;
+  padding:12px 14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
+  transition:transform .2s, box-shadow .2s;
 }
-.instruction-header:hover{opacity:.8}
+.instruction-header:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+}
+.instruction-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:#000;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;
+}
 .instruction-content{
-  max-height:0;overflow:hidden;opacity:0;transition:max-height .6s ease, opacity .4s ease;
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .6s ease, opacity .4s ease;
   font-size:13px;line-height:1.7;
+  margin-top:10px;
 }
 .instruction-content.open{max-height:1600px;opacity:1}
 
 /* ===== VIDEO ===== */
 iframe{width:100%;height:200px;border-radius:14px;border:none}
 .video-link{text-align:center;font-size:13px;margin-top:8px}
-
-/* ===== PAGE TRANSITIONS ===== */
-.fade-in{animation:fadeIn .5s ease forwards}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 </style>
 </head>
 
@@ -99,7 +106,7 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
 
-<div class="card fade-in">
+<div class="card">
 
 <!-- LOGIN -->
 <div id="loginBox">
@@ -112,7 +119,7 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
 </div>
 
 <!-- DASHBOARD -->
-<div id="dash" class="hidden fade-in">
+<div id="dash" class="hidden">
   <div class="pw-logo" style="width:90px;height:90px">
     <div class="pw-text" style="font-size:46px">PW</div>
   </div>
@@ -122,117 +129,8 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
 
   <!-- INSTRUCTIONS -->
   <div class="section">
-    <div class="instruction-header" onclick="document.getElementById('instr').classList.toggle('open')">
-      <span>📘 Instructions</span><span>▼</span>
+    <div class="instruction-header"
+         onclick="document.getElementById('instr').classList.toggle('open')">
+      <div class="instruction-icon">ℹ️</div>
+      <span>Instructions</span>
     </div>
-    <div id="instr" class="instruction-content">
-      <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-      ⚠️ <b>Important Browser Note:</b><br>
-      • If you open the link from an APP, ads may appear.<br>
-      • To avoid ads, use <b>Opera Mini</b> browser.<br>
-      • If site does not open, turn <b>ON VPN</b> and try again.<br><br>
-      📌 <b>Steps:</b><br>
-      1️⃣ Turn OFF DNS (Private / Custom DNS).<br>
-      2️⃣ Update Chrome to latest version.<br>
-      3️⃣ Use Chrome (recommended) or Opera Mini (fewer ads).<br>
-      4️⃣ If extra page opens, press <b>BACK once</b>.<br>
-      5️⃣ PC/Laptop: Turn ON VPN + Ad-Blocker.<br><br>
-      ⏳ <b>Validity:</b> 24 hours only due to copyright © issues.<br>
-      📱 <b>APK:</b> Android devices only.
-    </div>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="section">
-    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
-    <div class="video-link">
-      If video does not play on PC/Laptop,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
-    </div>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
-  </div>
-
-  <!-- APK -->
-  <div class="section">
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
-    <div class="hint">APK supported on <b>Android devices only</b></div>
-    <button onclick="unlockAPK()">Unlock APK</button>
-    <div id="apkErr" class="hint"></div>
-  </div>
-</div>
-
-</div>
-
-<script>
-const DAY=86400000;
-let roomAttempts=3, apkAttempts=3;
-
-/* 1 second password visibility */
-function visible1s(el){
-  let t; el.addEventListener("input",()=>{
-    el.type="text"; clearTimeout(t); t=setTimeout(()=>el.type="password",1000);
-  });
-}
-visible1s(roomPass); visible1s(apkPass);
-
-function todayCode(prefix){
-  const d=new Date();
-  return prefix+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+d.getFullYear();
-}
-
-function login(){
-  if(localStorage.lockRoom && Date.now()<localStorage.lockRoom){
-    roomErr.textContent="Login locked. Try after 24 hours."; return;
-  }
-  if(roomPass.value!==todayCode("RS@")){
-    roomAttempts--; roomErr.textContent=`Wrong password. Attempts left: ${roomAttempts}`;
-    if(roomAttempts<=0){localStorage.lockRoom=Date.now()+DAY; roomErr.textContent="Locked for 24 hours.";}
-    return;
-  }
-  localStorage.loginTime=Date.now();
-  loginBox.classList.add("hidden");
-  dash.classList.remove("hidden");
-  startTimer();
-}
-
-function unlockAPK(){
-  if(localStorage.lockAPK && Date.now()<localStorage.lockAPK){
-    apkErr.textContent="APK locked. Try after 24 hours."; return;
-  }
-  if(apkPass.value!==todayCode("APK@")){
-    apkAttempts--; apkErr.textContent=`Wrong APK password. Attempts left: ${apkAttempts}`;
-    if(apkAttempts<=0){localStorage.lockAPK=Date.now()+DAY; apkErr.textContent="APK locked for 24 hours.";}
-    return;
-  }
-  apkErr.textContent="APK unlocked (refresh will hide again)";
-}
-
-function startTimer(){
-  setInterval(()=>{
-    let left=DAY-(Date.now()-localStorage.loginTime);
-    if(left<=0){localStorage.clear(); location.reload();}
-    let h=Math.floor(left/3600000),
-        m=Math.floor(left%3600000/60000),
-        s=Math.floor(left%60000/1000);
-    timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
-  },1000);
-}
-
-window.onload=()=>{
-  let t=localStorage.loginTime;
-  if(t && Date.now()-t<DAY){
-    loginBox.classList.add("hidden");
-    dash.classList.remove("hidden");
-    startTimer();
-  }
-};
-</script>
-
-</body>
-      </html>
