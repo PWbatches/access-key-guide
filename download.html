@@ -16,7 +16,7 @@ body{
   background:#f4f6fb;
 }
 
-/* ===== WATERMARK ===== */
+/* ===== WATERMARK PW LOGO ===== */
 .watermark{
   position:fixed;
   inset:0;
@@ -24,11 +24,11 @@ body{
   justify-content:center;
   align-items:center;
   pointer-events:none;
-  opacity:.08;
+  opacity:.09;
   filter:blur(6px);
   z-index:0;
 }
-.watermark .pw-logo{transform:scale(2.5);}
+.watermark .pw-logo{transform:scale(2.6);}
 
 /* ===== CARD ===== */
 .card{
@@ -47,7 +47,7 @@ body{
 .pw-logo{
   width:120px;
   height:120px;
-  margin:0 auto 12px;
+  margin:0 auto 14px;
   background:#000;
   border-radius:50%;
   display:flex;
@@ -95,7 +95,12 @@ button{
   margin-top:12px;
 }
 button:disabled{background:#888}
-.hint{font-size:12px;color:#555;margin-top:8px}
+.hint{
+  font-size:12.5px;
+  color:#555;
+  margin-top:6px;
+  line-height:1.6;
+}
 
 /* ===== ACCESS & TIMER ===== */
 .access{
@@ -126,13 +131,13 @@ button:disabled{background:#888}
   margin-top:16px;
 }
 
-/* ===== INSTRUCTIONS TAB ===== */
+/* ===== INSTRUCTIONS ===== */
 .instruction-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   cursor:pointer;
-  font-weight:600;
+  font-weight:700;
 }
 .arrow{transition:transform .4s ease}
 .arrow.open{transform:rotate(180deg)}
@@ -142,11 +147,11 @@ button:disabled{background:#888}
   opacity:0;
   transform:translateY(-6px);
   transition:all .5s ease;
-  font-size:13px;
-  line-height:1.7;
+  font-size:13.5px;
+  line-height:1.8;
 }
 .instruction-content.open{
-  max-height:1500px;
+  max-height:1600px;
   opacity:1;
   transform:translateY(0);
 }
@@ -168,6 +173,7 @@ iframe{
 
 <body>
 
+<!-- WATERMARK -->
 <div class="watermark">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
@@ -199,23 +205,26 @@ iframe{
       <span id="arrow" class="arrow">▼</span>
     </div>
     <div id="instr" class="instruction-content">
-🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
 
 Follow the steps carefully 👇<br><br>
 
-⚠️ <b>Important Browser Note:</b><br>
+<b>⚠️ Important Browser Note:</b><br>
 • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using Opera Mini browser.<br>
+• To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
 • If app/website does not open, turn ON VPN and try again.<br>
-• When you click any link, if anything extra opens, press BACK only once and continue.<br><br>
+• When you click any link, if anything extra opens, press <b>BACK</b> only once and continue.<br><br>
 
-📌 <b>Steps to Generate Key:</b><br>
+<b>📌 Steps to Generate Key:</b><br>
 1️⃣ Turn OFF Private DNS / Custom DNS.<br>
-2️⃣ Update Google Chrome to latest version.<br>
-3️⃣ Use Chrome or Opera Mini.<br>
-4️⃣ Laptop users: Turn ON VPN + Ad-Blocker.<br><br>
+2️⃣ Update Google Chrome to the latest version.<br>
+3️⃣ Use Chrome (recommended) or Opera Mini (fewer ads).<br>
+4️⃣ Laptop / PC users: Turn ON VPN + use Ad-Blocker.<br><br>
 
-⏳ Access valid for 24 hours only due to copyright ©️ reasons.
+<b>⏳ Key Validity:</b><br>
+• Access is valid for <b>24 hours only</b>.<br>
+• After 24 hours, you must login again.<br>
+• This is required due to <b>copyright ©️ issues</b>.
     </div>
   </div>
 
@@ -223,7 +232,8 @@ Follow the steps carefully 👇<br><br>
   <div class="section">
     <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
     <div class="video-link">
-      If video does not play, <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
+      If video does not play on <b>PC or Laptop</b>,
+      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
     </div>
   </div>
 
@@ -235,6 +245,11 @@ Follow the steps carefully 👇<br><br>
   <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
+    <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
+    <div class="hint">
+      Note: This APK file is supported on <b>Android devices only</b>.
+      It will not work on iOS or PC.
+    </div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkErr" class="hint"></div>
   </div>
@@ -331,4 +346,4 @@ window.onload=()=>{
 </script>
 
 </body>
-  </html>
+      </html>
