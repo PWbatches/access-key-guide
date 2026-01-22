@@ -13,10 +13,10 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#f4f6fb;
+  background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
 
-/* ===== WATERMARK (NOW VISIBLE) ===== */
+/* ===== WATERMARK ===== */
 .watermark{
   position:fixed;
   inset:0;
@@ -24,22 +24,25 @@ body{
   justify-content:center;
   align-items:center;
   pointer-events:none;
-  opacity:.18;              /* increased */
-  filter:blur(2px);         /* reduced blur */
+  opacity:0.28;
+  filter:blur(1px);
   z-index:0;
 }
-.watermark .pw-logo{
-  transform:scale(2.8);
-}
+.watermark .pw-logo{transform:scale(3.2);}
 
-/* ===== CARD ===== */
+/* ===== GLASS CARD (LOGIN + DASHBOARD) ===== */
 .card{
   width:100%;
   max-width:420px;
-  background:#fff;
-  border-radius:24px;
-  padding:26px;
-  box-shadow:0 20px 60px rgba(0,0,0,.12);
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  border-radius:26px;
+  padding:28px;
+  border:1px solid rgba(255,255,255,0.35);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.4);
   position:relative;
   z-index:1;
 }
@@ -47,8 +50,7 @@ body{
 
 /* ===== PW LOGO ===== */
 .pw-logo{
-  width:120px;
-  height:120px;
+  width:120px;height:120px;
   margin:0 auto 14px;
   background:#000;
   border-radius:50%;
@@ -60,8 +62,7 @@ body{
 .pw-logo::before{
   content:"";
   position:absolute;
-  width:82%;
-  height:82%;
+  width:82%;height:82%;
   border-radius:50%;
   border:5px solid #fff;
   border-left-color:transparent;
@@ -80,9 +81,10 @@ input{
   width:100%;
   padding:14px;
   border-radius:14px;
-  border:1px solid #ddd;
+  border:1px solid rgba(0,0,0,.15);
   font-size:14px;
   margin-top:12px;
+  background:rgba(255,255,255,.85);
 }
 button{
   width:100%;
@@ -94,81 +96,37 @@ button{
   font-size:15px;
   font-weight:600;
   cursor:pointer;
-  margin-top:12px;
+  margin-top:14px;
 }
-button:disabled{background:#888}
 .hint{
   font-size:12.5px;
-  color:#555;
+  color:#333;
   margin-top:6px;
-  line-height:1.6;
 }
 
 /* ===== ACCESS & TIMER ===== */
 .access{
   text-align:center;
-  font-weight:700;
-  margin-bottom:6px;
+  font-weight:800;
+  letter-spacing:.5px;
 }
 .timer{
   background:#000;
   color:#fff;
   padding:14px;
-  border-radius:16px;
-  text-align:center;
-  font-weight:600;
-  animation:blink 1.2s ease-in-out infinite;
-}
-@keyframes blink{
-  0%{opacity:1}
-  50%{opacity:.65}
-  100%{opacity:1}
-}
-
-/* ===== SECTIONS ===== */
-.section{
-  background:#f7f7f7;
-  border-radius:16px;
-  padding:16px;
-  margin-top:16px;
-}
-
-/* ===== INSTRUCTIONS ===== */
-.instruction-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  font-weight:700;
-}
-.arrow{transition:transform .4s ease}
-.arrow.open{transform:rotate(180deg)}
-.instruction-content{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-6px);
-  transition:all .5s ease;
-  font-size:13.5px;
-  line-height:1.8;
-}
-.instruction-content.open{
-  max-height:1600px;
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ===== VIDEO ===== */
-iframe{
-  width:100%;
-  height:200px;
-  border:none;
-  border-radius:12px;
-}
-.video-link{
-  font-size:13px;
+  border-radius:18px;
   text-align:center;
   margin-top:8px;
+  animation:blink 1.2s infinite;
+}
+@keyframes blink{50%{opacity:.65}}
+
+.section{
+  background:rgba(255,255,255,.65);
+  border-radius:18px;
+  padding:16px;
+  margin-top:16px;
+  border:1px solid rgba(255,255,255,.4);
 }
 </style>
 </head>
@@ -195,7 +153,6 @@ iframe{
 
 <!-- DASHBOARD -->
 <div id="dash" class="hidden">
-
   <div class="pw-logo" style="width:90px;height:90px">
     <div class="pw-text" style="font-size:46px">PW</div>
   </div>
@@ -203,68 +160,32 @@ iframe{
   <div class="access">ACCESS GRANTED</div>
   <div class="timer" id="timer"></div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="section">
-    <div class="instruction-header" onclick="toggleInstr()">
-      <span>📘 Instructions</span>
-      <span id="arrow" class="arrow">▼</span>
-    </div>
-    <div id="instr" class="instruction-content">
-<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-Follow the steps carefully 👇<br><br>
-
-<b>⚠️ Important Browser Note:</b><br>
-• If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
-• If app/website does not open, turn ON VPN and try again.<br>
-• When you click any link, if anything extra opens, press <b>BACK</b> only once and continue.<br><br>
-
-<b>📌 Steps to Generate Key:</b><br>
-1️⃣ Turn OFF Private DNS / Custom DNS.<br>
-2️⃣ Update Google Chrome to the latest version.<br>
-3️⃣ Use Chrome (recommended) or Opera Mini (fewer ads).<br>
-4️⃣ Laptop / PC users: Turn ON VPN + use Ad-Blocker.<br><br>
-
-<b>⏳ Key Validity:</b><br>
-• Access is valid for <b>24 hours only</b>.<br>
-• After 24 hours, you must login again.<br>
-• This is required due to <b>copyright ©️ issues</b>.
-    </div>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="section">
-    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
-    <div class="video-link">
-      If video does not play on <b>PC or Laptop</b>,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
-    </div>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
-  </div>
-
-  <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
-    <div class="hint">
-      Note: This APK file works on <b>Android devices only</b>.
-    </div>
+    <div class="hint">APK works on <b>Android devices only</b></div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkErr" class="hint"></div>
   </div>
-
 </div>
+
 </div>
 
 <script>
-const DAY=86400000, MAX=3;
+const DAY=86400000;
 
-/* PASSWORDS */
+/* 1-second password visibility */
+function oneSecondVisibility(input){
+ let t;
+ input.addEventListener("input",()=>{
+  input.type="text";
+  clearTimeout(t);
+  t=setTimeout(()=>input.type="password",1000);
+ });
+}
+oneSecondVisibility(roomPass);
+oneSecondVisibility(apkPass);
+
 function roomPassword(){
  const d=new Date();
  return "RS@"+String(d.getDate()).padStart(2,'0')+
@@ -278,37 +199,17 @@ function apkPassword(){
         d.getFullYear();
 }
 
-/* LOGIN */
 function login(){
- let tries=+localStorage.roomTry||MAX;
- let block=+localStorage.roomBlock||0;
- let now=Date.now();
-
- if(now<block){
-  roomErr.textContent="Too many attempts. Try again after 24 hours.";
-  return;
- }
-
  if(roomPass.value!==roomPassword()){
-  tries--;
-  localStorage.roomTry=tries;
-  if(tries<=0){
-    localStorage.roomBlock=now+DAY;
-    roomErr.textContent="Locked for 24 hours.";
-  }else{
-    roomErr.textContent="Wrong password. Attempts left: "+tries;
-  }
+  roomErr.textContent="Wrong password";
   return;
  }
-
- localStorage.clear();
- localStorage.loginTime=now;
+ localStorage.loginTime=Date.now();
  loginBox.classList.add("hidden");
  dash.classList.remove("hidden");
  startTimer();
 }
 
-/* TIMER */
 function startTimer(){
  setInterval(()=>{
   let left=DAY-(Date.now()-localStorage.loginTime);
@@ -320,32 +221,12 @@ function startTimer(){
  },1000);
 }
 
-/* INSTRUCTIONS */
-function toggleInstr(){
- instr.classList.toggle("open");
- arrow.classList.toggle("open");
-}
-
-/* APK */
 function unlockAPK(){
- let tries=+localStorage.apkTry||MAX;
  if(apkPass.value!==apkPassword()){
-  tries--;
-  localStorage.apkTry=tries;
-  apkErr.textContent="Wrong APK password. Attempts left: "+tries;
+  apkErr.textContent="Wrong APK password";
   return;
  }
  apkErr.textContent="APK unlocked (refresh will hide again)";
-}
-
-/* AUTO LOGIN */
-window.onload=()=>{
- let t=localStorage.loginTime;
- if(t && Date.now()-t<DAY){
-  loginBox.classList.add("hidden");
-  dash.classList.remove("hidden");
-  startTimer();
- }
 }
 </script>
 
