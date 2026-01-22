@@ -12,15 +12,26 @@ body{
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
 
-/* ===== WATERMARK ===== */
+/* ===== WATERMARK (FIXED GLASS LAYER) ===== */
 .watermark{
-  position:fixed;inset:0;
-  display:flex;justify-content:center;align-items:center;
-  pointer-events:none;z-index:0;
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  pointer-events:none;
+
+  opacity:0.08;              /* visible but soft */
+  filter: blur(7px);        /* background blur */
+  transform: scale(1.6);
+
+  z-index:0;                /* MUST stay below cards */
 }
-.watermark.login{opacity:.30;filter:blur(.9px)}
-.watermark.dashboard{opacity:.65;filter:blur(.3px)}
-.watermark .pw-logo{transform:scale(3.8);opacity:.95}
+
+.watermark .pw-logo{
+  opacity:.9;
+}
 
 /* ===== CARDS ===== */
 .card{
@@ -117,32 +128,31 @@ button{
 
 .section{margin-top:22px}
 
-/* ===== INSTRUCTIONS ===== */
-.instruction-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px;border-radius:18px;
-  background:linear-gradient(135deg,#000,#1c1c1c);
-  color:#fff;font-weight:800;cursor:pointer;
-  box-shadow:0 14px 35px rgba(0,0,0,.35);
-}
-/* ===== SMOOTH INSTRUCTIONS (FIXED) ===== */
 .instruction-content{
   overflow:hidden;
   max-height:0;
   opacity:0;
-  transform:translateY(-6px);
+
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  border-radius:18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+
+  transform: translateY(-6px);
   transition:
     max-height .45s cubic-bezier(.4,0,.2,1),
     opacity .25s ease,
     transform .25s ease;
-  background:rgba(255,255,255,.97);
-  border-radius:18px;
+
   padding:0 16px;
   margin-top:12px;
   font-size:13px;
   line-height:1.8;
+
   will-change:max-height, opacity, transform;
-}
+     }
 
 .instruction-content.open{
   max-height:3000px;
