@@ -16,7 +16,7 @@ body{
   background:#f4f6fb;
 }
 
-/* ===== WATERMARK PW LOGO ===== */
+/* ===== WATERMARK (NOW VISIBLE) ===== */
 .watermark{
   position:fixed;
   inset:0;
@@ -24,11 +24,13 @@ body{
   justify-content:center;
   align-items:center;
   pointer-events:none;
-  opacity:.09;
-  filter:blur(6px);
+  opacity:.18;              /* increased */
+  filter:blur(2px);         /* reduced blur */
   z-index:0;
 }
-.watermark .pw-logo{transform:scale(2.6);}
+.watermark .pw-logo{
+  transform:scale(2.8);
+}
 
 /* ===== CARD ===== */
 .card{
@@ -183,7 +185,10 @@ iframe{
 <!-- LOGIN -->
 <div id="loginBox">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
+
   <input id="roomPass" type="password" placeholder="Enter room password">
+  <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
+
   <button onclick="login()">Continue</button>
   <div id="roomErr" class="hint"></div>
 </div>
@@ -247,8 +252,7 @@ Follow the steps carefully 👇<br><br>
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
     <div class="hint">
-      Note: This APK file is supported on <b>Android devices only</b>.
-      It will not work on iOS or PC.
+      Note: This APK file works on <b>Android devices only</b>.
     </div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkErr" class="hint"></div>
@@ -346,4 +350,4 @@ window.onload=()=>{
 </script>
 
 </body>
-      </html>
+  </html>
