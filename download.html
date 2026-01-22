@@ -7,7 +7,6 @@
 
 <style>
 *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
-
 body{
   margin:0;
   min-height:100vh;
@@ -26,35 +25,33 @@ body{
   align-items:center;
   pointer-events:none;
   z-index:0;
-  opacity:0.38;
-  filter:blur(0.6px);
+  opacity:0.42;
+  filter:blur(0.4px);
 }
 .watermark .pw-logo{
-  transform:scale(3.2);
-  opacity:0.9;
+  transform:scale(3.4);
+  opacity:0.95;
 }
 
-/* ===== GLASS CARD (LOGIN + DASHBOARD SAME) ===== */
+/* ===== GLASS CARD ===== */
 .card{
   width:100%;
   max-width:420px;
-  background:rgba(255,255,255,0.38);
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
-  border-radius:28px;
+  background:rgba(255,255,255,0.28);
+  backdrop-filter:blur(22px) saturate(170%);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);
+  border-radius:30px;
   padding:28px;
   border:1px solid rgba(255,255,255,0.35);
-  box-shadow:0 30px 60px rgba(0,0,0,.18);
+  box-shadow:0 35px 70px rgba(0,0,0,.22);
   position:relative;
   z-index:1;
 }
-
 .hidden{display:none}
 
-/* ===== PW LOGO ===== */
+/* ===== LOGO ===== */
 .pw-logo{
-  width:120px;
-  height:120px;
+  width:120px;height:120px;
   margin:0 auto 14px;
   background:#000;
   border-radius:50%;
@@ -66,8 +63,7 @@ body{
 .pw-logo::before{
   content:"";
   position:absolute;
-  width:82%;
-  height:82%;
+  width:82%;height:82%;
   border-radius:50%;
   border:5px solid #fff;
   border-left-color:transparent;
@@ -89,7 +85,7 @@ input{
   border:1px solid rgba(0,0,0,.15);
   font-size:14px;
   margin-top:12px;
-  background:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.95);
 }
 button{
   width:100%;
@@ -105,17 +101,13 @@ button{
 }
 .hint{
   font-size:12.5px;
-  color:#333;
+  color:#222;
   margin-top:6px;
   line-height:1.6;
 }
 
 /* ===== ACCESS + TIMER ===== */
-.access{
-  text-align:center;
-  font-weight:800;
-  margin-top:4px;
-}
+.access{text-align:center;font-weight:800}
 .timer{
   background:#000;
   color:#fff;
@@ -128,66 +120,30 @@ button{
 @keyframes blink{50%{opacity:.65}}
 
 .section{margin-top:18px}
-
-/* ===== INSTRUCTIONS ===== */
-.instruction-header{
-  display:flex;
-  justify-content:space-between;
-  cursor:pointer;
-  font-weight:700;
-}
-.instruction-content{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  transition:.5s;
-  font-size:13px;
-  line-height:1.7;
-}
-.instruction-content.open{
-  max-height:1600px;
-  opacity:1;
-}
-
-/* ===== VIDEO ===== */
-iframe{
-  width:100%;
-  height:200px;
-  border-radius:14px;
-  border:none;
-}
-.video-link{
-  text-align:center;
-  font-size:13px;
-  margin-top:8px;
-}
+iframe{width:100%;height:200px;border-radius:14px;border:none}
 </style>
 </head>
 
 <body>
 
-<!-- WATERMARK -->
 <div class="watermark">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
 
 <div class="card">
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="loginBox">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
-
   <input id="roomPass" type="password" placeholder="Enter room password">
   <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
-  <div class="hint">Password automatically changes after 24 hours</div>
-
+  <div class="hint">Password auto-changes after 24 hours</div>
   <button onclick="login()">Continue</button>
   <div id="roomErr" class="hint"></div>
 </div>
 
-<!-- ===== DASHBOARD ===== -->
+<!-- DASHBOARD -->
 <div id="dash" class="hidden">
-
   <div class="pw-logo" style="width:90px;height:90px">
     <div class="pw-text" style="font-size:46px">PW</div>
   </div>
@@ -195,84 +151,81 @@ iframe{
   <div class="access">ACCESS GRANTED</div>
   <div class="timer" id="timer"></div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="section">
-    <div class="instruction-header" onclick="instr.classList.toggle('open')">
-      <span>📘 Instructions</span><span>▼</span>
-    </div>
-    <div id="instr" class="instruction-content">
-      Access is valid for 24 hours only due to copyright © issues.<br>
-      If any extra page or ad opens, press BACK once and continue.<br>
-      For fewer ads, use Opera Mini browser.<br>
-      APK file works on Android devices only.
-    </div>
-  </div>
-
   <!-- VIDEO -->
   <div class="section">
     <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
-    <div class="video-link">
-      If video does not play on PC/Laptop,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
-    </div>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
   </div>
 
   <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
-    <div class="hint">APK supported on <b>Android devices only</b></div>
+    <div class="hint">APK works on <b>Android devices only</b></div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkErr" class="hint"></div>
   </div>
-
 </div>
 </div>
 
 <script>
 const DAY=86400000;
+let roomAttempts=3, apkAttempts=3;
 
-/* 1 second password visibility */
-function oneSecondVisibility(input){
+/* password visibility */
+function visible1s(el){
   let t;
-  input.addEventListener("input",()=>{
-    input.type="text";
+  el.addEventListener("input",()=>{
+    el.type="text";
     clearTimeout(t);
-    t=setTimeout(()=>input.type="password",1000);
+    t=setTimeout(()=>el.type="password",1000);
   });
 }
-oneSecondVisibility(roomPass);
-oneSecondVisibility(apkPass);
+visible1s(roomPass);
+visible1s(apkPass);
 
-function roomPassword(){
+function todayCode(prefix){
   const d=new Date();
-  return "RS@"+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
-}
-function apkPassword(){
-  const d=new Date();
-  return "APK@"+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+  return prefix+
+    String(d.getDate()).padStart(2,'0')+
+    String(d.getMonth()+1).padStart(2,'0')+
+    d.getFullYear();
 }
 
 function login(){
-  if(roomPass.value!==roomPassword()){
-    roomErr.textContent="Wrong password";
+  if(localStorage.lockRoom && Date.now()<localStorage.lockRoom){
+    roomErr.textContent="Login locked. Try after 24 hours.";
+    return;
+  }
+  if(roomPass.value!==todayCode("RS@")){
+    roomAttempts--;
+    roomErr.textContent=`Wrong password. Attempts left: ${roomAttempts}`;
+    if(roomAttempts<=0){
+      localStorage.lockRoom=Date.now()+DAY;
+      roomErr.textContent="Locked for 24 hours.";
+    }
     return;
   }
   localStorage.loginTime=Date.now();
   loginBox.classList.add("hidden");
   dash.classList.remove("hidden");
   startTimer();
+}
+
+function unlockAPK(){
+  if(localStorage.lockAPK && Date.now()<localStorage.lockAPK){
+    apkErr.textContent="APK locked. Try after 24 hours.";
+    return;
+  }
+  if(apkPass.value!==todayCode("APK@")){
+    apkAttempts--;
+    apkErr.textContent=`Wrong APK password. Attempts left: ${apkAttempts}`;
+    if(apkAttempts<=0){
+      localStorage.lockAPK=Date.now()+DAY;
+      apkErr.textContent="APK locked for 24 hours.";
+    }
+    return;
+  }
+  apkErr.textContent="APK unlocked (refresh will hide again)";
 }
 
 function startTimer(){
@@ -289,14 +242,6 @@ function startTimer(){
   },1000);
 }
 
-function unlockAPK(){
-  if(apkPass.value!==apkPassword()){
-    apkErr.textContent="Wrong APK password";
-    return;
-  }
-  apkErr.textContent="APK unlocked (refresh will hide again)";
-}
-
 window.onload=()=>{
   let t=localStorage.loginTime;
   if(t && Date.now()-t<DAY){
@@ -308,4 +253,4 @@ window.onload=()=>{
 </script>
 
 </body>
-  </html>
+    </html>
