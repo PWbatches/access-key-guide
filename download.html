@@ -6,40 +6,30 @@
 <title>Secure Access</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
 body{
   margin:0;
-  background:#f4f6fb;
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  background:#f5f7fb;
 }
-.hidden{display:none}
 
-/* ===== WATERMARK ===== */
-.watermark{
+/* ===== AESTHETIC WATERMARK ===== */
+body::before{
+  content:"PW   PW   PW   PW   PW";
   position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  pointer-events:none;
-  z-index:1;
-}
-.watermark::before{
-  content:"PW";
+  inset:-20%;
   font-family:"Times New Roman",serif;
-  font-size:260px;
+  font-size:180px;
   font-weight:bold;
   color:#000;
   opacity:0.04;
-  transform:rotate(-12deg);
-  letter-spacing:10px;
-  user-select:none;
+  transform:rotate(-20deg);
+  letter-spacing:140px;
+  line-height:1.5;
+  pointer-events:none;
 }
 
 /* ===== CARD ===== */
@@ -51,16 +41,40 @@ body{
   padding:26px;
   box-shadow:0 20px 60px rgba(0,0,0,.12);
   position:relative;
-  z-index:2;
+  z-index:1;
 }
+.hidden{display:none}
 
-/* ===== LOGO ===== */
-.logo{
-  text-align:center;
+/* ===== PW LOGO ===== */
+.pw-logo{
+  width:120px;
+  height:120px;
+  margin:0 auto 18px;
+  background:#000;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+.pw-logo::before{
+  content:"";
+  position:absolute;
+  width:82%;
+  height:82%;
+  border-radius:50%;
+  border:5px solid #fff;
+  border-left-color:transparent;
+  border-right-color:transparent;
+  transform:rotate(-12deg);
+}
+.pw-text{
+  color:#fff;
   font-family:"Times New Roman",serif;
-  font-size:46px;
+  font-size:64px;
   font-weight:bold;
-  margin-bottom:16px;
+  position:relative;
+  z-index:2;
 }
 
 /* ===== INPUTS ===== */
@@ -84,11 +98,6 @@ button{
   cursor:pointer;
   margin-top:12px;
 }
-button:disabled{
-  background:#888;
-  cursor:not-allowed;
-}
-
 .hint{
   font-size:12px;
   color:#555;
@@ -125,26 +134,16 @@ button:disabled{
 .instruction-header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   cursor:pointer;
   font-weight:600;
 }
-.instruction-header span{
-  font-size:14px;
-}
-.arrow{
-  font-size:18px;
-  transition:transform .3s ease;
-}
-.arrow.open{
-  transform:rotate(180deg);
-}
+.arrow{transition:.3s}
+.arrow.open{transform:rotate(180deg)}
 .instruction-content{
+  display:none;
   margin-top:12px;
   font-size:13px;
-  line-height:1.6;
-  color:#333;
-  display:none;
+  line-height:1.7;
 }
 
 /* ===== VIDEO ===== */
@@ -159,16 +158,14 @@ iframe{
 
 <body>
 
-<div class="watermark"></div>
-
 <div class="card">
 
 <!-- LOGIN -->
 <div id="loginBox">
-  <div class="logo">PW</div>
+  <div class="pw-logo"><div class="pw-text">PW</div></div>
 
   <input id="sitePass" type="password" placeholder="Enter website password">
-  <button id="loginBtn" onclick="checkLogin()">Continue</button>
+  <button onclick="login()">Continue</button>
 
   <div class="hint">
     Password format: <b>RS@DDMMYYYY</b><br>
@@ -178,68 +175,81 @@ iframe{
 </div>
 
 <!-- DASHBOARD -->
-<div id="content" class="hidden">
+<div id="dashboard" class="hidden">
 
-  <div class="logo">ACCESS GRANTED</div>
-
-  <div class="timer" id="sessionTimer"></div>
-
-  <!-- VIDEO -->
-  <div class="section">
-    <iframe loading="lazy"
-      src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview">
-    </iframe>
+  <div class="pw-logo" style="width:90px;height:90px">
+    <div class="pw-text" style="font-size:46px">PW</div>
   </div>
 
-  <!-- WEBSITE -->
+  <div class="timer" id="timer"></div>
+
+  <!-- 1️⃣ INSTRUCTIONS TAB -->
+  <div class="section">
+    <div class="instruction-header" onclick="toggleInstr()">
+      <span>📘 Instructions</span>
+      <span id="arrow" class="arrow">▼</span>
+    </div>
+
+    <div id="instr" class="instruction-content">
+      🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+      Follow the steps carefully 👇<br><br>
+
+      ⚠️ <b>Important Browser Note:</b><br>
+      • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+      • To avoid ads, open the website directly using Opera Mini browser.<br>
+      • If app/website does not open, turn ON VPN and try again.<br>
+      • When you click any link, if anything extra opens, press BACK only once and continue. The key will be generated successfully.<br><br>
+
+      📌 <b>Steps to Generate Key:</b><br><br>
+
+      1️⃣ Turn OFF DNS<br>
+      Go to phone settings and disable Private DNS / Custom DNS.<br><br>
+
+      2️⃣ Update Browser<br>
+      Make sure Google Chrome is updated to the latest version.<br><br>
+
+      3️⃣ Use Correct Browser<br>
+      • Chrome → recommended<br>
+      • Opera Mini → fewer ads (best option)<br><br>
+
+      4️⃣ If Any Extra Page / Ad Opens<br>
+      Just press BACK once and continue.<br>
+      Key will be generated successfully.<br><br>
+
+      5️⃣ Laptop / PC Users<br>
+      • Turn ON VPN<br>
+      • Use Ad-Blocker extension<br>
+      (This helps avoid ads & redirects)<br><br>
+
+      ⏳ <b>Key Validity:</b><br>
+      • Access Key is valid for 24 hours only.<br>
+      • After 24 hours, you must login again and repeat the same process.<br>
+      • This restriction is applied due to copyright ©️ issues.
+    </div>
+  </div>
+
+  <!-- 2️⃣ VIDEO -->
+  <div class="section">
+    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
+  </div>
+
+  <!-- 3️⃣ WEBSITE -->
   <div class="section">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
     </button>
   </div>
 
-  <!-- APK -->
+  <!-- 4️⃣ APK PASSWORD -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
-    <button id="apkBtn" onclick="unlockAPK()">Unlock APK</button>
-
+    <button onclick="unlockAPK()">Unlock APK</button>
     <div class="hint">
       APK password format: <b>APK@DDMMYYYY</b><br>
       Example: APK@01012025
     </div>
     <div id="apkErr" class="hint"></div>
-
-    <a id="apkLink" class="hidden" href="#">
-      <button>Download APK</button>
-    </a>
-  </div>
-
-  <!-- INSTRUCTIONS TOGGLE -->
-  <div class="section">
-    <div class="instruction-header" onclick="toggleInstructions()">
-      <span>📘 Instructions</span>
-      <span id="arrow" class="arrow">▼</span>
-    </div>
-
-    <div id="instructions" class="instruction-content">
-      <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-      • Use Chrome / Edge / Opera Mini browser.<br>
-      • If you open the link from an APP, ads may appear in Chrome.<br>
-      • To avoid ads, open the website directly using Opera Mini.<br>
-      • If app or website does not open, turn ON VPN and try again.<br>
-      • When any extra page opens, press BACK only once and continue.<br><br>
-
-      <b>Steps:</b><br>
-      1. Turn OFF Private DNS / Custom DNS from phone settings.<br>
-      2. Update Google Chrome to the latest version.<br>
-      3. Use Chrome (recommended) or Opera Mini (fewer ads).<br>
-      4. Laptop / PC users should use VPN and Ad-Blocker.<br><br>
-
-      • Access key is valid for 24 hours only.<br>
-      • After 24 hours, login again to generate a new key.<br>
-      • This restriction is applied due to copyright ©️ issues.
-    </div>
   </div>
 
 </div>
@@ -247,28 +257,68 @@ iframe{
 
 <script>
 const DAY=24*60*60*1000;
-const MAX_ATTEMPTS=3;
 
-function today(){
+function todayPass(){
   const d=new Date();
-  return String(d.getDate()).padStart(2,'0')+
+  return "RS@"+String(d.getDate()).padStart(2,'0')+
          String(d.getMonth()+1).padStart(2,'0')+
          d.getFullYear();
 }
-const SITE_PASSWORD="RS@"+today();
-const APK_PASSWORD="APK@"+today();
-
-/* TOGGLE INSTRUCTIONS */
-function toggleInstructions(){
-  const box=document.getElementById("instructions");
-  const arrow=document.getElementById("arrow");
-  const open=box.style.display==="block";
-  box.style.display=open?"none":"block";
-  arrow.classList.toggle("open",!open);
+function todayAPK(){
+  const d=new Date();
+  return "APK@"+String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
+         d.getFullYear();
 }
 
-/* बाकी login, apk, timer logic same रखा गया है (unchanged) */
+function login(){
+  if(sitePass.value!==todayPass()){
+    loginErr.textContent="Wrong password";
+    return;
+  }
+  localStorage.setItem("loginTime",Date.now());
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  startTimer();
+}
+
+function startTimer(){
+  setInterval(()=>{
+    const t=localStorage.getItem("loginTime");
+    const left=DAY-(Date.now()-t);
+    if(left<=0){localStorage.clear();location.reload();}
+    const h=Math.floor(left/3600000),
+          m=Math.floor(left%3600000/60000),
+          s=Math.floor(left%60000/1000);
+    timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
+  },1000);
+}
+
+function toggleInstr(){
+  const c=document.getElementById("instr");
+  const a=document.getElementById("arrow");
+  const open=c.style.display==="block";
+  c.style.display=open?"none":"block";
+  a.classList.toggle("open",!open);
+}
+
+function unlockAPK(){
+  if(apkPass.value!==todayAPK()){
+    apkErr.textContent="Wrong APK password";
+    return;
+  }
+  apkErr.textContent="APK unlocked successfully";
+}
+
+window.onload=()=>{
+  const t=localStorage.getItem("loginTime");
+  if(t && Date.now()-t<DAY){
+    loginBox.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+    startTimer();
+  }
+}
 </script>
 
 </body>
-</html>
+  </html>
