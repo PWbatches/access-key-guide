@@ -64,7 +64,19 @@ button{
   border:none;border-radius:14px;
   background:#000;color:#fff;font-weight:600;cursor:pointer;
 }
-.hint{font-size:12.5px;margin-top:6px;color:#333;line-height:1.6}
+.hint{
+  font-size:12.5px;margin-top:6px;color:#333;line-height:1.6
+}
+.warning{
+  font-size:12.5px;margin-top:10px;
+  color:#8a0000;font-weight:600;
+}
+.disclaimer{
+  font-size:12.5px;
+  margin-top:10px;
+  color:#222;
+  line-height:1.7;
+}
 
 /* ===== TIMER ===== */
 .timer{
@@ -117,7 +129,23 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
 
   <input id="roomPass" type="password" placeholder="Enter room password">
   <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
-  <div class="hint">Password automatically changes every 24 hours due to copyright © policy.</div>
+
+  <!-- DISCLAIMER (POINTS FORMAT) -->
+  <div class="disclaimer">
+    <b>Disclaimer:</b>
+    <ul>
+      <li>After successful login, users must carefully read and follow all instructions provided inside the dashboard.</li>
+      <li>The access password is date-based and automatically changes every 24 hours due to copyright © policy.</li>
+    </ul>
+  </div>
+
+  <!-- IMPORTANT NOTICE -->
+  <div class="warning">
+    <b>Important Notice:</b><br>
+    Sharing this website or access details without admin permission
+    may result in immediate access suspension.
+    Unauthorized sharing is strictly monitored.
+  </div>
 
   <button onclick="login()">Continue</button>
   <div id="roomMsg" class="hint"></div>
@@ -154,21 +182,6 @@ Follow the steps carefully to avoid access issues.<br><br>
 3️⃣ Use Correct Browser – Chrome (recommended) or Opera Mini (fewer ads).<br>
 4️⃣ If any extra page or ad opens, press <b>BACK once</b> and continue. Do not close the tab.<br>
 5️⃣ Laptop / PC users must turn <b>ON VPN</b> and use an <b>Ad-Blocker</b> extension.<br><br>
-
-<b>🔐 Password & Attempt Rules:</b><br>
-• Website access and APK access both follow the <b>same login process</b>.<br>
-• Password is <b>date-based</b> and changes automatically every <b>24 hours</b>.<br>
-• Password format example: <b>RS@DDMMYYYY</b> (for website login).<br>
-• You get a maximum of <b>3 password attempts</b>.<br>
-• After each wrong password, remaining attempts are shown.<br>
-• After 3 failed attempts, login is <b>locked for 24 hours</b>.<br><br>
-
-<b>📦 APK Password Rules:</b><br>
-• APK works on <b>Android devices only</b>.<br>
-• APK has a separate password (example: <b>APK@DDMMYYYY</b>).<br>
-• APK password also allows only <b>3 attempts</b>.<br>
-• After 3 wrong attempts, APK access is <b>locked for 24 hours</b>.<br>
-• Refreshing the page will hide the APK again.<br><br>
 
 <b>⏳ Key Validity:</b><br>
 • Access Key is valid for <b>24 hours only</b>.<br>
@@ -273,4 +286,4 @@ function unlockAPK(){
 </script>
 
 </body>
-                                                          </html>
+      </html>
