@@ -21,7 +21,7 @@ html,body{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
   pointer-events:none;z-index:0;
-  opacity:.035;filter:grayscale(100%);
+  opacity:.04;filter:grayscale(100%);
 }
 .watermark .pw-logo{transform:scale(3)}
 
@@ -74,7 +74,7 @@ button{
 button:active{transform:scale(.97)}
 button.secondary{background:#111}
 
-/* Time cards */
+/* Time card */
 .time-card{
   background:linear-gradient(180deg,#111,#000);
   color:#fff;border-radius:22px;
@@ -108,7 +108,7 @@ iframe{border:none;border-radius:18px}
 
   <p class="small">
     Format: <b>RS@DDMMYYYY</b><br>
-    Example: <b>RS@21012026</b>
+    Example: <b>RS@22012026</b>
   </p>
 
   <p id="loginErr" class="small" style="color:#c00"></p>
@@ -124,21 +124,33 @@ iframe{border:none;border-radius:18px}
 
   <div class="card time-card center" id="sessionTimer"></div>
 
-  <div class="card time-card center">
-    <div class="time-big">Exam Start Date: 1 June 2026</div>
-    <div id="examTimer" style="margin-top:8px"></div>
-  </div>
-
+  <!-- INSTRUCTIONS -->
   <div class="card">
     <button onclick="toggleInstructions()">Instructions</button>
     <div id="instructions" class="hidden small" style="margin-top:14px">
-      • Turn OFF Private DNS / Custom DNS.<br>
-      • Use Chrome or Opera Mini.<br>
-      • Turn ON VPN if page does not open.<br><br>
-      Re-login required after 24 hours due to copyright ©️ compliance.
+
+<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+<b>⚠️ Important Browser Note:</b><br>
+• If you open the link from an app, ads may appear.<br>
+• To avoid ads, open directly using <b>Opera Mini</b>.<br>
+• If the site does not open, turn <b>ON VPN</b>.<br><br>
+
+<b>📌 Steps:</b><br>
+1. Turn OFF <b>Private DNS / Custom DNS</b>.<br>
+2. Update your browser.<br>
+3. Chrome (recommended) / Opera Mini (fewer ads).<br>
+4. If ad opens, press <b>BACK</b> once.<br>
+5. Laptop users: VPN + Ad-Blocker.<br><br>
+
+<b>⏳ Validity:</b><br>
+• Access valid for <b>24 hours</b> only.<br>
+• Re-login required after expiry due to <b>copyright ©️ compliance</b>.
+
     </div>
   </div>
 
+  <!-- VIDEO -->
   <div class="card">
     <b>Instruction Video</b><br><br>
     <iframe width="100%" height="200"
@@ -146,6 +158,7 @@ iframe{border:none;border-radius:18px}
     </iframe>
   </div>
 
+  <!-- WEBSITE -->
   <div class="card">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
@@ -154,6 +167,11 @@ iframe{border:none;border-radius:18px}
 
   <!-- APK -->
   <div class="card">
+    <b>APK Download</b><br>
+    <span class="small">
+      ⚠️ Only for <b>Android devices</b> (Not for iOS / PC)
+    </span><br><br>
+
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <p class="small">Format: <b>APK@DDMMYYYY</b></p>
     <button onclick="unlockAPK()">Unlock APK</button>
@@ -171,99 +189,91 @@ iframe{border:none;border-radius:18px}
 
 <script>
 const SESSION = 86400000;
-const EXAM = new Date("2026-06-01T00:00:00").getTime();
+const MAX_ATTEMPTS = 3;
 
-/* DATE PASSWORD */
+let loginAttempts = MAX_ATTEMPTS;
+let apkAttempts   = MAX_ATTEMPTS;
+
 function today(){
-  const d=new Date();
-  return String(d.getDate()).padStart(2,"0")+
-         String(d.getMonth()+1).padStart(2,"0")+
-         d.getFullYear();
+ const d=new Date();
+ return String(d.getDate()).padStart(2,"0")+
+        String(d.getMonth()+1).padStart(2,"0")+
+        d.getFullYear();
 }
 
 /* LOGIN */
 function login(){
-  const val = sitePass.value.trim();
-  if(val === "RS@" + today()){
-    localStorage.setItem("loginTime", Date.now());
-    showDash();
-  }else{
-    loginErr.innerText = "Incorrect password.";
-  }
+ if(loginAttempts<=0){
+  loginErr.innerText="Too many attempts. Try again after 24 hours.";
+  return;
+ }
+ if(sitePass.value.trim()==="RS@"+today()){
+  localStorage.setItem("loginTime",Date.now());
+  showDash();
+ }else{
+  loginAttempts--;
+  loginErr.innerText="Incorrect password. Attempts left: "+loginAttempts;
+ }
 }
 
 function showDash(){
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  startSession(); startExam();
+ loginBox.classList.add("hidden");
+ dashboard.classList.remove("hidden");
+ startSession();
 }
 
-/* SESSION */
 function startSession(){
-  setInterval(()=>{
-    const t = localStorage.getItem("loginTime");
-    const left = SESSION - (Date.now() - t);
-    if(left <= 0){
-      localStorage.clear();
-      location.reload();
-    }
-    sessionTimer.innerHTML =
-      "<div class='time-big'>Session expires in</div>" +
-      Math.floor(left/3600000)+"h "+
-      Math.floor(left%3600000/60000)+"m "+
-      Math.floor(left%60000/1000)+"s";
-  },1000);
-}
-
-/* EXAM */
-function startExam(){
-  setInterval(()=>{
-    let d = EXAM - Date.now();
-    examTimer.innerText =
-      Math.floor(d/86400000)+"d "+
-      Math.floor(d%86400000/3600000)+"h "+
-      Math.floor(d%3600000/60000)+"m "+
-      Math.floor(d%60000/1000)+"s";
-  },1000);
+ setInterval(()=>{
+  const t=localStorage.getItem("loginTime");
+  const left=SESSION-(Date.now()-t);
+  if(left<=0){localStorage.clear();location.reload();}
+  sessionTimer.innerHTML=
+   "<div class='time-big'>Session expires in</div>"+
+   Math.floor(left/3600000)+"h "+
+   Math.floor(left%3600000/60000)+"m "+
+   Math.floor(left%60000/1000)+"s";
+ },1000);
 }
 
 /* APK */
 function unlockAPK(){
-  const val = apkPass.value.trim();
-  if(val === "APK@" + today()){
-    apkLink.classList.remove("hidden");
-    apkErr.innerText="";
-  }else{
-    apkLink.classList.add("hidden");
-    apkErr.innerText="Wrong APK password.";
-  }
+ if(apkAttempts<=0){
+  apkErr.innerText="APK locked. Try again after 24 hours.";
+  return;
+ }
+ if(apkPass.value.trim()==="APK@"+today()){
+  apkLink.classList.remove("hidden");
+  apkErr.innerText="";
+ }else{
+  apkAttempts--;
+  apkLink.classList.add("hidden");
+  apkErr.innerText="Wrong APK password. Attempts left: "+apkAttempts;
+ }
 }
 
-/* Instructions */
 function toggleInstructions(){
-  instructions.classList.toggle("hidden");
+ instructions.classList.toggle("hidden");
 }
 
-/* 🔐 PASSWORD VISIBILITY – 1 SECOND SAFE PEEK */
+/* Password peek – 1 second */
 function passwordPeek(id){
-  const input = document.getElementById(id);
-  let timer;
-  input.addEventListener("input",()=>{
-    input.type="text";
-    clearTimeout(timer);
-    timer=setTimeout(()=>input.type="password",1000);
-  });
+ const input=document.getElementById(id);
+ let timer;
+ input.addEventListener("input",()=>{
+  input.type="text";
+  clearTimeout(timer);
+  timer=setTimeout(()=>input.type="password",1000);
+ });
 }
-
 passwordPeek("sitePass");
 passwordPeek("apkPass");
 
 /* Restore session */
-window.onload = ()=>{
-  const t = localStorage.getItem("loginTime");
-  if(t && Date.now()-t < SESSION) showDash();
+window.onload=()=>{
+ const t=localStorage.getItem("loginTime");
+ if(t && Date.now()-t<SESSION) showDash();
 };
 </script>
 
 </body>
-      </html>
+                                                     </html>
