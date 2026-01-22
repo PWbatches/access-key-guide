@@ -18,15 +18,9 @@ body{
   display:flex;justify-content:center;align-items:center;
   pointer-events:none;z-index:0;
 }
-.watermark.login{
-  opacity:.35;filter:blur(.8px);
-}
-.watermark.dashboard{
-  opacity:.55;filter:blur(.4px);
-}
-.watermark .pw-logo{
-  transform:scale(3.6);opacity:.9;
-}
+.watermark.login{opacity:.35;filter:blur(.8px)}
+.watermark.dashboard{opacity:.55;filter:blur(.4px)}
+.watermark .pw-logo{transform:scale(3.6);opacity:.9}
 
 /* ===== CARDS ===== */
 .card{
@@ -70,7 +64,17 @@ button{
   border:none;border-radius:14px;
   background:#000;color:#fff;font-weight:600;cursor:pointer;
 }
-.hint{font-size:12.5px;margin-top:6px;color:#333}
+.hint{
+  font-size:12.5px;margin-top:6px;color:#333;line-height:1.6;
+}
+.disclaimer{
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(0,0,0,.05);
+  font-size:12px;
+  color:#222;
+}
 
 /* ===== TIMER ===== */
 .timer{
@@ -82,7 +86,7 @@ button{
 
 .section{margin-top:22px}
 
-/* ===== INSTRUCTIONS (CLEARLY DIFFERENT) ===== */
+/* ===== INSTRUCTIONS ===== */
 .instruction-header{
   display:flex;justify-content:space-between;align-items:center;
   padding:16px;border-radius:18px;
@@ -124,8 +128,19 @@ iframe{
 <!-- LOGIN -->
 <div class="card" id="loginCard">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
+
   <input id="roomPass" type="password" placeholder="Enter room password">
-  <div class="hint">Hint: RS@DDMMYYYY</div>
+  <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
+
+  <!-- ✅ UPDATED DISCLAIMER -->
+  <div class="disclaimer">
+    <b>Disclaimer:</b><br>
+    • For copyright © reasons, the access password automatically changes every 24 hours.<br>
+    • You will be logged out only after 24 hours are completed.<br>
+    • <b>iOS devices, Laptop & PC users must login through the website only.</b><br>
+    • APK file is supported on <b>Android devices only</b>.
+  </div>
+
   <button onclick="login()">Continue</button>
   <div id="roomMsg" class="hint"></div>
 </div>
@@ -148,7 +163,8 @@ iframe{
       Access valid for 24 hours due to copyright © issues.<br>
       If any extra page or ad opens, press BACK once and continue.<br>
       For fewer ads, use Opera Mini browser.<br>
-      APK file works on Android devices only.
+      iOS, Laptop & PC users must use website login.<br>
+      APK works on Android devices only.
     </div>
   </div>
 
@@ -173,7 +189,7 @@ iframe{
   <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
-    <div class="hint">Example: APK@DDMMYYYY</div>
+    <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
     <div class="hint">APK supported on Android devices only</div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkMsg" class="hint"></div>
@@ -182,48 +198,61 @@ iframe{
 
 <script>
 const DAY=86400000;
-function today(p){
+
+function today(prefix){
   const d=new Date();
-  return p+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+  return prefix+
+    String(d.getDate()).padStart(2,'0')+
+    String(d.getMonth()+1).padStart(2,'0')+
+    d.getFullYear();
 }
-function oneSec(i){
-  let t;i.addEventListener("input",()=>{
-    i.type="text";clearTimeout(t);
+
+/* 1-second password visibility */
+function oneSecond(i){
+  let t;
+  i.addEventListener("input",()=>{
+    i.type="text";
+    clearTimeout(t);
     t=setTimeout(()=>i.type="password",1000);
   });
 }
-oneSec(roomPass);oneSec(apkPass);
+oneSecond(roomPass);oneSecond(apkPass);
 
 function login(){
   if(roomPass.value!==today("RS@")){
-    roomMsg.textContent="Wrong password";return;
+    roomMsg.textContent="Wrong password";
+    return;
   }
+  localStorage.loginTime=Date.now();
   loginCard.classList.add("hidden");
   dashCard.classList.remove("hidden");
   wmLogin.classList.add("hidden");
   wmDash.classList.remove("hidden");
-  localStorage.loginTime=Date.now();
   startTimer();
 }
+
 function startTimer(){
   setInterval(()=>{
     let left=DAY-(Date.now()-localStorage.loginTime);
-    if(left<=0){localStorage.clear();location.reload()}
+    if(left<=0){
+      localStorage.clear();
+      location.reload();
+    }
     let h=Math.floor(left/3600000),
         m=Math.floor(left%3600000/60000),
         s=Math.floor(left%60000/1000);
     timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
+
 function unlockAPK(){
   if(apkPass.value!==today("APK@")){
-    apkMsg.textContent="Wrong APK password";return;
+    apkMsg.textContent="Wrong APK password";
+    return;
   }
-  apkMsg.textContent="APK unlocked (refresh hides again)";
+  apkMsg.textContent="APK unlocked (refresh will hide again)";
 }
 </script>
 
 </body>
-  </html>
+    </html>
