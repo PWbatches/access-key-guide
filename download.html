@@ -10,12 +10,11 @@ html,body{
   margin:0;padding:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
   background:#ffffff;color:#111;
-  overflow-x:hidden;
 }
 *{box-sizing:border-box;transition:all .25s ease}
 .hidden{display:none}
 .center{text-align:center}
-.small{font-size:13px;color:#555;line-height:1.5}
+.small{font-size:13px;color:#555;line-height:1.6}
 
 /* Watermark */
 .watermark{
@@ -24,7 +23,7 @@ html,body{
   pointer-events:none;z-index:0;
   opacity:.035;filter:grayscale(100%);
 }
-.watermark .pw-logo{transform:scale(3.1)}
+.watermark .pw-logo{transform:scale(3)}
 
 /* PW Logo */
 .pw-logo{
@@ -91,14 +90,13 @@ iframe{border:none;border-radius:18px}
 
 <body>
 
-<!-- Watermark -->
 <div class="watermark">
   <div class="pw-logo"><span>PW</span></div>
 </div>
 
 <div class="container">
 
-<!-- Login -->
+<!-- LOGIN -->
 <div id="loginBox" class="card center">
   <div style="display:flex;justify-content:center;margin-bottom:12px">
     <div class="pw-logo"><span>PW</span></div>
@@ -117,7 +115,7 @@ iframe{border:none;border-radius:18px}
   <p id="loginErr" class="small" style="color:#c00"></p>
 </div>
 
-<!-- Dashboard -->
+<!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
 
   <div class="card center">
@@ -137,27 +135,16 @@ iframe{border:none;border-radius:18px}
     <button onclick="toggleInstructions()">Instructions</button>
     <div id="instructions" class="hidden small" style="margin-top:14px">
       <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-      <b>Important Browser Note:</b><br>
-      • If opened from an app, ads may appear in Chrome.<br>
-      • Use Opera Mini to reduce ads.<br>
-      • If page does not open, turn ON VPN.<br><br>
-
-      <b>Steps:</b><br>
-      1. Turn OFF Private DNS / Custom DNS.<br>
-      2. Update browser to latest version.<br>
-      3. Use Chrome (recommended) or Opera Mini.<br>
-      4. If extra page opens, press BACK once.<br>
-      5. Laptop users: VPN + Ad-Blocker.<br><br>
-
-      <b>Key Validity:</b><br>
-      • Access Key is valid for 24 hours only.<br>
-      • For copyright ©️ compliance and content protection,
-        re-login is required after 24 hours.
+      • Turn OFF Private DNS / Custom DNS.<br>
+      • Update browser to latest version.<br>
+      • Use Chrome or Opera Mini.<br>
+      • If extra page opens, press BACK once.<br>
+      • Laptop users: VPN + Ad-Blocker.<br><br>
+      <b>Note:</b> For copyright ©️ compliance, re-login is required after 24 hours.
     </div>
   </div>
 
-  <!-- Video -->
+  <!-- VIDEO -->
   <div class="card">
     <b>Instruction Video</b><br><br>
     <iframe width="100%" height="200"
@@ -165,7 +152,7 @@ iframe{border:none;border-radius:18px}
     </iframe>
   </div>
 
-  <!-- Website -->
+  <!-- WEBSITE -->
   <div class="card">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
@@ -179,11 +166,10 @@ iframe{border:none;border-radius:18px}
       Format: <b>APK@DDMMYYYY</b><br>
       Example: <b>APK@21012026</b>
     </p>
-
     <button onclick="unlockAPK()">Unlock APK</button>
     <p id="apkErr" class="small" style="color:#c00"></p>
 
-    <a id="apkLink" class="hidden" href="#" download>
+    <a id="apkLink" class="hidden" href="#">
       <button class="secondary" style="margin-top:10px">
         Download APK
       </button>
@@ -194,13 +180,10 @@ iframe{border:none;border-radius:18px}
 </div>
 
 <script>
-const SESSION = 86400000;
-const EXAM = new Date("2026-06-01T00:00:00").getTime();
-
-let loginTries = 0;
-let apkTries = 0;
-const APK_MAX_TRIES = 3;
-const APK_LOCK_KEY = "apkLockUntil";
+const SESSION=86400000;
+const EXAM=new Date("2026-06-01T00:00:00").getTime();
+let loginTries=0,apkTries=0;
+const APK_MAX_TRIES=3;
 
 function today(){
  const d=new Date();
@@ -211,21 +194,20 @@ function today(){
 
 /* LOGIN */
 function login(){
- const lock = localStorage.getItem("lockUntil");
- if(lock && Date.now() < lock){
-  loginErr.innerText="Login locked. Try after 24 hours.";
+ const lock=localStorage.getItem("lockUntil");
+ if(lock && Date.now()<lock){
+  loginErr.innerText="Login locked for 24 hours.";
   return;
  }
- if(sitePass.value === "RS@" + today()){
-  localStorage.setItem("loginTime", Date.now());
+ if(sitePass.value==="RS@"+today()){
+  localStorage.setItem("loginTime",Date.now());
   showDash();
  }else{
   loginTries++;
-  if(loginTries >= 3){
-   localStorage.setItem("lockUntil", Date.now() + SESSION);
+  loginErr.innerText="Incorrect password.";
+  if(loginTries>=3){
+   localStorage.setItem("lockUntil",Date.now()+SESSION);
    loginErr.innerText="Too many attempts. Locked for 24 hours.";
-  }else{
-   loginErr.innerText="Incorrect password.";
   }
  }
 }
@@ -233,35 +215,28 @@ function login(){
 function showDash(){
  loginBox.classList.add("hidden");
  dashboard.classList.remove("hidden");
- startSession(); startExam();
+ startSession();startExam();
 }
 
 /* SESSION TIMER */
 function startSession(){
  setInterval(()=>{
-  const t = localStorage.getItem("loginTime");
-  const left = SESSION - (Date.now() - t);
-  if(left <= 0){
-    localStorage.clear();
-    location.reload();
-  }
-  sessionTimer.innerHTML =
-   "<div class='time-big'>Session expires in</div>" +
-   Math.floor(left/3600000) + "h " +
-   Math.floor(left%3600000/60000) + "m " +
-   Math.floor(left%60000/1000) + "s";
+  const t=localStorage.getItem("loginTime");
+  const left=SESSION-(Date.now()-t);
+  if(left<=0){localStorage.clear();location.reload();}
+  sessionTimer.innerHTML=
+   "<div class='time-big'>Session expires in</div>"+
+   Math.floor(left/3600000)+"h "+
+   Math.floor(left%3600000/60000)+"m "+
+   Math.floor(left%60000/1000)+"s";
  },1000);
 }
 
 /* EXAM TIMER */
 function startExam(){
  setInterval(()=>{
-  let d = EXAM - Date.now();
-  if(d <= 0){
-    examTimer.innerText = "Exam Started";
-    return;
-  }
-  examTimer.innerText =
+  let d=EXAM-Date.now();
+  examTimer.innerText=
    Math.floor(d/86400000)+"d "+
    Math.floor(d%86400000/3600000)+"h "+
    Math.floor(d%3600000/60000)+"m "+
@@ -269,45 +244,46 @@ function startExam(){
  },1000);
 }
 
-/* APK LOGIC – FINAL FIX */
-window.addEventListener("load",()=>{
-  apkLink.classList.add("hidden");
-});
-
+/* APK */
 function unlockAPK(){
- const lock = localStorage.getItem(APK_LOCK_KEY);
-
- if(lock && Date.now() < lock){
-  apkErr.innerText="APK access locked. Try after 24 hours.";
-  apkLink.classList.add("hidden");
-  return;
- }
-
- if(apkPass.value === "APK@" + today()){
+ if(apkPass.value==="APK@"+today()){
   apkErr.innerText="";
-  apkTries = 0;
+  apkTries=0;
   apkLink.classList.remove("hidden");
  }else{
   apkTries++;
   apkLink.classList.add("hidden");
-  if(apkTries >= APK_MAX_TRIES){
-   localStorage.setItem(APK_LOCK_KEY, Date.now() + SESSION);
-   apkErr.innerText="Too many attempts. APK locked for 24 hours.";
-  }else{
-   apkErr.innerText="Wrong APK password.";
+  apkErr.innerText="Wrong APK password.";
+  if(apkTries>=APK_MAX_TRIES){
+   apkErr.innerText="APK locked for 24 hours.";
   }
  }
 }
 
+/* Instructions */
 function toggleInstructions(){
  instructions.classList.toggle("hidden");
 }
 
-window.onload = ()=>{
- const t = localStorage.getItem("loginTime");
- if(t && Date.now() - t < SESSION) showDash();
+/* PASSWORD PEEK THEN HIDE */
+function applyPeek(id){
+ const i=document.getElementById(id);
+ let t;i.type="password";
+ i.addEventListener("input",()=>{
+  i.type="text";
+  clearTimeout(t);
+  t=setTimeout(()=>i.type="password",700);
+ });
 }
+applyPeek("sitePass");
+applyPeek("apkPass");
+
+/* Restore session */
+window.onload=()=>{
+ const t=localStorage.getItem("loginTime");
+ if(t && Date.now()-t<SESSION) showDash();
+};
 </script>
 
 </body>
-                                      </html>
+                                         </html>
