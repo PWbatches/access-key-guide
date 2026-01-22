@@ -18,9 +18,9 @@ body{
   display:flex;justify-content:center;align-items:center;
   pointer-events:none;z-index:0;
 }
-.watermark.login{opacity:.35;filter:blur(.8px)}
-.watermark.dashboard{opacity:.55;filter:blur(.4px)}
-.watermark .pw-logo{transform:scale(3.6);opacity:.9}
+.watermark.login{opacity:.30;filter:blur(.9px)}
+.watermark.dashboard{opacity:.65;filter:blur(.3px)}
+.watermark .pw-logo{transform:scale(3.8);opacity:.95}
 
 /* ===== CARDS ===== */
 .card{
@@ -33,10 +33,10 @@ body{
 }
 .card.dashboard{
   background:rgba(255,255,255,.22);
-  backdrop-filter:blur(32px) saturate(200%);
+  backdrop-filter:blur(34px) saturate(210%);
   box-shadow:
-    0 45px 100px rgba(0,0,0,.28),
-    inset 0 0 0 1px rgba(255,255,255,.25);
+    0 45px 100px rgba(0,0,0,.30),
+    inset 0 0 0 1px rgba(255,255,255,.28);
 }
 .hidden{display:none}
 
@@ -64,17 +64,7 @@ button{
   border:none;border-radius:14px;
   background:#000;color:#fff;font-weight:600;cursor:pointer;
 }
-.hint{
-  font-size:12.5px;margin-top:6px;color:#333;line-height:1.6;
-}
-.disclaimer{
-  margin-top:10px;
-  padding:12px;
-  border-radius:14px;
-  background:rgba(0,0,0,.05);
-  font-size:12px;
-  color:#222;
-}
+.hint{font-size:12.5px;margin-top:6px;color:#333;line-height:1.6}
 
 /* ===== TIMER ===== */
 .timer{
@@ -99,28 +89,24 @@ button{
   transition:.5s ease;
   background:rgba(255,255,255,.97);
   border-radius:18px;padding:0 16px;margin-top:12px;
-  font-size:13px;line-height:1.7;
+  font-size:13px;line-height:1.8;
 }
 .instruction-content.open{
-  max-height:1600px;opacity:1;padding:16px;
+  max-height:3000px;opacity:1;padding:16px;
 }
 
 /* ===== VIDEO ===== */
-iframe{
-  width:100%;height:200px;border-radius:14px;border:none;
-}
+iframe{width:100%;height:200px;border-radius:14px;border:none}
 .video-link{text-align:center;font-size:13px;margin-top:8px}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN WATERMARK -->
+<!-- WATERMARKS -->
 <div class="watermark login" id="wmLogin">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
-
-<!-- DASHBOARD WATERMARK -->
 <div class="watermark dashboard hidden" id="wmDash">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
@@ -131,15 +117,7 @@ iframe{
 
   <input id="roomPass" type="password" placeholder="Enter room password">
   <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
-
-  <!-- ✅ UPDATED DISCLAIMER -->
-  <div class="disclaimer">
-    <b>Disclaimer:</b><br>
-    • For copyright © reasons, the access password automatically changes every 24 hours.<br>
-    • You will be logged out only after 24 hours are completed.<br>
-    • <b>iOS devices, Laptop & PC users must login through the website only.</b><br>
-    • APK file is supported on <b>Android devices only</b>.
-  </div>
+  <div class="hint">Password automatically changes every 24 hours due to copyright © policy.</div>
 
   <button onclick="login()">Continue</button>
   <div id="roomMsg" class="hint"></div>
@@ -155,16 +133,64 @@ iframe{
 
   <!-- INSTRUCTIONS -->
   <div class="section">
-    <div class="instruction-header"
-      onclick="instr.classList.toggle('open')">
+    <div class="instruction-header" onclick="instr.classList.toggle('open')">
       <span>📘 Instructions</span><span>▼</span>
     </div>
+
     <div id="instr" class="instruction-content">
-      Access valid for 24 hours due to copyright © issues.<br>
-      If any extra page or ad opens, press BACK once and continue.<br>
-      For fewer ads, use Opera Mini browser.<br>
-      iOS, Laptop & PC users must use website login.<br>
-      APK works on Android devices only.
+
+<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+Follow all the steps carefully to avoid any access issues.<br><br>
+
+<b>⚠️ Important Browser & Access Notes:</b><br>
+• If you open the link from any APP, it may automatically open in Google Chrome and ads may appear.<br>
+• To reduce ads, open the website directly using <b>Opera Mini</b> browser.<br>
+• If app or website does not open, turn <b>ON VPN</b> and try again.<br>
+• If any extra page, redirect, or ad opens, press <b>BACK once</b> and continue. Do not close the browser tab.<br><br>
+
+<b>📌 Login & Password Rules:</b><br>
+• Website login and APK login both follow the <b>same process</b>.<br>
+• Password is <b>date-based</b> and automatically changes every 24 hours.<br>
+• Password format example: <b>RS@DDMMYYYY</b>.<br>
+• Password changes automatically due to <b>copyright © protection policy</b>.<br><br>
+
+<b>🔐 Login Attempt Limitation:</b><br>
+• Maximum <b>3 attempts</b> are allowed.<br>
+• Remaining attempts are shown after each wrong password.<br>
+• After 3 failed attempts, login is <b>locked for 24 hours</b>.<br>
+• During lock time, login will not work even if password is correct.<br><br>
+
+<b>⏳ Session & Refresh Behaviour:</b><br>
+• Once logged in, access remains valid for <b>24 hours</b>.<br>
+• Page refresh, new tab, or browser reopen will <b>NOT log you out</b>.<br>
+• Automatic logout happens only after full 24 hours are completed.<br>
+• After logout, login again using the <b>new password</b>.<br><br>
+
+<b>📹 Video Guide:</b><br>
+• Video guide is provided inside the dashboard.<br>
+• If video does not play on Laptop or PC, use the <b>Open Here</b> link below the video.<br><br>
+
+<b>🌐 Website Access:</b><br>
+• Website opens only after successful login.<br>
+• Website follows the same password, attempts, and 24-hour validity rules.<br><br>
+
+<b>📦 APK File Access:</b><br>
+• APK works on <b>Android devices only</b>.<br>
+• APK has a separate password which also changes every 24 hours.<br>
+• APK password also allows only <b>3 attempts</b>.<br>
+• Refreshing the page will hide the APK again.<br>
+• After 3 wrong attempts, APK access is locked for <b>24 hours</b>.<br><br>
+
+<b>💻 Device Compatibility:</b><br>
+• Android: Website + APK<br>
+• iOS: Website only<br>
+• Laptop / PC: Website (VPN + Ad-Blocker recommended)<br><br>
+
+<b>⚖️ Copyright Notice:</b><br>
+• All access restrictions are applied due to <b>copyright © protection</b>.<br>
+• Daily password change and 24-hour access limit cannot be bypassed.
+
     </div>
   </div>
 
@@ -181,46 +207,48 @@ iframe{
 
   <!-- WEBSITE -->
   <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
+    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
   </div>
 
   <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
-    <div class="hint">APK supported on Android devices only</div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkMsg" class="hint"></div>
   </div>
+
 </div>
 
 <script>
 const DAY=86400000;
+let roomAttempts=3, apkAttempts=3;
 
 function today(prefix){
   const d=new Date();
-  return prefix+
-    String(d.getDate()).padStart(2,'0')+
-    String(d.getMonth()+1).padStart(2,'0')+
-    d.getFullYear();
+  return prefix+String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
+         d.getFullYear();
 }
-
-/* 1-second password visibility */
-function oneSecond(i){
-  let t;
-  i.addEventListener("input",()=>{
-    i.type="text";
-    clearTimeout(t);
+function oneSec(i){
+  let t;i.addEventListener("input",()=>{
+    i.type="text";clearTimeout(t);
     t=setTimeout(()=>i.type="password",1000);
   });
 }
-oneSecond(roomPass);oneSecond(apkPass);
+oneSec(roomPass);oneSec(apkPass);
 
 function login(){
+  if(localStorage.roomLock && Date.now()<localStorage.roomLock){
+    roomMsg.textContent="Login locked. Try again after 24 hours.";return;
+  }
   if(roomPass.value!==today("RS@")){
-    roomMsg.textContent="Wrong password";
+    roomAttempts--;
+    roomMsg.innerHTML=`Wrong password. Attempts left: ${roomAttempts}`;
+    if(roomAttempts<=0){
+      localStorage.roomLock=Date.now()+DAY;
+      roomMsg.textContent="Too many attempts. Login locked for 24 hours.";
+    }
     return;
   }
   localStorage.loginTime=Date.now();
@@ -234,10 +262,7 @@ function login(){
 function startTimer(){
   setInterval(()=>{
     let left=DAY-(Date.now()-localStorage.loginTime);
-    if(left<=0){
-      localStorage.clear();
-      location.reload();
-    }
+    if(left<=0){localStorage.clear();location.reload()}
     let h=Math.floor(left/3600000),
         m=Math.floor(left%3600000/60000),
         s=Math.floor(left%60000/1000);
@@ -247,12 +272,16 @@ function startTimer(){
 
 function unlockAPK(){
   if(apkPass.value!==today("APK@")){
-    apkMsg.textContent="Wrong APK password";
+    apkAttempts--;
+    apkMsg.innerHTML=`Wrong APK password. Attempts left: ${apkAttempts}`;
+    if(apkAttempts<=0){
+      apkMsg.textContent="APK locked for 24 hours.";
+    }
     return;
   }
-  apkMsg.textContent="APK unlocked (refresh will hide again)";
+  apkMsg.textContent="APK unlocked (refresh will hide it again)";
 }
 </script>
 
 </body>
-    </html>
+  </html>
