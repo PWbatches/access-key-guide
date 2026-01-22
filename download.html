@@ -11,7 +11,7 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
   background:#ffffff;color:#111;
 }
-*{box-sizing:border-box;transition:all .25s ease}
+*{box-sizing:border-box}
 .hidden{display:none}
 .center{text-align:center}
 .small{font-size:13px;color:#555;line-height:1.6}
@@ -83,7 +83,6 @@ button.secondary{background:#111}
 }
 .time-big{font-size:18px;font-weight:700}
 
-/* Iframe */
 iframe{border:none;border-radius:18px}
 </style>
 </head>
@@ -130,21 +129,16 @@ iframe{border:none;border-radius:18px}
     <div id="examTimer" style="margin-top:8px"></div>
   </div>
 
-  <!-- Instructions -->
   <div class="card">
     <button onclick="toggleInstructions()">Instructions</button>
     <div id="instructions" class="hidden small" style="margin-top:14px">
-      <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
       • Turn OFF Private DNS / Custom DNS.<br>
-      • Update browser to latest version.<br>
       • Use Chrome or Opera Mini.<br>
-      • If extra page opens, press BACK once.<br>
-      • Laptop users: VPN + Ad-Blocker.<br><br>
-      <b>Note:</b> For copyright ©️ compliance, re-login is required after 24 hours.
+      • Turn ON VPN if page does not open.<br><br>
+      Re-login required after 24 hours due to copyright ©️ compliance.
     </div>
   </div>
 
-  <!-- VIDEO -->
   <div class="card">
     <b>Instruction Video</b><br><br>
     <iframe width="100%" height="200"
@@ -152,7 +146,6 @@ iframe{border:none;border-radius:18px}
     </iframe>
   </div>
 
-  <!-- WEBSITE -->
   <div class="card">
     <button onclick="window.open('https://rarestudy.site','_blank')">
       Open Website
@@ -162,10 +155,7 @@ iframe{border:none;border-radius:18px}
   <!-- APK -->
   <div class="card">
     <input id="apkPass" placeholder="Enter APK password">
-    <p class="small">
-      Format: <b>APK@DDMMYYYY</b><br>
-      Example: <b>APK@21012026</b>
-    </p>
+    <p class="small">Format: <b>APK@DDMMYYYY</b></p>
     <button onclick="unlockAPK()">Unlock APK</button>
     <p id="apkErr" class="small" style="color:#c00"></p>
 
@@ -182,8 +172,6 @@ iframe{border:none;border-radius:18px}
 <script>
 const SESSION=86400000;
 const EXAM=new Date("2026-06-01T00:00:00").getTime();
-let loginTries=0,apkTries=0;
-const APK_MAX_TRIES=3;
 
 function today(){
  const d=new Date();
@@ -194,21 +182,11 @@ function today(){
 
 /* LOGIN */
 function login(){
- const lock=localStorage.getItem("lockUntil");
- if(lock && Date.now()<lock){
-  loginErr.innerText="Login locked for 24 hours.";
-  return;
- }
  if(sitePass.value==="RS@"+today()){
   localStorage.setItem("loginTime",Date.now());
   showDash();
  }else{
-  loginTries++;
   loginErr.innerText="Incorrect password.";
-  if(loginTries>=3){
-   localStorage.setItem("lockUntil",Date.now()+SESSION);
-   loginErr.innerText="Too many attempts. Locked for 24 hours.";
-  }
  }
 }
 
@@ -247,36 +225,41 @@ function startExam(){
 /* APK */
 function unlockAPK(){
  if(apkPass.value==="APK@"+today()){
-  apkErr.innerText="";
-  apkTries=0;
   apkLink.classList.remove("hidden");
+  apkErr.innerText="";
  }else{
-  apkTries++;
   apkLink.classList.add("hidden");
   apkErr.innerText="Wrong APK password.";
-  if(apkTries>=APK_MAX_TRIES){
-   apkErr.innerText="APK locked for 24 hours.";
-  }
  }
 }
 
-/* Instructions */
 function toggleInstructions(){
  instructions.classList.toggle("hidden");
 }
 
-/* PASSWORD PEEK THEN HIDE */
-function applyPeek(id){
- const i=document.getElementById(id);
- let t;i.type="password";
- i.addEventListener("input",()=>{
-  i.type="text";
-  clearTimeout(t);
-  t=setTimeout(()=>i.type="password",700);
+/* 🔐 LAST CHARACTER ONLY – 0.2 SECOND VISIBILITY (MICRO-POLISH) */
+function lastCharPeek(id){
+ const input=document.getElementById(id);
+ let timer;
+ input.type="password";
+
+ input.addEventListener("input",()=>{
+  const len=input.value.length;
+  if(len===0) return;
+
+  clearTimeout(timer);
+
+  const last=input.value.slice(-1);
+  input.value="•".repeat(len-1)+last;
+
+  timer=setTimeout(()=>{
+    input.value="•".repeat(len);
+  },200); // ✅ 0.2 second
  });
 }
-applyPeek("sitePass");
-applyPeek("apkPass");
+
+lastCharPeek("sitePass");
+lastCharPeek("apkPass");
 
 /* Restore session */
 window.onload=()=>{
@@ -286,4 +269,4 @@ window.onload=()=>{
 </script>
 
 </body>
-                                         </html>
+  </html>
