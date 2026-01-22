@@ -115,15 +115,30 @@ button{
   color:#fff;font-weight:800;cursor:pointer;
   box-shadow:0 14px 35px rgba(0,0,0,.35);
 }
+/* ===== SMOOTH INSTRUCTIONS (FIXED) ===== */
 .instruction-content{
-  max-height:0;overflow:hidden;opacity:0;
-  transition:.5s ease;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:
+    max-height .45s cubic-bezier(.4,0,.2,1),
+    opacity .25s ease,
+    transform .25s ease;
   background:rgba(255,255,255,.97);
-  border-radius:18px;padding:0 16px;margin-top:12px;
-  font-size:13px;line-height:1.8;
+  border-radius:18px;
+  padding:0 16px;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.8;
+  will-change:max-height, opacity, transform;
 }
+
 .instruction-content.open{
-  max-height:3000px;opacity:1;padding:16px;
+  max-height:3000px;
+  opacity:1;
+  transform:translateY(0);
+  padding:16px;
 }
 
 /* ===== VIDEO ===== */
