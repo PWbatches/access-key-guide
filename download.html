@@ -64,19 +64,9 @@ button{
   border:none;border-radius:14px;
   background:#000;color:#fff;font-weight:600;cursor:pointer;
 }
-.hint{
-  font-size:12.5px;margin-top:6px;color:#333;line-height:1.6
-}
-.warning{
-  font-size:12.5px;margin-top:10px;
-  color:#8a0000;font-weight:600;
-}
-.disclaimer{
-  font-size:12.5px;
-  margin-top:10px;
-  color:#222;
-  line-height:1.7;
-}
+.hint{font-size:12.5px;margin-top:6px;color:#333;line-height:1.6}
+.warning{font-size:12.5px;margin-top:10px;color:#8a0000;font-weight:600}
+.disclaimer{font-size:12.5px;margin-top:10px;color:#222;line-height:1.7}
 
 /* ===== TIMER ===== */
 .timer{
@@ -142,7 +132,6 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
     <b>Important Notice:</b><br>
     Sharing this website or access details without admin permission
     may result in immediate access suspension.
-    Unauthorized sharing is strictly monitored.
   </div>
 
   <button onclick="login()">Continue</button>
@@ -181,11 +170,9 @@ Follow the steps carefully to avoid access issues.<br><br>
 4️⃣ If any extra page or ad opens, press <b>BACK once</b> and continue. Do not close the tab.<br>
 5️⃣ Laptop / PC users must turn <b>ON VPN</b> and use an <b>Ad-Blocker</b> extension.<br><br>
 
-<!-- 🔽 ONLY ADDED LINES -->
 <b>🔐 Password Information:</b><br>
 • Website login password and APK password are <b>date-based</b> and change automatically every 24 hours.<br>
 • If you access through the APK, ads may appear because it opens directly in Google Chrome.<br><br>
-<!-- 🔼 ONLY ADDED LINES -->
 
 <b>⏳ Key Validity:</b><br>
 • Access Key is valid for <b>24 hours only</b>.<br>
@@ -227,37 +214,47 @@ Follow the steps carefully to avoid access issues.<br><br>
 </div>
 
 <script>
-const DAY=86400000;
-let roomAttempts=3, apkAttempts=3;
+const DAY = 86400000;
+let roomAttempts = 3;
+let apkAttempts = 3;
 
 function today(prefix){
-  const d=new Date();
-  return prefix+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+  const d = new Date();
+  return prefix +
+    String(d.getDate()).padStart(2,'0') +
+    String(d.getMonth()+1).padStart(2,'0') +
+    d.getFullYear();
 }
-function oneSec(i){
-  let t;i.addEventListener("input",()=>{
-    i.type="text";clearTimeout(t);
-    t=setTimeout(()=>i.type="password",1000);
+
+/* 1 second password visibility */
+function oneSec(input){
+  let t;
+  input.addEventListener("input",()=>{
+    input.type="text";
+    clearTimeout(t);
+    t=setTimeout(()=>input.type="password",1000);
   });
 }
-oneSec(roomPass);oneSec(apkPass);
+oneSec(roomPass);
+oneSec(apkPass);
 
+/* LOGIN */
 function login(){
-  if(localStorage.roomLock && Date.now()<localStorage.roomLock){
-    roomMsg.textContent="Login locked. Try again after 24 hours.";return;
+  if(localStorage.roomLock && Date.now() < localStorage.roomLock){
+    roomMsg.textContent="Login locked. Try again after 24 hours.";
+    return;
   }
-  if(roomPass.value!==today("RS@")){
+  if(roomPass.value !== today("RS@")){
     roomAttempts--;
-    roomMsg.innerHTML=`Wrong password. Attempts left: ${roomAttempts}`;
-    if(roomAttempts<=0){
-      localStorage.roomLock=Date.now()+DAY;
+    roomMsg.innerHTML = `Wrong password. Attempts left: ${roomAttempts}`;
+    if(roomAttempts <= 0){
+      localStorage.roomLock = Date.now() + DAY;
       roomMsg.textContent="Too many attempts. Login locked for 24 hours.";
     }
     return;
   }
-  localStorage.loginTime=Date.now();
+
+  localStorage.loginTime = Date.now();
   loginCard.classList.add("hidden");
   dashCard.classList.remove("hidden");
   wmLogin.classList.add("hidden");
@@ -265,29 +262,56 @@ function login(){
   startTimer();
 }
 
+/* TIMER – FIXED */
 function startTimer(){
   setInterval(()=>{
-    let left=DAY-(Date.now()-localStorage.loginTime);
-    if(left<=0){localStorage.clear();location.reload()}
-    let h=Math.floor(left/3600000),
-        m=Math.floor(left%3600000/60000),
-        s=Math.floor(left%60000/1000);
-    timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
+    const start = Number(localStorage.loginTime);
+    if(!start) return;
+
+    const elapsed = Date.now() - start;
+    const left = DAY - elapsed;
+
+    if(left <= 0){
+      delete localStorage.loginTime;
+      delete localStorage.roomLock;
+      delete localStorage.apkLock;
+      location.reload();
+      return;
+    }
+
+    const h = Math.floor(left/3600000);
+    const m = Math.floor((left%3600000)/60000);
+    const s = Math.floor((left%60000)/1000);
+    timer.textContent = `Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
 
+/* APK */
 function unlockAPK(){
-  if(apkPass.value!==today("APK@")){
+  if(apkPass.value !== today("APK@")){
     apkAttempts--;
-    apkMsg.innerHTML=`Wrong APK password. Attempts left: ${apkAttempts}`;
-    if(apkAttempts<=0){
+    apkMsg.innerHTML = `Wrong APK password. Attempts left: ${apkAttempts}`;
+    if(apkAttempts <= 0){
+      localStorage.apkLock = Date.now() + DAY;
       apkMsg.textContent="APK locked for 24 hours.";
     }
     return;
   }
   apkMsg.textContent="APK unlocked (refresh will hide it again)";
 }
+
+/* AUTO RESTORE LOGIN */
+window.onload = ()=>{
+  const t = localStorage.loginTime;
+  if(t && Date.now() - t < DAY){
+    loginCard.classList.add("hidden");
+    dashCard.classList.remove("hidden");
+    wmLogin.classList.add("hidden");
+    wmDash.classList.remove("hidden");
+    startTimer();
+  }
+};
 </script>
 
 </body>
-      </html>
+  </html>
