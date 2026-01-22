@@ -6,282 +6,358 @@
 <title>Secure Access</title>
 
 <style>
-/* ===== Base ===== */
-:root{
-  --bg:#ffffff;
-  --card:#f7f8fb;
-  --ink:#111;
-  --soft:#e9ebf0;
-}
-*{box-sizing:border-box}
-html,body{
-  margin:0;padding:0;
+/* ========== BASE ========== */
+*{
+  box-sizing:border-box;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  background:var(--bg);color:var(--ink);
+}
+body{
+  margin:0;
+  background:#f4f6fb;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 .hidden{display:none}
-.center{text-align:center}
-.small{font-size:13px;color:#555;line-height:1.6}
 
-/* ===== Watermark ===== */
+/* ========== WATERMARK ========== */
 .watermark{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at center,
+      rgba(0,0,0,0.035) 0,
+      rgba(0,0,0,0.035) 1px,
+      transparent 1px),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 60px,
+      rgba(0,0,0,0.025) 60px,
+      rgba(0,0,0,0.025) 120px
+    );
   pointer-events:none;
-  opacity:.03;
-  transform:scale(2.3);
-  filter:grayscale(100%);
-  z-index:0;
 }
 
-/* ===== PW Logo ===== */
-.pw-logo{
-  width:78px;height:78px;
-  background:#000;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
+/* ========== CARD ========== */
+.card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:24px;
+  padding:26px;
+  box-shadow:0 20px 60px rgba(0,0,0,.12);
   position:relative;
-}
-.pw-logo::before{
-  content:"";
-  position:absolute;
-  width:70%;height:70%;
-  border:4px solid #fff;
-  border-left-color:transparent;
-  border-right-color:transparent;
-  border-radius:50%;
-}
-.pw-logo span{
-  font-family:"Times New Roman",serif;
-  font-size:40px;font-weight:bold;color:#fff;
+  z-index:2;
 }
 
-/* ===== Avatar ===== */
+/* ========== AVATAR ========== */
 .avatar-wrap{
   display:flex;
   justify-content:center;
-  margin:18px 0 14px;
+  margin-bottom:14px;
 }
-.avatar{
-  width:150px;
-  height:150px;
+.avatar-ring{
+  width:130px;
+  height:130px;
   border-radius:50%;
-  overflow:hidden;
-  background:#eaeaea;
-  border:4px solid #fff;
-  box-shadow:
-    0 12px 28px rgba(0,0,0,.22),
-    inset 0 0 0 1px rgba(255,255,255,.6);
-  animation:avatarIn .8s cubic-bezier(.22,.61,.36,1);
+  padding:4px;
+  background:#000;
 }
-.avatar img{
+.avatar-ring img{
   width:100%;
   height:100%;
+  border-radius:50%;
   object-fit:cover;
   object-position:center top;
+  display:block;
 }
 
-/* ===== Layout ===== */
-.container{
-  position:relative;z-index:2;
-  max-width:420px;
-  margin:auto;padding:22px;
-}
-.card{
-  background:var(--card);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  animation:fadeLift .55s cubic-bezier(.22,.61,.36,1);
+/* ========== LOGO ========== */
+.logo{
+  text-align:center;
+  font-family:"Times New Roman",serif;
+  font-size:42px;
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
-/* ===== Inputs & Buttons ===== */
+/* ========== INPUTS & BUTTONS ========== */
 input{
   width:100%;
-  padding:14px 18px;
-  border-radius:26px;
-  border:none;
-  background:var(--soft);
-  font-size:15px;
-  margin-bottom:12px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  font-size:14px;
+  margin-top:12px;
 }
 button{
   width:100%;
   padding:14px;
-  border:none;border-radius:28px;
-  background:#000;color:#fff;
-  font-size:15px;font-weight:600;
+  border:none;
+  border-radius:14px;
+  background:#000;
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
   cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
+  margin-top:12px;
 }
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,.18);
+button:disabled{
+  background:#888;
+  cursor:not-allowed;
 }
-button:active{transform:scale(.97);box-shadow:none}
 
-/* ===== Timer ===== */
-.time-card{
-  background:#000;color:#fff;
-  border-radius:20px;
+.hint{
+  font-size:12px;
+  color:#555;
+  margin-top:8px;
+  line-height:1.5;
+}
+
+/* ========== TIMER ========== */
+.timer{
+  background:#000;
+  color:#fff;
+  padding:14px;
+  border-radius:16px;
+  text-align:center;
+  font-weight:600;
+  margin:16px 0;
+}
+
+/* ========== SECTION ========== */
+.section{
+  background:#f7f7f7;
+  border-radius:16px;
   padding:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  margin-top:16px;
 }
-.time-big{
-  font-size:17px;font-weight:700;
-  animation:textReveal .4s ease-out;
-}
-
-/* ===== Animations ===== */
-@keyframes fadeLift{
-  from{opacity:0;transform:translateY(14px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes avatarIn{
-  from{opacity:0;transform:scale(.92)}
-  to{opacity:1;transform:scale(1)}
-}
-@keyframes textReveal{
-  from{opacity:0;letter-spacing:2px}
-  to{opacity:1;letter-spacing:normal}
+.section strong{
+  display:block;
+  margin-bottom:8px;
 }
 
+/* ========== IFRAME ========== */
 iframe{
   width:100%;
   height:200px;
-  border:none;border-radius:16px;
+  border:none;
+  border-radius:12px;
 }
 </style>
 </head>
 
 <body>
+<div class="watermark"></div>
 
-<!-- Watermark -->
-<div class="watermark">
-  <div class="pw-logo"><span>PW</span></div>
-</div>
-
-<div class="container">
+<div class="card">
 
 <!-- LOGIN -->
-<div id="loginBox" class="card center hidden">
-
+<div id="loginBox">
   <div class="avatar-wrap">
-    <div class="avatar">
-      <img src="https://instasize.com/p/570e019b001dfc8e038301b7e595411dce044cfb40ea066c4d763b83d653810a"
-           alt="Avatar">
+    <div class="avatar-ring">
+      <img src="avatar.png" alt="Avatar">
     </div>
   </div>
-
-  <div style="display:flex;justify-content:center;margin-bottom:10px">
-    <div class="pw-logo"><span>PW</span></div>
-  </div>
-
-  <h3>Secure Access (24 Hours)</h3>
+  <div class="logo">PW</div>
 
   <input id="sitePass" type="password" placeholder="Enter website password">
-  <button onclick="login()">Continue</button>
+  <button id="loginBtn" onclick="checkLogin()">Continue</button>
 
-  <p class="small">
-    Format: <b>RS@DDMMYYYY</b><br>
-    Example: <b>RS@01012025</b>
-  </p>
-
-  <p id="loginErr" class="small" style="color:#c00"></p>
+  <div class="hint">
+    Format: RS@DDMMYYYY<br>
+    Example: RS@01012025
+  </div>
+  <div id="loginErr" class="hint"></div>
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+<div id="content" class="hidden">
 
-  <div class="card center">
-    <div class="avatar" style="width:80px;height:80px;margin:0 auto 8px">
-      <img src="https://instasize.com/p/570e019b001dfc8e038301b7e595411dce044cfb40ea066c4d763b83d653810a">
+  <div class="avatar-wrap">
+    <div class="avatar-ring" style="width:90px;height:90px">
+      <img src="avatar.png">
     </div>
-    <div class="pw-logo" style="margin:0 auto 8px"><span>PW</span></div>
-    <div class="time-big">ACCESS GRANTED</div>
+  </div>
+  <div class="logo">ACCESS GRANTED</div>
+
+  <div class="timer" id="sessionTimer"></div>
+
+  <!-- VIDEO -->
+  <div class="section">
+    <strong>Instruction Video</strong>
+    <iframe loading="lazy"
+      src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview">
+    </iframe>
   </div>
 
-  <div class="card time-card center" id="sessionTimer"></div>
+  <!-- WEBSITE -->
+  <div class="section">
+    <button onclick="window.open('https://rarestudy.site','_blank')">
+      Open Website
+    </button>
+  </div>
 
-  <!-- Video -->
-  <div class="card">
-    <b>Instruction Video</b><br><br>
-    <button onclick="loadVideo()">Load Video</button>
-    <div id="videoBox" class="hidden" style="margin-top:12px">
-      <iframe
-        src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"
-        allow="autoplay; encrypted-media"
-        allowfullscreen></iframe>
-      <p class="small" style="margin-top:6px">
-        If video does not load on PC,
-        <a target="_blank"
-        href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view">
-        open directly</a>.
-      </p>
+  <!-- APK -->
+  <div class="section">
+    <strong>APK Download (Android only)</strong>
+    <input id="apkPass" type="password" placeholder="Enter APK password">
+    <button id="apkBtn" onclick="unlockAPK()">Unlock APK</button>
+    <div class="hint">
+      Format: APK@DDMMYYYY<br>
+      Example: APK@01012025
     </div>
+    <div id="apkErr" class="hint"></div>
+
+    <a id="apkLink" class="hidden" href="#">
+      <button>Download APK</button>
+    </a>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="section">
+    <strong>Instructions</strong>
+    • Use Chrome / Edge / Opera Mini<br>
+    • If any extra page opens, press BACK once only<br>
+    • Turn OFF Private DNS if enabled<br>
+    • VPN may be required in some regions<br>
+    • Access valid for 24 hours only (copyright reasons)
   </div>
 
 </div>
 </div>
 
 <script>
-const SESSION = 86400000;
-let timer=null;
+/* ========== CONSTANTS ========== */
+const DAY = 24 * 60 * 60 * 1000;
+const MAX_ATTEMPTS = 3;
 
+/* ========== DATE PASSWORD ========== */
 function today(){
   const d=new Date();
-  return String(d.getDate()).padStart(2,"0")+
-         String(d.getMonth()+1).padStart(2,"0")+
+  return String(d.getDate()).padStart(2,'0')+
+         String(d.getMonth()+1).padStart(2,'0')+
          d.getFullYear();
 }
+const SITE_PASSWORD = "RS@" + today();
+const APK_PASSWORD  = "APK@" + today();
 
-function login(){
-  if(sitePass.value==="RS@"+today()){
-    const now=Date.now();
-    localStorage.setItem("loginExpiry",now+SESSION);
-    showDashboard();
-  }else{
-    loginErr.innerText="Incorrect password.";
+/* ========== WEBSITE LOGIN ========== */
+function checkLogin(){
+  const now = Date.now();
+
+  let attempts = parseInt(localStorage.getItem("siteAttempts")) || MAX_ATTEMPTS;
+  let blocked  = parseInt(localStorage.getItem("siteBlocked")) || 0;
+
+  if(now < blocked){
+    loginErr.textContent = "Too many attempts. Try again after 24 hours.";
+    sitePass.disabled = true;
+    loginBtn.disabled = true;
+    return;
   }
-}
 
-function showDashboard(){
+  if(sitePass.value !== SITE_PASSWORD){
+    attempts--;
+    localStorage.setItem("siteAttempts", attempts);
+
+    if(attempts <= 0){
+      localStorage.setItem("siteBlocked", now + DAY);
+      loginErr.textContent = "Too many attempts. Try again after 24 hours.";
+      sitePass.disabled = true;
+      loginBtn.disabled = true;
+    }else{
+      loginErr.textContent = `Wrong password. Attempts left: ${attempts}`;
+    }
+    return;
+  }
+
+  localStorage.removeItem("siteAttempts");
+  localStorage.removeItem("siteBlocked");
+  localStorage.setItem("loginTime", now);
+
   loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+  content.classList.remove("hidden");
   startTimer();
 }
 
+/* ========== APK UNLOCK ========== */
+function unlockAPK(){
+  const now = Date.now();
+
+  let attempts = parseInt(localStorage.getItem("apkAttempts")) || MAX_ATTEMPTS;
+  let blocked  = parseInt(localStorage.getItem("apkBlocked")) || 0;
+
+  if(now < blocked){
+    apkErr.textContent = "Too many attempts. Try again after 24 hours.";
+    apkPass.disabled = true;
+    apkBtn.disabled = true;
+    return;
+  }
+
+  if(apkPass.value !== APK_PASSWORD){
+    attempts--;
+    localStorage.setItem("apkAttempts", attempts);
+
+    if(attempts <= 0){
+      localStorage.setItem("apkBlocked", now + DAY);
+      apkErr.textContent = "Too many attempts. Try again after 24 hours.";
+      apkPass.disabled = true;
+      apkBtn.disabled = true;
+    }else{
+      apkErr.textContent = `Wrong APK password. Attempts left: ${attempts}`;
+    }
+    return;
+  }
+
+  localStorage.removeItem("apkAttempts");
+  localStorage.removeItem("apkBlocked");
+  apkErr.textContent = "";
+  apkLink.classList.remove("hidden");
+}
+
+/* ========== TIMER ========== */
 function startTimer(){
-  if(timer) return;
-  timer=setInterval(()=>{
-    const exp=localStorage.getItem("loginExpiry");
-    if(!exp||Date.now()>exp){
+  setInterval(()=>{
+    const t = localStorage.getItem("loginTime");
+    const left = DAY - (Date.now() - t);
+    if(left <= 0){
       localStorage.clear();
       location.reload();
-      return;
     }
-    const left=exp-Date.now();
-    sessionTimer.innerHTML=
-      "<div class='time-big'>Session expires in</div>"+
-      Math.floor(left/3600000)+"h "+
-      Math.floor(left%3600000/60000)+"m "+
-      Math.floor(left%60000/1000)+"s";
+    const h=Math.floor(left/3600000),
+          m=Math.floor(left%3600000/60000),
+          s=Math.floor(left%60000/1000);
+    sessionTimer.textContent =
+      `Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
 
-function loadVideo(){
-  document.getElementById("videoBox").classList.remove("hidden");
-}
+/* ========== ON LOAD ========== */
+window.onload = ()=>{
+  const now = Date.now();
 
-window.onload=()=>{
-  const exp=localStorage.getItem("loginExpiry");
-  if(exp && Date.now()<exp){
-    showDashboard();
-  }else{
-    loginBox.classList.remove("hidden");
+  if(now > (parseInt(localStorage.getItem("siteBlocked"))||0)){
+    localStorage.removeItem("siteAttempts");
+    localStorage.removeItem("siteBlocked");
+  }
+  if(now > (parseInt(localStorage.getItem("apkBlocked"))||0)){
+    localStorage.removeItem("apkAttempts");
+    localStorage.removeItem("apkBlocked");
+  }
+
+  // Always hide APK download on refresh
+  apkLink.classList.add("hidden");
+
+  const t = localStorage.getItem("loginTime");
+  if(t && now - t < DAY){
+    loginBox.classList.add("hidden");
+    content.classList.remove("hidden");
+    startTimer();
   }
 };
 </script>
 
 </body>
-  </html>
+      </html>
