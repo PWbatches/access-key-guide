@@ -30,19 +30,16 @@ body{
 }
 .watermark .pw-logo{transform:scale(3.2);}
 
-/* ===== GLASS CARD (LOGIN + DASHBOARD) ===== */
+/* ===== GLASS CARD ===== */
 .card{
   width:100%;
   max-width:420px;
   background:rgba(255,255,255,0.55);
   backdrop-filter:blur(14px) saturate(160%);
-  -webkit-backdrop-filter:blur(14px) saturate(160%);
   border-radius:26px;
   padding:28px;
   border:1px solid rgba(255,255,255,0.35);
-  box-shadow:
-    0 30px 60px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.4);
+  box-shadow:0 30px 60px rgba(0,0,0,.18);
   position:relative;
   z-index:1;
 }
@@ -128,6 +125,37 @@ button{
   margin-top:16px;
   border:1px solid rgba(255,255,255,.4);
 }
+
+/* ===== INSTRUCTIONS ===== */
+.instruction-header{
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:700;
+}
+.instruction-content{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:.5s;
+}
+.instruction-content.open{
+  max-height:1600px;
+  opacity:1;
+}
+
+/* ===== VIDEO ===== */
+iframe{
+  width:100%;
+  height:200px;
+  border-radius:12px;
+  border:none;
+}
+.video-link{
+  text-align:center;
+  font-size:13px;
+  margin-top:8px;
+}
 </style>
 </head>
 
@@ -143,10 +171,8 @@ button{
 <!-- LOGIN -->
 <div id="loginBox">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
-
   <input id="roomPass" type="password" placeholder="Enter room password">
   <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
-
   <button onclick="login()">Continue</button>
   <div id="roomErr" class="hint"></div>
 </div>
@@ -160,6 +186,31 @@ button{
   <div class="access">ACCESS GRANTED</div>
   <div class="timer" id="timer"></div>
 
+  <!-- INSTRUCTIONS -->
+  <div class="section">
+    <div class="instruction-header" onclick="instr.classList.toggle('open')">
+      <span>📘 Instructions</span><span>▼</span>
+    </div>
+    <div id="instr" class="instruction-content">
+      Access valid for 24 hours only due to copyright ©️ issues.
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="section">
+    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
+    <div class="video-link">
+      If video does not play on PC/Laptop,
+      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">open here</a>
+    </div>
+  </div>
+
+  <!-- WEBSITE -->
+  <div class="section">
+    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
+  </div>
+
+  <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
@@ -167,8 +218,8 @@ button{
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkErr" class="hint"></div>
   </div>
-</div>
 
+</div>
 </div>
 
 <script>
@@ -231,4 +282,4 @@ function unlockAPK(){
 </script>
 
 </body>
-  </html>
+</html>
