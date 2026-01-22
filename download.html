@@ -9,7 +9,7 @@
 html,body{
   margin:0;padding:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  background:#ffffff;color:#111;
+  background:#fff;color:#111;
 }
 *{box-sizing:border-box}
 .hidden{display:none}
@@ -95,8 +95,17 @@ iframe{border:none;border-radius:18px}
 
 <div class="container">
 
+<!-- UNSUPPORTED BROWSER -->
+<div id="unsupported" class="card center hidden">
+  <h3>Browser Not Supported</h3>
+  <p class="small">
+    Please use one of the following browsers:<br><br>
+    <b>Google Chrome, Microsoft Edge, Safari, Firefox, Opera Mini</b>
+  </p>
+</div>
+
 <!-- LOGIN -->
-<div id="loginBox" class="card center">
+<div id="loginBox" class="card center hidden">
   <div style="display:flex;justify-content:center;margin-bottom:12px">
     <div class="pw-logo"><span>PW</span></div>
   </div>
@@ -158,7 +167,6 @@ iframe{border:none;border-radius:18px}
   <!-- VIDEO -->
   <div class="card">
     <b>Instruction Video</b><br><br>
-
     <iframe
       width="100%"
       height="200"
@@ -166,7 +174,6 @@ iframe{border:none;border-radius:18px}
       allow="autoplay; encrypted-media"
       allowfullscreen>
     </iframe>
-
     <p class="small" style="margin-top:8px">
       If the video does not load on laptop/PC,
       <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view"
@@ -185,7 +192,7 @@ iframe{border:none;border-radius:18px}
   <div class="card">
     <b>APK Download</b><br>
     <span class="small">
-      ⚠️ Only for <b>Android devices</b> (Not for iOS / PC)
+      ⚠️ Only for <b>Android devices</b>
     </span><br><br>
 
     <input id="apkPass" type="password" placeholder="Enter APK password">
@@ -210,6 +217,15 @@ const MAX_ATTEMPTS = 3;
 let loginAttempts = MAX_ATTEMPTS;
 let apkAttempts   = MAX_ATTEMPTS;
 
+/* Browser check */
+const ua = navigator.userAgent.toLowerCase();
+const allowed =
+  ua.includes("chrome") ||
+  ua.includes("edg") ||
+  ua.includes("safari") ||
+  ua.includes("firefox") ||
+  ua.includes("opera mini");
+
 function today(){
  const d=new Date();
  return String(d.getDate()).padStart(2,"0")+
@@ -217,14 +233,15 @@ function today(){
         d.getFullYear();
 }
 
-/* LOGIN */
 function login(){
  if(loginAttempts<=0){
   loginErr.innerText="Too many attempts. Try again after 24 hours.";
   return;
  }
  if(sitePass.value.trim()==="RS@"+today()){
-  localStorage.setItem("loginTime",Date.now());
+  const now=Date.now();
+  localStorage.setItem("loginTime",now);
+  localStorage.setItem("loginExpiry",now+SESSION);
   showDash();
  }else{
   loginAttempts--;
@@ -240,9 +257,11 @@ function showDash(){
 
 function startSession(){
  setInterval(()=>{
-  const t=localStorage.getItem("loginTime");
-  const left=SESSION-(Date.now()-t);
-  if(left<=0){localStorage.clear();location.reload();}
+  const exp=localStorage.getItem("loginExpiry");
+  if(!exp||Date.now()>exp){
+   localStorage.clear();location.reload();return;
+  }
+  const left=exp-Date.now();
   sessionTimer.innerHTML=
    "<div class='time-big'>Session expires in</div>"+
    Math.floor(left/3600000)+"h "+
@@ -251,7 +270,6 @@ function startSession(){
  },1000);
 }
 
-/* APK */
 function unlockAPK(){
  if(apkAttempts<=0){
   apkErr.innerText="APK locked. Try again after 24 hours.";
@@ -272,24 +290,25 @@ function toggleInstructions(){
 }
 
 /* Password peek – 1 second */
-function passwordPeek(id){
- const input=document.getElementById(id);
- let timer;
- input.addEventListener("input",()=>{
-  input.type="text";
-  clearTimeout(timer);
-  timer=setTimeout(()=>input.type="password",1000);
+["sitePass","apkPass"].forEach(id=>{
+ const i=document.getElementById(id);let t;
+ i.addEventListener("input",()=>{
+  i.type="text";clearTimeout(t);
+  t=setTimeout(()=>i.type="password",1000);
  });
-}
-passwordPeek("sitePass");
-passwordPeek("apkPass");
+});
 
-/* Restore session */
+/* INIT */
 window.onload=()=>{
- const t=localStorage.getItem("loginTime");
- if(t && Date.now()-t<SESSION) showDash();
+ if(!allowed){
+  unsupported.classList.remove("hidden");
+  return;
+ }
+ const exp=localStorage.getItem("loginExpiry");
+ if(exp&&Date.now()<exp) showDash();
+ else loginBox.classList.remove("hidden");
 };
 </script>
 
 </body>
-      </html>
+</html>
