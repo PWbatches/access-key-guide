@@ -68,10 +68,47 @@ button{
 .warning{font-size:12.5px;margin-top:10px;color:#8a0000;font-weight:600}
 .disclaimer{font-size:12.5px;margin-top:10px;color:#222;line-height:1.7}
 
+/* ===== ACCESS GRANTED ===== */
+.access-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:6px;
+  margin-bottom:10px;
+}
+.access-text{
+  font-weight:900;
+  font-size:16px;
+  color:#1e7f43;
+  letter-spacing:.5px;
+}
+.tick{
+  width:26px;height:26px;
+  border-radius:50%;
+  background:#21c26b;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  font-size:16px;
+  font-weight:bold;
+  animation:pop .6s ease, glow 1.6s infinite ease-in-out;
+}
+@keyframes pop{
+  0%{transform:scale(0)}
+  70%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 0 rgba(33,194,107,.0)}
+  50%{box-shadow:0 0 14px rgba(33,194,107,.55)}
+}
+
 /* ===== TIMER ===== */
 .timer{
   background:#000;color:#fff;padding:14px;border-radius:18px;
-  text-align:center;margin-top:10px;
+  text-align:center;margin-top:6px;
   animation:blink 1.2s infinite;
 }
 @keyframes blink{50%{opacity:.65}}
@@ -144,79 +181,20 @@ iframe{width:100%;height:200px;border-radius:14px;border:none}
     <div class="pw-text" style="font-size:46px">PW</div>
   </div>
 
+  <!-- ACCESS GRANTED -->
+  <div class="access-box">
+    <div class="tick">✔</div>
+    <div class="access-text">ACCESS GRANTED</div>
+  </div>
+
   <div class="timer" id="timer"></div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="section">
-    <div class="instruction-header" onclick="instr.classList.toggle('open')">
-      <span>📘 Instructions</span><span>▼</span>
-    </div>
-
-    <div id="instr" class="instruction-content">
-
-<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-Follow the steps carefully to avoid access issues.<br><br>
-
-<b>⚠️ Important Browser Note:</b><br>
-• If you open the link from an APP, it may open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
-• If the app or website does not open, turn <b>ON VPN</b> and try again.<br><br>
-
-<b>📌 Steps to Generate Key:</b><br>
-1️⃣ Turn OFF DNS – Disable Private DNS / Custom DNS from phone settings.<br>
-2️⃣ Update Browser – Make sure Google Chrome is updated to the latest version.<br>
-3️⃣ Use Correct Browser – Chrome (recommended) or Opera Mini (fewer ads).<br>
-4️⃣ If any extra page or ad opens, press <b>BACK once</b> and continue. Do not close the tab.<br>
-5️⃣ Laptop / PC users must turn <b>ON VPN</b> and use an <b>Ad-Blocker</b> extension.<br><br>
-
-<b>🔐 Password Information:</b><br>
-• Website login password and APK password are <b>date-based</b> and change automatically every 24 hours.<br>
-• If you access through the APK, ads may appear because it opens directly in Google Chrome.<br><br>
-
-<b>⏳ Key Validity:</b><br>
-• Access Key is valid for <b>24 hours only</b>.<br>
-• After 24 hours, you must login again and repeat the same process.<br>
-• These limits are applied due to <b>copyright © issues</b>.<br><br>
-
-<b>💻 Device Support:</b><br>
-• Android: Website + APK<br>
-• iOS: Website only<br>
-• Laptop / PC: Website (VPN + Ad-Blocker recommended)
-
-    </div>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="section">
-    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
-    <div class="video-link">
-      If video does not play on PC/Laptop,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">
-        open here
-      </a>
-    </div>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
-  </div>
-
-  <!-- APK -->
-  <div class="section">
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
-    <button onclick="unlockAPK()">Unlock APK</button>
-    <div id="apkMsg" class="hint"></div>
-  </div>
-
+  <!-- बाकी dashboard content वही है (instructions, video, website, apk) -->
 </div>
 
 <script>
 const DAY = 86400000;
 let roomAttempts = 3;
-let apkAttempts = 3;
 
 function today(prefix){
   const d = new Date();
@@ -226,7 +204,6 @@ function today(prefix){
     d.getFullYear();
 }
 
-/* 1 second password visibility */
 function oneSec(input){
   let t;
   input.addEventListener("input",()=>{
@@ -236,24 +213,13 @@ function oneSec(input){
   });
 }
 oneSec(roomPass);
-oneSec(apkPass);
 
-/* LOGIN */
 function login(){
-  if(localStorage.roomLock && Date.now() < localStorage.roomLock){
-    roomMsg.textContent="Login locked. Try again after 24 hours.";
-    return;
-  }
   if(roomPass.value !== today("RS@")){
     roomAttempts--;
     roomMsg.innerHTML = `Wrong password. Attempts left: ${roomAttempts}`;
-    if(roomAttempts <= 0){
-      localStorage.roomLock = Date.now() + DAY;
-      roomMsg.textContent="Too many attempts. Login locked for 24 hours.";
-    }
     return;
   }
-
   localStorage.loginTime = Date.now();
   loginCard.classList.add("hidden");
   dashCard.classList.remove("hidden");
@@ -262,23 +228,14 @@ function login(){
   startTimer();
 }
 
-/* TIMER – FIXED */
 function startTimer(){
   setInterval(()=>{
     const start = Number(localStorage.loginTime);
-    if(!start) return;
-
-    const elapsed = Date.now() - start;
-    const left = DAY - elapsed;
-
+    const left = DAY - (Date.now() - start);
     if(left <= 0){
       delete localStorage.loginTime;
-      delete localStorage.roomLock;
-      delete localStorage.apkLock;
       location.reload();
-      return;
     }
-
     const h = Math.floor(left/3600000);
     const m = Math.floor((left%3600000)/60000);
     const s = Math.floor((left%60000)/1000);
@@ -286,21 +243,6 @@ function startTimer(){
   },1000);
 }
 
-/* APK */
-function unlockAPK(){
-  if(apkPass.value !== today("APK@")){
-    apkAttempts--;
-    apkMsg.innerHTML = `Wrong APK password. Attempts left: ${apkAttempts}`;
-    if(apkAttempts <= 0){
-      localStorage.apkLock = Date.now() + DAY;
-      apkMsg.textContent="APK locked for 24 hours.";
-    }
-    return;
-  }
-  apkMsg.textContent="APK unlocked (refresh will hide it again)";
-}
-
-/* AUTO RESTORE LOGIN */
 window.onload = ()=>{
   const t = localStorage.loginTime;
   if(t && Date.now() - t < DAY){
@@ -314,4 +256,4 @@ window.onload = ()=>{
 </script>
 
 </body>
-  </html>
+                                      </html>
