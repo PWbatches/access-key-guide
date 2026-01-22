@@ -13,10 +13,10 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#f5f7fb;
+  background:#f4f6fb;
 }
 
-/* ===== BLURRED PW WATERMARK ===== */
+/* ===== WATERMARK LOGO ===== */
 .watermark{
   position:fixed;
   inset:0;
@@ -25,12 +25,10 @@ body{
   align-items:center;
   pointer-events:none;
   z-index:0;
+  opacity:.08;
   filter:blur(6px);
-  opacity:0.08;
 }
-.watermark .pw-logo{
-  transform:scale(2.6);
-}
+.watermark .pw-logo{transform:scale(2.4);}
 
 /* ===== CARD ===== */
 .card{
@@ -45,11 +43,11 @@ body{
 }
 .hidden{display:none}
 
-/* ===== PW ROUND LOGO ===== */
+/* ===== PW LOGO ===== */
 .pw-logo{
   width:120px;
   height:120px;
-  margin:0 auto 18px;
+  margin:0 auto 14px;
   background:#000;
   border-radius:50%;
   display:flex;
@@ -73,11 +71,9 @@ body{
   font-family:"Times New Roman",serif;
   font-size:64px;
   font-weight:bold;
-  position:relative;
-  z-index:2;
 }
 
-/* ===== INPUTS ===== */
+/* ===== INPUT / BUTTON ===== */
 input{
   width:100%;
   padding:14px;
@@ -101,7 +97,12 @@ button{
 button:disabled{background:#888;cursor:not-allowed}
 .hint{font-size:12px;color:#555;margin-top:8px}
 
-/* ===== TIMER ===== */
+/* ===== ACCESS + TIMER ===== */
+.access{
+  text-align:center;
+  font-weight:700;
+  margin-bottom:6px;
+}
 .timer{
   background:#000;
   color:#fff;
@@ -109,16 +110,15 @@ button:disabled{background:#888;cursor:not-allowed}
   border-radius:16px;
   text-align:center;
   font-weight:600;
-  margin:16px 0;
   animation:blink 1.2s ease-in-out infinite;
 }
 @keyframes blink{
   0%{opacity:1}
-  50%{opacity:.6}
+  50%{opacity:.65}
   100%{opacity:1}
 }
 
-/* ===== SECTION ===== */
+/* ===== SECTIONS ===== */
 .section{
   background:#f7f7f7;
   border-radius:16px;
@@ -126,7 +126,7 @@ button:disabled{background:#888;cursor:not-allowed}
   margin-top:16px;
 }
 
-/* ===== PREMIUM INSTRUCTIONS ANIMATION ===== */
+/* ===== INSTRUCTIONS TAB ===== */
 .instruction-header{
   display:flex;
   justify-content:space-between;
@@ -134,27 +134,19 @@ button:disabled{background:#888;cursor:not-allowed}
   cursor:pointer;
   font-weight:600;
 }
-.arrow{
-  transition:transform .4s ease;
-}
-.arrow.open{
-  transform:rotate(180deg);
-}
+.arrow{transition:transform .4s ease}
+.arrow.open{transform:rotate(180deg)}
 .instruction-content{
-  overflow:hidden;
   max-height:0;
+  overflow:hidden;
   opacity:0;
   transform:translateY(-6px);
-  transition:
-    max-height .6s ease,
-    opacity .4s ease,
-    transform .4s ease;
+  transition:all .5s ease;
   font-size:13px;
   line-height:1.7;
-  margin-top:10px;
 }
 .instruction-content.open{
-  max-height:1200px;
+  max-height:1500px;
   opacity:1;
   transform:translateY(0);
 }
@@ -171,7 +163,6 @@ iframe{
 
 <body>
 
-<!-- WATERMARK -->
 <div class="watermark">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
@@ -181,20 +172,19 @@ iframe{
 <!-- LOGIN -->
 <div id="loginBox">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
-
-  <input id="sitePass" type="password" placeholder="Enter room password">
-  <button id="loginBtn" onclick="login()">Continue</button>
-
-  <div id="loginErr" class="hint"></div>
+  <input id="roomPass" type="password" placeholder="Enter room password">
+  <button onclick="login()">Continue</button>
+  <div id="roomErr" class="hint"></div>
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+<div id="dash" class="hidden">
 
   <div class="pw-logo" style="width:90px;height:90px">
     <div class="pw-text" style="font-size:46px">PW</div>
   </div>
 
+  <div class="access">ACCESS GRANTED</div>
   <div class="timer" id="timer"></div>
 
   <!-- INSTRUCTIONS -->
@@ -204,19 +194,23 @@ iframe{
       <span id="arrow" class="arrow">▼</span>
     </div>
     <div id="instr" class="instruction-content">
-      🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-      Follow the steps carefully 👇<br><br>
-      ⚠️ <b>Important Browser Note:</b><br>
-      • If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
-      • To avoid ads, open the website directly using Opera Mini browser.<br>
-      • If app/website does not open, turn ON VPN and try again.<br>
-      • When you click any link, if anything extra opens, press BACK only once and continue.<br><br>
-      📌 <b>Steps:</b><br>
-      1️⃣ Turn OFF Private DNS / Custom DNS.<br>
-      2️⃣ Update Google Chrome.<br>
-      3️⃣ Use Chrome or Opera Mini.<br>
-      4️⃣ Laptop users use VPN + Ad-Blocker.<br><br>
-      ⏳ Access valid for 24 hours only (copyright ©️).
+🔑 <b>How to Generate Access Key (Valid for 24 Hours)</b><br><br>
+
+Follow the steps carefully 👇<br><br>
+
+⚠️ <b>Important Browser Note:</b><br>
+• If you open the link from an APP, it will open in Google Chrome and ads may appear.<br>
+• To avoid ads, open the website directly using Opera Mini browser.<br>
+• If app/website does not open, turn ON VPN and try again.<br>
+• When you click any link, if anything extra opens, press BACK only once and continue.<br><br>
+
+📌 <b>Steps to Generate Key:</b><br>
+1️⃣ Turn OFF Private DNS / Custom DNS.<br>
+2️⃣ Update Google Chrome to latest version.<br>
+3️⃣ Use Chrome or Opera Mini.<br>
+4️⃣ Laptop users: Turn ON VPN + Ad-Blocker.<br><br>
+
+⏳ Access valid for 24 hours only due to copyright ©️ reasons.
     </div>
   </div>
 
@@ -241,94 +235,94 @@ iframe{
 </div>
 
 <script>
-const DAY=24*60*60*1000;
-const MAX_ATTEMPTS=3;
+const DAY=86400000;
+const MAX=3;
 
-/* PASSWORD */
-function todayRoom(){
-  const d=new Date();
-  return "RS@"+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+/* PASSWORDS */
+function roomPassword(){
+ const d=new Date();
+ return "RS@"+String(d.getDate()).padStart(2,'0')+
+        String(d.getMonth()+1).padStart(2,'0')+
+        d.getFullYear();
 }
-function todayAPK(){
-  const d=new Date();
-  return "APK@"+String(d.getDate()).padStart(2,'0')+
-         String(d.getMonth()+1).padStart(2,'0')+
-         d.getFullYear();
+function apkPassword(){
+ const d=new Date();
+ return "APK@"+String(d.getDate()).padStart(2,'0')+
+        String(d.getMonth()+1).padStart(2,'0')+
+        d.getFullYear();
 }
 
-/* LOGIN WITH ATTEMPTS */
+/* LOGIN */
 function login(){
-  const now=Date.now();
-  let attempts=parseInt(localStorage.getItem("roomAttempts"))||MAX_ATTEMPTS;
-  let blocked=parseInt(localStorage.getItem("roomBlocked"))||0;
+ let tries=+localStorage.roomTry||MAX;
+ let block=+localStorage.roomBlock||0;
+ let now=Date.now();
 
-  if(now<blocked){
-    loginErr.textContent="Too many attempts. Try again after 24 hours.";
-    sitePass.disabled=true;loginBtn.disabled=true;
-    return;
+ if(now<block){
+  roomErr.textContent="Locked. Try after 24 hours.";
+  return;
+ }
+
+ if(roomPass.value!==roomPassword()){
+  tries--;
+  localStorage.roomTry=tries;
+  if(tries<=0){
+    localStorage.roomBlock=now+DAY;
+    roomErr.textContent="Too many attempts. Locked 24 hours.";
+  }else{
+    roomErr.textContent="Wrong password. Attempts left: "+tries;
   }
+  return;
+ }
 
-  if(sitePass.value!==todayRoom()){
-    attempts--;
-    localStorage.setItem("roomAttempts",attempts);
-    if(attempts<=0){
-      localStorage.setItem("roomBlocked",now+DAY);
-      loginErr.textContent="Too many attempts. Locked for 24 hours.";
-      sitePass.disabled=true;loginBtn.disabled=true;
-    }else{
-      loginErr.textContent=`Wrong password. Attempts left: ${attempts}`;
-    }
-    return;
-  }
-
-  localStorage.removeItem("roomAttempts");
-  localStorage.removeItem("roomBlocked");
-  localStorage.setItem("loginTime",now);
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  startTimer();
+ localStorage.clear();
+ localStorage.loginTime=now;
+ loginBox.classList.add("hidden");
+ dash.classList.remove("hidden");
+ startTimer();
 }
 
 /* TIMER */
 function startTimer(){
-  setInterval(()=>{
-    const t=localStorage.getItem("loginTime");
-    const left=DAY-(Date.now()-t);
-    if(left<=0){localStorage.clear();location.reload();}
-    const h=Math.floor(left/3600000),
-          m=Math.floor(left%3600000/60000),
-          s=Math.floor(left%60000/1000);
-    timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
-  },1000);
+ setInterval(()=>{
+  let t=localStorage.loginTime;
+  let left=DAY-(Date.now()-t);
+  if(left<=0){localStorage.clear();location.reload();}
+  let h=Math.floor(left/3600000),
+      m=Math.floor(left%3600000/60000),
+      s=Math.floor(left%60000/1000);
+  timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
+ },1000);
 }
 
-/* INSTRUCTIONS TOGGLE */
+/* INSTRUCTIONS */
 function toggleInstr(){
-  instr.classList.toggle("open");
-  arrow.classList.toggle("open");
+ instr.classList.toggle("open");
+ arrow.classList.toggle("open");
 }
 
 /* APK */
 function unlockAPK(){
-  if(apkPass.value!==todayAPK()){
-    apkErr.textContent="Wrong APK password";
-    return;
-  }
-  apkErr.textContent="APK unlocked";
+ let tries=+localStorage.apkTry||MAX;
+ if(apkPass.value!==apkPassword()){
+  tries--;
+  localStorage.apkTry=tries;
+  apkErr.textContent="Wrong APK password. Attempts left: "+tries;
+  return;
+ }
+ apkErr.textContent="APK Unlocked (refresh will hide again)";
 }
 
 /* AUTO LOGIN */
 window.onload=()=>{
-  const t=localStorage.getItem("loginTime");
-  if(t && Date.now()-t<DAY){
-    loginBox.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    startTimer();
-  }
+ let t=localStorage.loginTime;
+ if(t && Date.now()-t<DAY){
+  loginBox.classList.add("hidden");
+  dash.classList.remove("hidden");
+  startTimer();
+ }
 }
 </script>
 
 </body>
-      </html>
+  </html>
