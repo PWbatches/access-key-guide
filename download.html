@@ -134,7 +134,7 @@ iframe{border:none;border-radius:18px}
     <div id="instructions" class="hidden small" style="margin-top:14px">
       • Turn OFF Private DNS / Custom DNS.<br>
       • Use Chrome or Opera Mini.<br>
-      • Turn ON VPN if page does not open.<br><br>
+      • VPN if page does not open.<br><br>
       Re-login required after 24 hours due to copyright ©️ compliance.
     </div>
   </div>
@@ -173,6 +173,11 @@ iframe{border:none;border-radius:18px}
 const SESSION=86400000;
 const EXAM=new Date("2026-06-01T00:00:00").getTime();
 
+/* REAL PASSWORD STORAGE */
+let realSitePass="";
+let realApkPass="";
+
+/* DATE PASSWORD */
 function today(){
  const d=new Date();
  return String(d.getDate()).padStart(2,"0")+
@@ -182,7 +187,7 @@ function today(){
 
 /* LOGIN */
 function login(){
- if(sitePass.value==="RS@"+today()){
+ if(realSitePass==="RS@"+today()){
   localStorage.setItem("loginTime",Date.now());
   showDash();
  }else{
@@ -224,7 +229,7 @@ function startExam(){
 
 /* APK */
 function unlockAPK(){
- if(apkPass.value==="APK@"+today()){
+ if(realApkPass==="APK@"+today()){
   apkLink.classList.remove("hidden");
   apkErr.innerText="";
  }else{
@@ -237,29 +242,32 @@ function toggleInstructions(){
  instructions.classList.toggle("hidden");
 }
 
-/* 🔐 LAST CHARACTER ONLY – 0.2 SECOND VISIBILITY (MICRO-POLISH) */
-function lastCharPeek(id){
- const input=document.getElementById(id);
+/* 🔐 PASSWORD UI MASK (1 SECOND LAST CHAR) */
+function secureInput(inputId, store){
+ const input=document.getElementById(inputId);
  let timer;
- input.type="password";
 
- input.addEventListener("input",()=>{
-  const len=input.value.length;
-  if(len===0) return;
+ input.addEventListener("input",(e)=>{
+  const char=e.data;
+  if(char){
+   store.value+=char;
+  }else{
+   store.value=store.value.slice(0,-1);
+  }
 
   clearTimeout(timer);
 
-  const last=input.value.slice(-1);
-  input.value="•".repeat(len-1)+last;
+  input.value="•".repeat(store.value.length-1)+store.value.slice(-1);
 
   timer=setTimeout(()=>{
-    input.value="•".repeat(len);
-  },200); // ✅ 0.2 second
+    input.value="•".repeat(store.value.length);
+  },1000); // ✅ 1 second
  });
 }
 
-lastCharPeek("sitePass");
-lastCharPeek("apkPass");
+/* Attach secure inputs */
+secureInput("sitePass",{get value(){return realSitePass},set value(v){realSitePass=v}});
+secureInput("apkPass",{get value(){return realApkPass},set value(v){realApkPass=v}});
 
 /* Restore session */
 window.onload=()=>{
