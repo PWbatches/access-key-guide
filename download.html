@@ -6,26 +6,35 @@
 <title>Secure Access</title>
 
 <style>
+/* ===== Base ===== */
+:root{
+  --bg:#ffffff;
+  --card:#f7f8fb;
+  --ink:#111;
+  --soft:#e9ebf0;
+}
+*{box-sizing:border-box}
 html,body{
   margin:0;padding:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  background:#fff;color:#111;
+  background:var(--bg);color:var(--ink);
 }
-*{box-sizing:border-box}
 .hidden{display:none}
 .center{text-align:center}
 .small{font-size:13px;color:#555;line-height:1.6}
 
-/* Watermark */
+/* ===== Watermark ===== */
 .watermark{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
-  pointer-events:none;z-index:0;
-  opacity:.04;filter:grayscale(100%);
+  pointer-events:none;
+  opacity:.03;
+  transform:scale(2.3);
+  filter:grayscale(100%);
+  z-index:0;
 }
-.watermark .pw-logo{transform:scale(3)}
 
-/* PW Logo */
+/* ===== PW Logo ===== */
 .pw-logo{
   width:78px;height:78px;
   background:#000;border-radius:50%;
@@ -33,8 +42,9 @@ html,body{
   position:relative;
 }
 .pw-logo::before{
-  content:"";position:absolute;
-  width:72%;height:72%;
+  content:"";
+  position:absolute;
+  width:70%;height:70%;
   border:4px solid #fff;
   border-left-color:transparent;
   border-right-color:transparent;
@@ -45,68 +55,125 @@ html,body{
   font-size:40px;font-weight:bold;color:#fff;
 }
 
-/* Layout */
-.container{
-  position:relative;z-index:2;
-  max-width:420px;margin:auto;padding:24px;
+/* ===== Avatar ===== */
+.avatar-wrap{
+  display:flex;
+  justify-content:center;
+  margin:18px 0 14px;
 }
-.card{
-  background:#f8f9fb;
-  border-radius:24px;
-  padding:22px;margin-bottom:18px;
-  box-shadow:0 18px 40px rgba(0,0,0,.12);
+.avatar{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#eaeaea;
+  border:4px solid #fff;
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.22),
+    inset 0 0 0 1px rgba(255,255,255,.6);
+  animation:avatarIn .8s cubic-bezier(.22,.61,.36,1);
+}
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
 }
 
-/* Inputs & Buttons */
+/* ===== Layout ===== */
+.container{
+  position:relative;z-index:2;
+  max-width:420px;
+  margin:auto;padding:22px;
+}
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  animation:fadeLift .55s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ===== Inputs & Buttons ===== */
 input{
-  width:100%;padding:15px 18px;
-  border-radius:28px;border:none;
-  background:#eef0f4;font-size:15px;
+  width:100%;
+  padding:14px 18px;
+  border-radius:26px;
+  border:none;
+  background:var(--soft);
+  font-size:15px;
   margin-bottom:12px;
 }
 button{
-  width:100%;padding:15px;
-  border:none;border-radius:30px;
+  width:100%;
+  padding:14px;
+  border:none;border-radius:28px;
   background:#000;color:#fff;
-  font-size:16px;font-weight:600;
+  font-size:15px;font-weight:600;
   cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
 }
-button:active{transform:scale(.97)}
-button.secondary{background:#111}
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+button:active{transform:scale(.97);box-shadow:none}
 
-/* Time card */
+/* ===== Timer ===== */
 .time-card{
-  background:linear-gradient(180deg,#111,#000);
-  color:#fff;border-radius:22px;
-  padding:18px;
-  box-shadow:0 20px 50px rgba(0,0,0,.35);
+  background:#000;color:#fff;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
 }
-.time-big{font-size:18px;font-weight:700}
+.time-big{
+  font-size:17px;font-weight:700;
+  animation:textReveal .4s ease-out;
+}
 
-iframe{border:none;border-radius:18px}
+/* ===== Animations ===== */
+@keyframes fadeLift{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes avatarIn{
+  from{opacity:0;transform:scale(.92)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes textReveal{
+  from{opacity:0;letter-spacing:2px}
+  to{opacity:1;letter-spacing:normal}
+}
+
+iframe{
+  width:100%;
+  height:200px;
+  border:none;border-radius:16px;
+}
 </style>
 </head>
 
 <body>
 
+<!-- Watermark -->
 <div class="watermark">
   <div class="pw-logo"><span>PW</span></div>
 </div>
 
 <div class="container">
 
-<!-- UNSUPPORTED BROWSER -->
-<div id="unsupported" class="card center hidden">
-  <h3>Browser Not Supported</h3>
-  <p class="small">
-    Please use one of the following browsers:<br><br>
-    <b>Google Chrome, Microsoft Edge, Safari, Firefox, Opera Mini</b>
-  </p>
-</div>
-
 <!-- LOGIN -->
 <div id="loginBox" class="card center hidden">
-  <div style="display:flex;justify-content:center;margin-bottom:12px">
+
+  <div class="avatar-wrap">
+    <div class="avatar">
+      <img src="https://instasize.com/p/570e019b001dfc8e038301b7e595411dce044cfb40ea066c4d763b83d653810a"
+           alt="Avatar">
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin-bottom:10px">
     <div class="pw-logo"><span>PW</span></div>
   </div>
 
@@ -127,84 +194,31 @@ iframe{border:none;border-radius:18px}
 <div id="dashboard" class="hidden">
 
   <div class="card center">
+    <div class="avatar" style="width:80px;height:80px;margin:0 auto 8px">
+      <img src="https://instasize.com/p/570e019b001dfc8e038301b7e595411dce044cfb40ea066c4d763b83d653810a">
+    </div>
     <div class="pw-logo" style="margin:0 auto 8px"><span>PW</span></div>
     <div class="time-big">ACCESS GRANTED</div>
   </div>
 
   <div class="card time-card center" id="sessionTimer"></div>
 
-  <!-- INSTRUCTIONS -->
-  <div class="card">
-    <button onclick="toggleInstructions()">Instructions</button>
-    <div id="instructions" class="hidden small" style="margin-top:14px">
-
-<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-<b>⚠️ Important Browser Note:</b><br>
-• If you open the link from an app, ads may appear.<br>
-• To avoid ads, open the website directly using <b>Opera Mini</b>.<br>
-• If the website does not open, turn <b>ON VPN</b> and try again.<br><br>
-
-<b>📌 Steps to Generate Key:</b><br>
-1. Turn OFF <b>Private DNS / Custom DNS</b> from phone settings.<br>
-2. Make sure your browser is updated to the latest version.<br>
-3. Use the correct browser:<br>
-&nbsp;&nbsp;• Chrome → Recommended<br>
-&nbsp;&nbsp;• Opera Mini → Fewer ads (Best option)<br>
-4. If anything opens after you click a link, just press <b>BACK</b> once and continue. Your key will be generated successfully.<br>
-5. <b>Laptop / PC users:</b><br>
-&nbsp;&nbsp;• Turn ON VPN<br>
-&nbsp;&nbsp;• Use an Ad-Blocker extension<br><br>
-
-<b>⏳ Key Validity:</b><br>
-• Access Key is valid for <b>24 hours only</b>.<br>
-• After 24 hours, you must login again and repeat the process.<br>
-• This restriction is required due to <b>copyright ©️ compliance</b>.
-
-    </div>
-  </div>
-
-  <!-- VIDEO -->
+  <!-- Video -->
   <div class="card">
     <b>Instruction Video</b><br><br>
-    <iframe
-      width="100%"
-      height="200"
-      src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-    <p class="small" style="margin-top:8px">
-      If the video does not load on laptop/PC,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view"
-         target="_blank">click here to watch directly</a>.
-    </p>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="card">
-    <button onclick="window.open('https://rarestudy.site','_blank')">
-      Open Website
-    </button>
-  </div>
-
-  <!-- APK -->
-  <div class="card">
-    <b>APK Download</b><br>
-    <span class="small">
-      ⚠️ Only for <b>Android devices</b>
-    </span><br><br>
-
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <p class="small">Format: <b>APK@DDMMYYYY</b></p>
-    <button onclick="unlockAPK()">Unlock APK</button>
-    <p id="apkErr" class="small" style="color:#c00"></p>
-
-    <a id="apkLink" class="hidden" href="#">
-      <button class="secondary" style="margin-top:10px">
-        Download APK
-      </button>
-    </a>
+    <button onclick="loadVideo()">Load Video</button>
+    <div id="videoBox" class="hidden" style="margin-top:12px">
+      <iframe
+        src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"
+        allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
+      <p class="small" style="margin-top:6px">
+        If video does not load on PC,
+        <a target="_blank"
+        href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view">
+        open directly</a>.
+      </p>
+    </div>
   </div>
 
 </div>
@@ -212,103 +226,62 @@ iframe{border:none;border-radius:18px}
 
 <script>
 const SESSION = 86400000;
-const MAX_ATTEMPTS = 3;
-
-let loginAttempts = MAX_ATTEMPTS;
-let apkAttempts   = MAX_ATTEMPTS;
-
-/* Browser check */
-const ua = navigator.userAgent.toLowerCase();
-const allowed =
-  ua.includes("chrome") ||
-  ua.includes("edg") ||
-  ua.includes("safari") ||
-  ua.includes("firefox") ||
-  ua.includes("opera mini");
+let timer=null;
 
 function today(){
- const d=new Date();
- return String(d.getDate()).padStart(2,"0")+
-        String(d.getMonth()+1).padStart(2,"0")+
-        d.getFullYear();
+  const d=new Date();
+  return String(d.getDate()).padStart(2,"0")+
+         String(d.getMonth()+1).padStart(2,"0")+
+         d.getFullYear();
 }
 
 function login(){
- if(loginAttempts<=0){
-  loginErr.innerText="Too many attempts. Try again after 24 hours.";
-  return;
- }
- if(sitePass.value.trim()==="RS@"+today()){
-  const now=Date.now();
-  localStorage.setItem("loginTime",now);
-  localStorage.setItem("loginExpiry",now+SESSION);
-  showDash();
- }else{
-  loginAttempts--;
-  loginErr.innerText="Incorrect password. Attempts left: "+loginAttempts;
- }
-}
-
-function showDash(){
- loginBox.classList.add("hidden");
- dashboard.classList.remove("hidden");
- startSession();
-}
-
-function startSession(){
- setInterval(()=>{
-  const exp=localStorage.getItem("loginExpiry");
-  if(!exp||Date.now()>exp){
-   localStorage.clear();location.reload();return;
+  if(sitePass.value==="RS@"+today()){
+    const now=Date.now();
+    localStorage.setItem("loginExpiry",now+SESSION);
+    showDashboard();
+  }else{
+    loginErr.innerText="Incorrect password.";
   }
-  const left=exp-Date.now();
-  sessionTimer.innerHTML=
-   "<div class='time-big'>Session expires in</div>"+
-   Math.floor(left/3600000)+"h "+
-   Math.floor(left%3600000/60000)+"m "+
-   Math.floor(left%60000/1000)+"s";
- },1000);
 }
 
-function unlockAPK(){
- if(apkAttempts<=0){
-  apkErr.innerText="APK locked. Try again after 24 hours.";
-  return;
- }
- if(apkPass.value.trim()==="APK@"+today()){
-  apkLink.classList.remove("hidden");
-  apkErr.innerText="";
- }else{
-  apkAttempts--;
-  apkLink.classList.add("hidden");
-  apkErr.innerText="Wrong APK password. Attempts left: "+apkAttempts;
- }
+function showDashboard(){
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  startTimer();
 }
 
-function toggleInstructions(){
- instructions.classList.toggle("hidden");
+function startTimer(){
+  if(timer) return;
+  timer=setInterval(()=>{
+    const exp=localStorage.getItem("loginExpiry");
+    if(!exp||Date.now()>exp){
+      localStorage.clear();
+      location.reload();
+      return;
+    }
+    const left=exp-Date.now();
+    sessionTimer.innerHTML=
+      "<div class='time-big'>Session expires in</div>"+
+      Math.floor(left/3600000)+"h "+
+      Math.floor(left%3600000/60000)+"m "+
+      Math.floor(left%60000/1000)+"s";
+  },1000);
 }
 
-/* Password peek – 1 second */
-["sitePass","apkPass"].forEach(id=>{
- const i=document.getElementById(id);let t;
- i.addEventListener("input",()=>{
-  i.type="text";clearTimeout(t);
-  t=setTimeout(()=>i.type="password",1000);
- });
-});
+function loadVideo(){
+  document.getElementById("videoBox").classList.remove("hidden");
+}
 
-/* INIT */
 window.onload=()=>{
- if(!allowed){
-  unsupported.classList.remove("hidden");
-  return;
- }
- const exp=localStorage.getItem("loginExpiry");
- if(exp&&Date.now()<exp) showDash();
- else loginBox.classList.remove("hidden");
+  const exp=localStorage.getItem("loginExpiry");
+  if(exp && Date.now()<exp){
+    showDashboard();
+  }else{
+    loginBox.classList.remove("hidden");
+  }
 };
 </script>
 
 </body>
-</html>
+  </html>
