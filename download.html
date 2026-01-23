@@ -153,7 +153,28 @@ button{
 
   will-change:max-height, opacity, transform;
      }
+/* ===== INSTRUCTION HEADER STYLE ===== */
+.instruction-header{
+  background:#1e40af;        /* alag color */
+  color:#fff;
+  padding:14px 16px;
+  border-radius:18px;
+  font-weight:700;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
 
+.instruction-header span:last-child{
+  transition:transform .3s ease;
+}
+
+.instruction-header.open span:last-child{
+  transform:rotate(180deg);
+}
+/* ===== END ===== */
 .instruction-content.open{
   max-height:3000px;
   opacity:1;
