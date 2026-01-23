@@ -175,13 +175,31 @@ button{
   transform:rotate(180deg);
 }
 /* ===== END ===== */
+.instruction-content{
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  transform: translateY(-6px);
+  transition:
+    max-height .45s cubic-bezier(.4,0,.2,1),
+    opacity .25s ease,
+    transform .25s ease;
+  padding:0 16px;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.8;
+}
+
 .instruction-content.open{
   max-height:3000px;
   opacity:1;
   transform:translateY(0);
   padding:16px;
 }
-
 /* ===== VIDEO ===== */
 iframe{width:100%;height:200px;border-radius:14px;border:none}
 .video-link{text-align:center;font-size:13px;margin-top:8px}
