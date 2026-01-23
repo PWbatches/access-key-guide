@@ -286,6 +286,16 @@ Follow the steps carefully to avoid access issues.<br><br>
     <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
     <button onclick="unlockAPK()">Unlock APK</button>
     <div id="apkMsg" class="hint"></div>
+    <a id="apkLink"
+   href="apk/PW.apk"
+   download
+   style="display:none;text-decoration:none">
+
+  <button style="margin-top:10px;background:#16a34a">
+    Download APK
+  </button>
+
+    </a>
   </div>
 
 </div>
@@ -375,6 +385,7 @@ function unlockAPK(){
     return;
   }
   apkMsg.textContent="APK unlocked (refresh will hide it again)";
+  document.getElementById("apkLink").style.display = "block";
 }
 
 /* AUTO RESTORE LOGIN */
