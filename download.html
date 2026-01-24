@@ -22,15 +22,18 @@ body{
 
   pointer-events: none;
 
-  opacity: 0.30;        /* 🔥 MAIN CHANGE */
-  filter: blur(1px);    /* 🔥 watermark sharp रहेगा */
-  transform: scale(1.15);
+  /* 🔥 VISIBILITY CONTROL */
+  opacity: 0.45;          /* watermark clearly visible */
+  filter: blur(0px);      /* NO blur */
+  transform: scale(1.25); /* thoda bada */
 
-  z-index: 0;
+  z-index: 0;             /* cards ke peeche */
 }
 
+/* logo ko sharp aur visible rakho */
 .watermark .pw-logo{
-  opacity: 1;
+  opacity: 055;
+  filter: none;
 }
 
 /* ===== CARDS ===== */
