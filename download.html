@@ -12,25 +12,25 @@ body{
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
 
-/* ===== WATERMARK (FIXED GLASS LAYER) ===== */
+/* ===== WATERMARK (LOGIN + DASHBOARD) ===== */
 .watermark{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  pointer-events:none;
+  pointer-events: none;
 
-  opacity:0.08;              /* visible but soft */
-  filter: blur(7px);        /* background blur */
-  transform: scale(1.6);
+  opacity: 0.18;          /* 🔥 clearly visible */
+  filter: blur(2px);      /* 🔥 soft aesthetic blur */
+  transform: scale(1.25); /* 🔥 balanced size */
 
-  z-index:0;                /* MUST stay below cards */
+  z-index: 0;             /* cards ke peeche */
 }
 
 .watermark .pw-logo{
-  opacity:.9;
+  opacity: 1;
 }
 
 /* ===== CARDS ===== */
