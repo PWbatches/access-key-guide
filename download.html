@@ -65,30 +65,31 @@ button{
 
 <body>
 
-<!-- ================= UTR PAGE ================= -->
+<
+
+<!-- ================= LOGIN PAGE ================= -->
+<div class="card hidden" id="loginPage">
+  <h2>🔑 Login</h2>
+
+  <input id="loginPass" type="password" placeholder="Enter Password<!-- ================= UTR PAGE ================= -->
 <div class="card" id="utrPage">
   <h2>🔐 Payment Verification</h2>
 
-  <!-- ✅ YOUR QR IMAGE -->
-  <img 
-    src="https://drive.google.com/uc?export=view&id=1JFGJzrEhJbSAOhPUqG-9v-GdwmxqEq18"
-    style="width:100%;border-radius:16px"
+  <!-- ✅ FIXED QR CODE (WILL SHOW EVERYWHERE) -->
+  <img
+    src="https://drive.google.com/uc?export=download&id=1JFGJzrEhJbSAOhPUqG-9v-GdwmxqEq18"
+    alt="UPI QR Code"
+    style="width:100%;border-radius:16px;margin:12px 0"
   >
 
   <input id="utrInput" placeholder="Enter UTR Number">
   <button onclick="submitUTR()">Submit UTR</button>
 
   <div class="hint">
-    • UTR केवल एक बार submit करना होगा<br>
-    • Access 24 hours के लिए valid रहेगा
+    • UTR needs to be submitted only once<br>
+    • Access will remain valid for 24 hours
   </div>
-</div>
-
-<!-- ================= LOGIN PAGE ================= -->
-<div class="card hidden" id="loginPage">
-  <h2>🔑 Login</h2>
-
-  <input id="loginPass" type="password" placeholder="Enter Password">
+</div>">
   <div class="hint">Format: <b>RS@DDMMYYYY</b></div>
 
   <button onclick="login()">Login</button>
