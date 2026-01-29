@@ -6,119 +6,116 @@
 <title>Secure Access</title>
 
 <style>
-*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
 body{
   margin:0;min-height:100vh;
   display:flex;justify-content:center;align-items:center;
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
-
-.card{
-  width:100%;max-width:420px;
-  padding:26px;border-radius:26px;
-  background:rgba(255,255,255,.35);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,.35);
-  box-shadow:0 30px 60px rgba(0,0,0,.18);
-}
-
 .hidden{display:none}
 
-h2{text-align:center;margin:0 0 14px}
+/* ===== CARD ===== */
+.card{
+  width:100%;max-width:420px;
+  padding:28px;border-radius:28px;
+  background:rgba(255,255,255,.4);
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 60px rgba(0,0,0,.2);
+}
 
-input,button{
+/* ===== LOGO ===== */
+.logo{
+  width:100px;height:100px;margin:0 auto 16px;
+  background:#000;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.logo span{
+  color:#fff;font-size:52px;
+  font-family:"Times New Roman";font-weight:bold;
+}
+
+/* ===== INPUTS ===== */
+input{
   width:100%;padding:14px;
-  border-radius:14px;margin-top:12px;
-  border:1px solid rgba(0,0,0,.15);
+  border-radius:14px;border:1px solid rgba(0,0,0,.15);
+  margin-top:12px;font-size:14px;
 }
 button{
+  width:100%;padding:14px;margin-top:14px;
+  border:none;border-radius:14px;
   background:#000;color:#fff;
   font-weight:600;cursor:pointer;
-  border:none;
+}
+.hint{
+  font-size:12.5px;margin-top:8px;
+  color:#333;line-height:1.6;
+}
+.timer{
+  background:#000;color:#fff;
+  padding:14px;border-radius:16px;
+  text-align:center;margin-top:12px;
+  font-weight:600;
 }
 
-.hint{font-size:12px;color:#333;margin-top:6px}
-.timer{
-  margin-top:12px;
-  padding:12px;border-radius:14px;
-  background:#000;color:#fff;
-  text-align:center;
-}
-.instruction-box{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.85);
-  font-size:13px;
-  line-height:1.7;
-}
-.notice{
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background:rgba(255,0,0,.08);
-  color:#b00020;
-  font-size:13px;
+/* ===== QR ===== */
+.qr{
+  width:100%;
+  border-radius:16px;
+  margin:12px 0;
 }
 </style>
 </head>
 
 <body>
 
-<
-
-<!-- ================= LOGIN PAGE ================= -->
-<div class="card hidden" id="loginPage">
-  <h2>🔑 Login</h2>
-
-  <input id="loginPass" type="password" placeholder="Enter Password<!-- ================= UTR PAGE ================= -->
+<!-- ================= UTR PAGE ================= -->
 <div class="card" id="utrPage">
-  <h2>🔐 Payment Verification</h2>
+  <div class="logo"><span>PW</span></div>
 
-  <!-- ✅ FIXED QR CODE (WILL SHOW EVERYWHERE) -->
-  <img
-    src="https://drive.google.com/uc?export=download&id=1JFGJzrEhJbSAOhPUqG-9v-GdwmxqEq18"
-    alt="UPI QR Code"
-    style="width:100%;border-radius:16px;margin:12px 0"
-  >
+  <h3>🔐 Payment Verification</h3>
+
+  <!-- ✅ QR CODE (FIXED & WORKING) -->
+  <img class="qr"
+   src="https://drive.google.com/uc?export=download&id=1JFGJzrEhJbSAOhPUqG-9v-GdwmxqEq18"
+   alt="UPI QR Code">
 
   <input id="utrInput" placeholder="Enter UTR Number">
   <button onclick="submitUTR()">Submit UTR</button>
 
   <div class="hint">
-    • UTR needs to be submitted only once<br>
-    • Access will remain valid for 24 hours
+    • UTR is required only once<br>
+    • Access remains valid for 24 hours
   </div>
-</div>">
-  <div class="hint">Format: <b>RS@DDMMYYYY</b></div>
 
-  <button onclick="login()">Login</button>
+  <div id="utrMsg" class="hint"></div>
+</div>
+
+<!-- ================= LOGIN PAGE ================= -->
+<div class="card hidden" id="loginPage">
+  <div class="logo"><span>PW</span></div>
+
+  <input id="roomPass" type="password" placeholder="Enter login password">
+  <div class="hint">Password format: <b>RS@DDMMYYYY</b></div>
+
+  <button onclick="login()">Continue</button>
   <div id="loginMsg" class="hint"></div>
-
-  <div class="instruction-box">
-    <b>Instructions:</b><br>
-    • Password date-based होता है और हर 24 hours में change होता है<br>
-    • Website और APK login का process same है<br>
-    • Wrong password पर access deny हो सकता है
-  </div>
-
-  <div class="notice">
-    <b>⚠ Important Notice</b><br>
-    • Website / access details share करना strictly prohibited है<br>
-    • Unauthorized sharing पर access permanently block किया जा सकता है
-  </div>
 </div>
 
 <!-- ================= DASHBOARD ================= -->
 <div class="card hidden" id="dashPage">
-  <h2 style="color:#16a34a">✔ ACCESS GRANTED</h2>
+  <div class="logo"><span>PW</span></div>
+
+  <h3 style="text-align:center;color:#16a34a">✔ ACCESS GRANTED</h3>
+
   <div class="timer" id="timer"></div>
+
+  <button onclick="logout()">Logout</button>
 </div>
 
 <script>
 const DAY = 86400000;
 
-/* ---------- DATE PASSWORD ---------- */
+/* ===== DATE PASSWORD ===== */
 function today(prefix){
   const d=new Date();
   return prefix+
@@ -127,30 +124,30 @@ function today(prefix){
     d.getFullYear();
 }
 
-/* ---------- UTR SUBMIT ---------- */
+/* ===== UTR SUBMIT ===== */
 function submitUTR(){
-  const utr = document.getElementById("utrInput").value.trim();
-  if(utr.length < 6){
-    alert("Invalid UTR number");
+  const utr = utrInput.value.trim();
+
+  if(utr.length < 8){
+    utrMsg.textContent="Please enter a valid UTR number.";
     return;
   }
-  localStorage.setItem("paid", "true");
-  localStorage.setItem("paidTime", Date.now());
+
+  localStorage.utrTime = Date.now();
   showLogin();
 }
 
-/* ---------- LOGIN ---------- */
+/* ===== LOGIN ===== */
 function login(){
-  if(loginPass.value !== today("RS@")){
-    loginMsg.textContent="Wrong password";
+  if(roomPass.value !== today("RS@")){
+    loginMsg.textContent="Incorrect password.";
     return;
   }
-  localStorage.setItem("loginTime", Date.now());
-  showDash();
-  startTimer();
+  localStorage.loginTime = Date.now();
+  showDashboard();
 }
 
-/* ---------- TIMER ---------- */
+/* ===== TIMER ===== */
 function startTimer(){
   setInterval(()=>{
     const start = Number(localStorage.loginTime);
@@ -158,35 +155,43 @@ function startTimer(){
 
     const left = DAY - (Date.now()-start);
     if(left<=0){
-      localStorage.removeItem("loginTime");
+      localStorage.clear();
       location.reload();
       return;
     }
-    const h=Math.floor(left/3600000),
-          m=Math.floor(left%3600000/60000),
-          s=Math.floor(left%60000/1000);
+    const h=Math.floor(left/3600000);
+    const m=Math.floor((left%3600000)/60000);
+    const s=Math.floor((left%60000)/1000);
     timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
 
-/* ---------- UI STATES ---------- */
+/* ===== PAGE SWITCHERS ===== */
 function showLogin(){
   utrPage.classList.add("hidden");
   loginPage.classList.remove("hidden");
 }
-function showDash(){
+function showDashboard(){
   loginPage.classList.add("hidden");
   dashPage.classList.remove("hidden");
+  startTimer();
+}
+function logout(){
+  localStorage.removeItem("loginTime");
+  location.reload();
 }
 
-/* ---------- AUTO LOAD ---------- */
+/* ===== AUTO RESTORE ===== */
 window.onload=()=>{
-  if(localStorage.paid==="true"){
-    showLogin();
-  }
-  if(localStorage.loginTime && Date.now()-localStorage.loginTime < DAY){
-    showDash();
-    startTimer();
+  const utr=localStorage.utrTime;
+  const login=localStorage.loginTime;
+
+  if(utr && Date.now()-utr < DAY){
+    if(login && Date.now()-login < DAY){
+      showDashboard();
+    }else{
+      showLogin();
+    }
   }
 };
 </script>
