@@ -6,170 +6,118 @@
 <title>Secure Access</title>
 
 <style>
-*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
 body{
-  margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;
+  margin:0;min-height:100vh;
+  display:flex;justify-content:center;align-items:center;
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
 
-/* ===== WATERMARK ===== */
-.watermark{
-  position:fixed;inset:0;
-  display:flex;justify-content:center;align-items:center;
-  pointer-events:none;
-  opacity:.35;
-  transform:scale(1.25);
-  z-index:0;
-}
-
-/* ===== CARDS ===== */
 .card{
-  width:100%;max-width:420px;padding:28px;border-radius:30px;
+  width:100%;max-width:420px;
+  padding:26px;border-radius:26px;
   background:rgba(255,255,255,.35);
-  backdrop-filter:blur(20px);
+  backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.35);
   box-shadow:0 30px 60px rgba(0,0,0,.18);
-  z-index:1;
 }
+
 .hidden{display:none}
 
-/* ===== LOGO ===== */
-.pw-logo{
-  width:120px;height:120px;margin:0 auto 14px;
-  background:#000;border-radius:50%;
-  display:flex;justify-content:center;align-items:center;position:relative;
-}
-.pw-text{color:#fff;font-size:64px;font-family:"Times New Roman";font-weight:bold}
+h2{text-align:center;margin:0 0 14px}
 
-/* ===== INPUTS ===== */
 input,button{
-  width:100%;padding:14px;border-radius:14px;margin-top:12px;
+  width:100%;padding:14px;
+  border-radius:14px;margin-top:12px;
+  border:1px solid rgba(0,0,0,.15);
 }
-input{border:1px solid rgba(0,0,0,.15)}
-button{border:none;background:#000;color:#fff;font-weight:600;cursor:pointer}
-
-.hint{font-size:12.5px;color:#333;margin-top:6px;line-height:1.6}
-
-/* ===== ACCESS GRANTED ===== */
-.access{
-  display:flex;justify-content:center;align-items:center;gap:10px;
-  margin:10px 0;font-weight:800;color:#16a34a;
+button{
+  background:#000;color:#fff;
+  font-weight:600;cursor:pointer;
+  border:none;
 }
-.tick{
-  width:26px;height:26px;border-radius:50%;
-  background:#22c55e;color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  animation:pop .5s ease;
-}
-@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
 
-/* ===== TIMER ===== */
+.hint{font-size:12px;color:#333;margin-top:6px}
 .timer{
-  background:#000;color:#fff;padding:14px;border-radius:18px;
-  text-align:center;margin-top:10px;
+  margin-top:12px;
+  padding:12px;border-radius:14px;
+  background:#000;color:#fff;
+  text-align:center;
 }
-
-/* ===== INSTRUCTIONS ===== */
-.section{margin-top:22px}
-.instruction-header{
-  background:#1e40af;color:#fff;padding:14px 16px;
-  border-radius:18px;font-weight:700;
-  display:flex;justify-content:space-between;cursor:pointer;
+.instruction-box{
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.85);
+  font-size:13px;
+  line-height:1.7;
 }
-.instruction-content{
-  max-height:0;overflow:hidden;opacity:0;
-  background:#fff;border-radius:18px;
-  padding:0 16px;margin-top:10px;
-  font-size:13px;line-height:1.8;
-  transition:.4s ease;
-}
-.instruction-content.open{
-  max-height:3000px;opacity:1;padding:16px;
-}
-
-/* ===== NOTICE ===== */
 .notice{
-  margin-top:14px;padding:14px;border-radius:14px;
-  background:rgba(255,0,0,.07);
-  color:#b00020;font-size:13px;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:rgba(255,0,0,.08);
+  color:#b00020;
+  font-size:13px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="watermark">
-  <div class="pw-logo"><div class="pw-text">PW</div></div>
-</div>
+<!-- ================= UTR PAGE ================= -->
+<div class="card" id="utrPage">
+  <h2>🔐 Payment Verification</h2>
 
-<!-- ================= PAYMENT ================= -->
-<div class="card" id="payCard">
-  <div class="pw-logo"><div class="pw-text">PW</div></div>
+  <!-- ✅ YOUR QR IMAGE -->
+  <img 
+    src="https://drive.google.com/uc?export=view&id=1JFGJzrEhJbSAOhPUqG-9v-GdwmxqEq18"
+    style="width:100%;border-radius:16px"
+  >
 
-  <h3 style="text-align:center">Complete Payment</h3>
-  <img src="YOUR_QR_IMAGE.png" style="width:100%;border-radius:14px">
-
-  <input id="utr" placeholder="Enter UTR Number">
+  <input id="utrInput" placeholder="Enter UTR Number">
   <button onclick="submitUTR()">Submit UTR</button>
-  <div id="utrMsg" class="hint"></div>
+
+  <div class="hint">
+    • UTR केवल एक बार submit करना होगा<br>
+    • Access 24 hours के लिए valid रहेगा
+  </div>
 </div>
 
-<!-- ================= LOGIN ================= -->
-<div class="card hidden" id="loginCard">
-  <div class="pw-logo"><div class="pw-text">PW</div></div>
+<!-- ================= LOGIN PAGE ================= -->
+<div class="card hidden" id="loginPage">
+  <h2>🔑 Login</h2>
 
-  <input id="roomPass" type="password" placeholder="Enter room password">
+  <input id="loginPass" type="password" placeholder="Enter Password">
   <div class="hint">Format: <b>RS@DDMMYYYY</b></div>
 
-  <div class="notice">
-    • Password changes every 24 hours<br>
-    • Read instructions after login<br>
-    • Sharing access may lead to block
+  <button onclick="login()">Login</button>
+  <div id="loginMsg" class="hint"></div>
+
+  <div class="instruction-box">
+    <b>Instructions:</b><br>
+    • Password date-based होता है और हर 24 hours में change होता है<br>
+    • Website और APK login का process same है<br>
+    • Wrong password पर access deny हो सकता है
   </div>
 
-  <button onclick="login()">Continue</button>
-  <div id="roomMsg" class="hint"></div>
+  <div class="notice">
+    <b>⚠ Important Notice</b><br>
+    • Website / access details share करना strictly prohibited है<br>
+    • Unauthorized sharing पर access permanently block किया जा सकता है
+  </div>
 </div>
 
 <!-- ================= DASHBOARD ================= -->
-<div class="card hidden" id="dashCard">
-  <div class="access">
-    <div class="tick">✔</div> ACCESS GRANTED
-  </div>
-
+<div class="card hidden" id="dashPage">
+  <h2 style="color:#16a34a">✔ ACCESS GRANTED</h2>
   <div class="timer" id="timer"></div>
-
-  <div class="section">
-    <div class="instruction-header" onclick="instr.classList.toggle('open')">
-      📘 Instructions <span>▼</span>
-    </div>
-    <div id="instr" class="instruction-content">
-      <b>Important:</b><br>
-      • Login & APK passwords are date-based<br>
-      • Valid for 24 hours only<br>
-      • Do not share access or APK<br><br>
-      <div class="notice">
-        Unauthorized sharing = permanent block
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <input id="apkPass" type="password" placeholder="Enter APK password">
-    <div class="hint">Format: <b>APK@DDMMYYYY</b></div>
-    <button onclick="unlockAPK()">Unlock APK</button>
-    <a id="apkLink"
-       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
-       download
-       style="display:none">
-      <button style="background:#16a34a">Download APK</button>
-    </a>
-  </div>
 </div>
 
 <script>
 const DAY = 86400000;
 
+/* ---------- DATE PASSWORD ---------- */
 function today(prefix){
   const d=new Date();
   return prefix+
@@ -178,34 +126,41 @@ function today(prefix){
     d.getFullYear();
 }
 
-/* ===== UTR ===== */
+/* ---------- UTR SUBMIT ---------- */
 function submitUTR(){
-  if(utr.value.length < 6){
-    utrMsg.textContent="Enter valid UTR number";
+  const utr = document.getElementById("utrInput").value.trim();
+  if(utr.length < 6){
+    alert("Invalid UTR number");
     return;
   }
-  localStorage.utrOK = "yes";
-  payCard.classList.add("hidden");
-  loginCard.classList.remove("hidden");
+  localStorage.setItem("paid", "true");
+  localStorage.setItem("paidTime", Date.now());
+  showLogin();
 }
 
-/* ===== LOGIN ===== */
+/* ---------- LOGIN ---------- */
 function login(){
-  if(roomPass.value !== today("RS@")){
-    roomMsg.textContent="Wrong password";
+  if(loginPass.value !== today("RS@")){
+    loginMsg.textContent="Wrong password";
     return;
   }
-  localStorage.loginTime = Date.now();
-  loginCard.classList.add("hidden");
-  dashCard.classList.remove("hidden");
+  localStorage.setItem("loginTime", Date.now());
+  showDash();
   startTimer();
 }
 
-/* ===== TIMER ===== */
+/* ---------- TIMER ---------- */
 function startTimer(){
   setInterval(()=>{
-    const left = DAY - (Date.now() - localStorage.loginTime);
-    if(left <= 0){ localStorage.clear(); location.reload(); }
+    const start = Number(localStorage.loginTime);
+    if(!start) return;
+
+    const left = DAY - (Date.now()-start);
+    if(left<=0){
+      localStorage.removeItem("loginTime");
+      location.reload();
+      return;
+    }
     const h=Math.floor(left/3600000),
           m=Math.floor(left%3600000/60000),
           s=Math.floor(left%60000/1000);
@@ -213,22 +168,23 @@ function startTimer(){
   },1000);
 }
 
-/* ===== APK ===== */
-function unlockAPK(){
-  if(apkPass.value !== today("APK@")) return;
-  apkLink.style.display="block";
+/* ---------- UI STATES ---------- */
+function showLogin(){
+  utrPage.classList.add("hidden");
+  loginPage.classList.remove("hidden");
+}
+function showDash(){
+  loginPage.classList.add("hidden");
+  dashPage.classList.remove("hidden");
 }
 
-/* ===== RESTORE ===== */
+/* ---------- AUTO LOAD ---------- */
 window.onload=()=>{
-  if(localStorage.utrOK==="yes"){
-    payCard.classList.add("hidden");
-    loginCard.classList.remove("hidden");
+  if(localStorage.paid==="true"){
+    showLogin();
   }
-  if(localStorage.loginTime && Date.now()-localStorage.loginTime<DAY){
-    payCard.classList.add("hidden");
-    loginCard.classList.add("hidden");
-    dashCard.classList.remove("hidden");
+  if(localStorage.loginTime && Date.now()-localStorage.loginTime < DAY){
+    showDash();
     startTimer();
   }
 };
