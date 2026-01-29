@@ -12,436 +12,227 @@ body{
   background:linear-gradient(135deg,#eef1f7,#f9fafc);
 }
 
-/* ===== WATERMARK (LOGIN + DASHBOARD) ===== */
+/* ===== WATERMARK ===== */
 .watermark{
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  pointer-events: none;
-
-  /* 🔥 VISIBILITY CONTROL */
-  opacity: 0.45;          /* watermark clearly visible */
-  filter: blur(0px);      /* NO blur */
-  transform: scale(1.25); /* thoda bada */
-
-  z-index: 0;             /* cards ke peeche */
-}
-
-/* logo ko sharp aur visible rakho */
-.watermark .pw-logo{
-  opacity: 070;
-  filter: none;
+  position:fixed;inset:0;
+  display:flex;justify-content:center;align-items:center;
+  pointer-events:none;
+  opacity:.35;
+  transform:scale(1.25);
+  z-index:0;
 }
 
 /* ===== CARDS ===== */
 .card{
   width:100%;max-width:420px;padding:28px;border-radius:30px;
   background:rgba(255,255,255,.35);
-  backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(20px);
   border:1px solid rgba(255,255,255,.35);
   box-shadow:0 30px 60px rgba(0,0,0,.18);
   z-index:1;
 }
-.card.dashboard{
-  background:rgba(255,255,255,.22);
-  backdrop-filter:blur(34px) saturate(210%);
-  box-shadow:
-    0 45px 100px rgba(0,0,0,.30),
-    inset 0 0 0 1px rgba(255,255,255,.28);
-}
 .hidden{display:none}
 
-/* ===== PW LOGO ===== */
+/* ===== LOGO ===== */
 .pw-logo{
   width:120px;height:120px;margin:0 auto 14px;
   background:#000;border-radius:50%;
   display:flex;justify-content:center;align-items:center;position:relative;
 }
-.pw-logo::before{
-  content:"";position:absolute;width:82%;height:82%;border-radius:50%;
-  border:5px solid #fff;border-left-color:transparent;border-right-color:transparent;
-  transform:rotate(-12deg);
-}
 .pw-text{color:#fff;font-size:64px;font-family:"Times New Roman";font-weight:bold}
 
 /* ===== INPUTS ===== */
-input{
-  width:100%;padding:14px;border-radius:14px;
-  border:1px solid rgba(0,0,0,.15);
-  margin-top:12px;font-size:14px;
+input,button{
+  width:100%;padding:14px;border-radius:14px;margin-top:12px;
 }
-button{
-  width:100%;padding:14px;margin-top:14px;
-  border:none;border-radius:14px;
-  background:#000;color:#fff;font-weight:600;cursor:pointer;
-}
-.hint{font-size:12.5px;margin-top:6px;color:#333;line-height:1.6}
-.warning{font-size:12.5px;margin-top:10px;color:#8a0000;font-weight:600}
-.disclaimer{font-size:12.5px;margin-top:10px;color:#222;line-height:1.7}
+input{border:1px solid rgba(0,0,0,.15)}
+button{border:none;background:#000;color:#fff;font-weight:600;cursor:pointer}
+
+.hint{font-size:12.5px;color:#333;margin-top:6px;line-height:1.6}
+
 /* ===== ACCESS GRANTED ===== */
 .access{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin:12px 0;
-  font-weight:800;
-  color:#16a34a;
-  text-align:center;
+  display:flex;justify-content:center;align-items:center;gap:10px;
+  margin:10px 0;font-weight:800;color:#16a34a;
 }
-
 .tick{
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:#22c55e;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
-  animation:pop .5s ease-out;
+  width:26px;height:26px;border-radius:50%;
+  background:#22c55e;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  animation:pop .5s ease;
 }
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
 
-@keyframes pop{
-  0%{transform:scale(0);opacity:0}
-  70%{transform:scale(1.2);opacity:1}
-  100%{transform:scale(1)}
-  }
-  /* ===== IMPORTANT NOTICE ===== */
-.important-notice{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,0,0,.07);
-  color:#b00020;
-  font-size:13px;
-  line-height:1.7;
-  }
 /* ===== TIMER ===== */
 .timer{
   background:#000;color:#fff;padding:14px;border-radius:18px;
   text-align:center;margin-top:10px;
-  animation:blink 1.2s infinite;
 }
-@keyframes blink{50%{opacity:.65}}
 
+/* ===== INSTRUCTIONS ===== */
 .section{margin-top:22px}
-
-.instruction-content{
-  overflow:hidden;
-  max-height:0;
-  opacity:0;
-
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-
-  border-radius:18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-
-  transform: translateY(-6px);
-  transition:
-    max-height .45s cubic-bezier(.4,0,.2,1),
-    opacity .25s ease,
-    transform .25s ease;
-
-  padding:0 16px;
-  margin-top:12px;
-  font-size:13px;
-  line-height:1.8;
-
-  will-change:max-height, opacity, transform;
-     }
-/* ===== INSTRUCTION HEADER STYLE ===== */
 .instruction-header{
-  background:#1e40af;        /* alag color */
-  color:#fff;
-  padding:14px 16px;
-  border-radius:18px;
-  font-weight:700;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  background:#1e40af;color:#fff;padding:14px 16px;
+  border-radius:18px;font-weight:700;
+  display:flex;justify-content:space-between;cursor:pointer;
 }
-
-.instruction-header span:last-child{
-  transition:transform .3s ease;
-}
-
-.instruction-header.open span:last-child{
-  transform:rotate(180deg);
-}
-/* ===== END ===== */
 .instruction-content{
-  overflow:hidden;
-  max-height:0;
-  opacity:0;
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-radius:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-  transform: translateY(-6px);
-  transition:
-    max-height .45s cubic-bezier(.4,0,.2,1),
-    opacity .25s ease,
-    transform .25s ease;
-  padding:0 16px;
-  margin-top:12px;
-  font-size:13px;
-  line-height:1.8;
+  max-height:0;overflow:hidden;opacity:0;
+  background:#fff;border-radius:18px;
+  padding:0 16px;margin-top:10px;
+  font-size:13px;line-height:1.8;
+  transition:.4s ease;
+}
+.instruction-content.open{
+  max-height:3000px;opacity:1;padding:16px;
 }
 
-.instruction-content.open{
-  max-height:3000px;
-  opacity:1;
-  transform:translateY(0);
-  padding:16px;
+/* ===== NOTICE ===== */
+.notice{
+  margin-top:14px;padding:14px;border-radius:14px;
+  background:rgba(255,0,0,.07);
+  color:#b00020;font-size:13px;
 }
-/* ===== VIDEO ===== */
-iframe{width:100%;height:200px;border-radius:14px;border:none}
-.video-link{text-align:center;font-size:13px;margin-top:8px}
 </style>
 </head>
 
 <body>
 
-<!-- WATERMARKS -->
-<div class="watermark login" id="wmLogin">
-  <div class="pw-logo"><div class="pw-text">PW</div></div>
-</div>
-<div class="watermark dashboard hidden" id="wmDash">
+<div class="watermark">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 </div>
 
-<!-- LOGIN -->
-<div class="card" id="loginCard">
+<!-- ================= PAYMENT ================= -->
+<div class="card" id="payCard">
+  <div class="pw-logo"><div class="pw-text">PW</div></div>
+
+  <h3 style="text-align:center">Complete Payment</h3>
+  <img src="YOUR_QR_IMAGE.png" style="width:100%;border-radius:14px">
+
+  <input id="utr" placeholder="Enter UTR Number">
+  <button onclick="submitUTR()">Submit UTR</button>
+  <div id="utrMsg" class="hint"></div>
+</div>
+
+<!-- ================= LOGIN ================= -->
+<div class="card hidden" id="loginCard">
   <div class="pw-logo"><div class="pw-text">PW</div></div>
 
   <input id="roomPass" type="password" placeholder="Enter room password">
-  <div class="hint">Hint: <b>RS@DDMMYYYY</b></div>
+  <div class="hint">Format: <b>RS@DDMMYYYY</b></div>
 
-  <div class="disclaimer">
-    <b>Disclaimer:</b>
-    <ul>
-      <li>After successful login, users must carefully read and follow all instructions provided inside the dashboard.</li>
-      <li>The access password automatically changes after 24 hours due to copyright © policy.</li>
-    </ul>
-  </div>
-
-  <div class="warning">
-    <b>Important Notice:</b><br>
-    Sharing this website or access details without admin permission
-    may result in immediate access suspension.
+  <div class="notice">
+    • Password changes every 24 hours<br>
+    • Read instructions after login<br>
+    • Sharing access may lead to block
   </div>
 
   <button onclick="login()">Continue</button>
   <div id="roomMsg" class="hint"></div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="card dashboard hidden" id="dashCard">
-  <div class="pw-logo" style="width:90px;height:90px">
-    <div class="pw-text" style="font-size:46px">PW</div>
-  </div>
+<!-- ================= DASHBOARD ================= -->
+<div class="card hidden" id="dashCard">
   <div class="access">
-  <div class="tick">✔</div>
-  ACCESS GRANTED
+    <div class="tick">✔</div> ACCESS GRANTED
   </div>
 
   <div class="timer" id="timer"></div>
 
-  <!-- INSTRUCTIONS -->
   <div class="section">
     <div class="instruction-header" onclick="instr.classList.toggle('open')">
-      <span>📘 Instructions</span><span>▼</span>
+      📘 Instructions <span>▼</span>
     </div>
-
     <div id="instr" class="instruction-content">
-
-<b>🔑 How to Generate Access Key (Valid for 24 Hours)</b><br><br>
-
-Follow the steps carefully to avoid access issues.<br><br>
-
-<b>⚠️ Important Browser Note:</b><br>
-• If you open the link from an APP, it may open in Google Chrome and ads may appear.<br>
-• To avoid ads, open the website directly using <b>Opera Mini</b> browser.<br>
-• If the app or website does not open, turn <b>ON VPN</b> and try again.<br><br>
-
-<b>📌 Steps to Generate Key:</b><br>
-1️⃣ Turn OFF DNS – Disable Private DNS / Custom DNS from phone settings.<br>
-2️⃣ Update Browser – Make sure Google Chrome is updated to the latest version.<br>
-3️⃣ Use Correct Browser – Chrome (recommended) or Opera Mini (fewer ads).<br>
-4️⃣ If any extra page or ad opens, press <b>BACK once</b> and continue. Do not close the tab.<br>
-5️⃣ Laptop / PC users must turn <b>ON VPN</b> and use an <b>Ad-Blocker</b> extension.<br><br>
-
-<b>🔐 Password Information:</b><br>
-• Website login password and APK password are <b>date-based</b> and change automatically every 24 hours.<br>
-• If you access through the APK, ads may appear because it opens directly in Google Chrome.<br><br>
-
-<b>⏳ Key Validity:</b><br>
-• Access Key is valid for <b>24 hours only</b>.<br>
-• After 24 hours, you must login again and repeat the same process.<br>
-• These limits are applied due to <b>copyright © issues</b>.<br><br>
-
-<b>💻 Device Support:</b><br>
-• Android: Website + APK<br>
-• iOS: Website only<br>
-• Laptop / PC: Website (VPN + Ad-Blocker recommended)
-<hr style="margin:16px 0;border:none;height:1px;background:rgba(0,0,0,.2)">
-
-<div class="important-notice">
-  <b>⚠ Important Notice</b><br><br>
-  • Do <b>NOT</b> share this website, access key, or APK with anyone.<br>
-  • Any unauthorized sharing may result in <b>immediate access suspension</b>.<br>
-  • Access is limited to <b>24-hour sessions</b> only.<br>
-  • Passwords are <b>date-based</b> and change automatically every day.<br>
-  • Repeated misuse may lead to <b>permanent blocking</b>.
-</div>
+      <b>Important:</b><br>
+      • Login & APK passwords are date-based<br>
+      • Valid for 24 hours only<br>
+      • Do not share access or APK<br><br>
+      <div class="notice">
+        Unauthorized sharing = permanent block
+      </div>
     </div>
   </div>
 
-  <!-- VIDEO -->
-  <div class="section">
-    <iframe src="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/preview"></iframe>
-    <div class="video-link">
-      If video does not play on PC/Laptop,
-      <a href="https://drive.google.com/file/d/16WmuBH_ycBUAsqNYaSDnJ9nbS5s2JF2s/view" target="_blank">
-        open here
-      </a>
-    </div>
-  </div>
-
-  <!-- WEBSITE -->
-  <div class="section">
-    <button onclick="window.open('https://rarestudy.site','_blank')">Open Website</button>
-  </div>
-
-  <!-- APK -->
   <div class="section">
     <input id="apkPass" type="password" placeholder="Enter APK password">
-    <div class="hint">Example: <b>APK@DDMMYYYY</b></div>
+    <div class="hint">Format: <b>APK@DDMMYYYY</b></div>
     <button onclick="unlockAPK()">Unlock APK</button>
-    <div id="apkMsg" class="hint"></div>
     <a id="apkLink"
-   href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
-      download 
-   style="display:none;text-decoration:none">
-
-  <button style="margin-top:10px;background:#16a34a">
-    Download APK
-  </button>
-
+       href="https://drive.google.com/uc?export=download&id=1dTC01CLUktCk2BDQN1bfEglRUuvpM8sH"
+       download
+       style="display:none">
+      <button style="background:#16a34a">Download APK</button>
     </a>
   </div>
-
 </div>
 
 <script>
 const DAY = 86400000;
-let roomAttempts = 3;
-let apkAttempts = 3;
 
 function today(prefix){
-  const d = new Date();
-  return prefix +
-    String(d.getDate()).padStart(2,'0') +
-    String(d.getMonth()+1).padStart(2,'0') +
+  const d=new Date();
+  return prefix+
+    String(d.getDate()).padStart(2,'0')+
+    String(d.getMonth()+1).padStart(2,'0')+
     d.getFullYear();
 }
 
-/* 1 second password visibility */
-function oneSec(input){
-  let t;
-  input.addEventListener("input",()=>{
-    input.type="text";
-    clearTimeout(t);
-    t=setTimeout(()=>input.type="password",1000);
-  });
+/* ===== UTR ===== */
+function submitUTR(){
+  if(utr.value.length < 6){
+    utrMsg.textContent="Enter valid UTR number";
+    return;
+  }
+  localStorage.utrOK = "yes";
+  payCard.classList.add("hidden");
+  loginCard.classList.remove("hidden");
 }
-oneSec(roomPass);
-oneSec(apkPass);
 
-/* LOGIN */
+/* ===== LOGIN ===== */
 function login(){
-  if(localStorage.roomLock && Date.now() < localStorage.roomLock){
-    roomMsg.textContent="Login locked. Try again after 24 hours.";
-    return;
-  }
   if(roomPass.value !== today("RS@")){
-    roomAttempts--;
-    roomMsg.innerHTML = `Wrong password. Attempts left: ${roomAttempts}`;
-    if(roomAttempts <= 0){
-      localStorage.roomLock = Date.now() + DAY;
-      roomMsg.textContent="Too many attempts. Login locked for 24 hours.";
-    }
+    roomMsg.textContent="Wrong password";
     return;
   }
-
   localStorage.loginTime = Date.now();
   loginCard.classList.add("hidden");
   dashCard.classList.remove("hidden");
-  wmLogin.classList.add("hidden");
-  wmDash.classList.remove("hidden");
   startTimer();
 }
 
-/* TIMER – FIXED */
+/* ===== TIMER ===== */
 function startTimer(){
   setInterval(()=>{
-    const start = Number(localStorage.loginTime);
-    if(!start) return;
-
-    const elapsed = Date.now() - start;
-    const left = DAY - elapsed;
-
-    if(left <= 0){
-      delete localStorage.loginTime;
-      delete localStorage.roomLock;
-      delete localStorage.apkLock;
-      location.reload();
-      return;
-    }
-
-    const h = Math.floor(left/3600000);
-    const m = Math.floor((left%3600000)/60000);
-    const s = Math.floor((left%60000)/1000);
-    timer.textContent = `Session expires in ${h}h ${m}m ${s}s`;
+    const left = DAY - (Date.now() - localStorage.loginTime);
+    if(left <= 0){ localStorage.clear(); location.reload(); }
+    const h=Math.floor(left/3600000),
+          m=Math.floor(left%3600000/60000),
+          s=Math.floor(left%60000/1000);
+    timer.textContent=`Session expires in ${h}h ${m}m ${s}s`;
   },1000);
 }
 
-/* APK */
+/* ===== APK ===== */
 function unlockAPK(){
-  if(apkPass.value !== today("APK@")){
-    apkAttempts--;
-    apkMsg.innerHTML = `Wrong APK password. Attempts left: ${apkAttempts}`;
-    if(apkAttempts <= 0){
-      localStorage.apkLock = Date.now() + DAY;
-      apkMsg.textContent="APK locked for 24 hours.";
-    }
-    return;
-  }
-  apkMsg.textContent="APK unlocked (refresh will hide it again)";
-  document.getElementById("apkLink").style.display = "block";
+  if(apkPass.value !== today("APK@")) return;
+  apkLink.style.display="block";
 }
 
-/* AUTO RESTORE LOGIN */
-window.onload = ()=>{
-  const t = localStorage.loginTime;
-  if(t && Date.now() - t < DAY){
+/* ===== RESTORE ===== */
+window.onload=()=>{
+  if(localStorage.utrOK==="yes"){
+    payCard.classList.add("hidden");
+    loginCard.classList.remove("hidden");
+  }
+  if(localStorage.loginTime && Date.now()-localStorage.loginTime<DAY){
+    payCard.classList.add("hidden");
     loginCard.classList.add("hidden");
     dashCard.classList.remove("hidden");
-    wmLogin.classList.add("hidden");
-    wmDash.classList.remove("hidden");
     startTimer();
   }
 };
 </script>
 
 </body>
-  </html>
+</html>
